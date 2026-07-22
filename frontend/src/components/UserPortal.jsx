@@ -11,15 +11,20 @@ const CATEGORIES = [
   'Two Pointers',
 ]
 
-const DOMAINS = ['Operating Systems', 'Machine Learning', 'DBMS', 'Networks', 'General CS']
-
-// Written as literal class names (not template-interpolated) so Tailwind's
-// build-time scanner can actually find and keep them.
+const DIFFICULTIES = ['Easy', 'Medium', 'Hard']
+const DIFFICULTY_ORDER = { Easy: 0, Medium: 1, Hard: 2 }
+const DIFFICULTY_ROLE = { Easy: 'verified', Medium: 'warn', Hard: 'danger' }
 const DIFFICULTY_TEXT_CLASS = {
   verified: 'text-verified',
   warn: 'text-warn',
   danger: 'text-danger',
 }
+
+const SORT_OPTIONS = [
+  { value: 'title-asc', label: 'Title A-Z' },
+  { value: 'difficulty-asc', label: 'Difficulty: Easy first' },
+  { value: 'difficulty-desc', label: 'Difficulty: Hard first' },
+]
 
 export default function UserPortal({ onLogout }) {
   const { questions: rawQuestions, loading } = useQuestions()
@@ -28,32 +33,44 @@ export default function UserPortal({ onLogout }) {
     [rawQuestions],
   )
 
-  const [activeType, setActiveType] = useState('All') // 'All' | 'coding' | 'conceptual'
   const [activeCategory, setActiveCategory] = useState('All')
+  const [activeDifficulty, setActiveDifficulty] = useState('All')
+  const [activeCompany, setActiveCompany] = useState('All')
+  const [sortBy, setSortBy] = useState('title-asc')
   const [query, setQuery] = useState('')
   const [selected, setSelected] = useState(new Set())
   const [openQuestion, setOpenQuestion] = useState(null)
 
-  // Selection defaults to "all" once data actually arrives — can't build a
-  // Set from allQuestions before it's loaded, so this syncs it in once.
   useMemo(() => {
     if (rawQuestions) setSelected(new Set(allQuestions.map((q) => q.id)))
   }, [rawQuestions]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  function handleTypeChange(nextType) {
-    setActiveType(nextType)
-    setActiveCategory('All')
-  }
+  const companies = useMemo(() => {
+    const set = new Set()
+    allQuestions.forEach((q) => {
+      if (q.company) set.add(q.company)
+    })
+    return Array.from(set).sort()
+  }, [allQuestions])
 
-  const filtered = allQuestions.filter((q) => {
-    const itemType = q.item_type || 'coding'
-    if (activeType !== 'All' && itemType !== activeType) return false
-    if (activeCategory !== 'All') {
-      const bucket = itemType === 'conceptual' ? q.domain : q.category
-      if (bucket !== activeCategory) return false
-    }
-    return q.title.toLowerCase().includes(query.toLowerCase())
-  })
+  const filtered = useMemo(() => {
+    let result = allQuestions.filter(
+      (q) =>
+        (activeCategory === 'All' || q.category === activeCategory) &&
+        (activeDifficulty === 'All' || q.difficulty === activeDifficulty) &&
+        (activeCompany === 'All' || q.company === activeCompany) &&
+        q.title.toLowerCase().includes(query.toLowerCase()),
+    )
+
+    result = [...result].sort((a, b) => {
+      if (sortBy === 'title-asc') return a.title.localeCompare(b.title)
+      const da = DIFFICULTY_ORDER[a.difficulty] ?? 1
+      const db = DIFFICULTY_ORDER[b.difficulty] ?? 1
+      return sortBy === 'difficulty-asc' ? da - db : db - da
+    })
+
+    return result
+  }, [allQuestions, activeCategory, activeDifficulty, activeCompany, query, sortBy])
 
   function toggle(id) {
     setSelected((prev) => {
@@ -90,38 +107,61 @@ export default function UserPortal({ onLogout }) {
         </button>
       </div>
 
-      <input
-        type="text"
-        placeholder="Search by title"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        className="w-full bg-surface border border-surfaceRaised rounded-lg px-4 py-2.5 text-sm mb-4 focus:outline-none focus:border-catDp"
-      />
+      {companies.length > 0 && (
+        <div className="mb-4 overflow-x-auto">
+          <div className="flex gap-2 pb-1 w-max">
+            <button
+              onClick={() => setActiveCompany('All')}
+              className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-mono border ${
+                activeCompany === 'All' ? 'border-bone' : 'border-surfaceRaised text-muted'
+              }`}
+            >
+              All companies
+            </button>
+            {companies.map((c) => (
+              <button
+                key={c}
+                onClick={() => setActiveCompany(c)}
+                className={`whitespace-nowrap px-3 py-1.5 rounded-full text-xs font-mono border ${
+                  activeCompany === c ? 'border-bone' : 'border-surfaceRaised text-muted'
+                }`}
+              >
+                {c}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
-      <div className="flex flex-wrap gap-2 mb-3">
-        {['All', 'coding', 'conceptual'].map((t) => (
-          <button
-            key={t}
-            onClick={() => handleTypeChange(t)}
-            className={`px-3 py-1.5 rounded-full text-xs font-medium border ${
-              activeType === t ? 'border-bone bg-surfaceRaised' : 'border-surfaceRaised text-muted'
-            }`}
-          >
-            {t === 'All' ? 'All types' : t === 'coding' ? 'Coding' : 'Conceptual (bonus)'}
-          </button>
-        ))}
+      <div className="flex flex-col md:flex-row gap-3 mb-4">
+        <input
+          type="text"
+          placeholder="Search by title"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="flex-1 bg-surface border border-surfaceRaised rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:border-catDp"
+        />
+        <select
+          value={sortBy}
+          onChange={(e) => setSortBy(e.target.value)}
+          className="bg-surface border border-surfaceRaised rounded-lg px-3 py-2.5 text-sm text-muted"
+        >
+          {SORT_OPTIONS.map((opt) => (
+            <option key={opt.value} value={opt.value}>{opt.label}</option>
+          ))}
+        </select>
       </div>
 
-      <div className="flex flex-wrap gap-2 mb-6">
+      <div className="flex flex-wrap gap-2 mb-3">
         <button
           onClick={() => setActiveCategory('All')}
           className={`px-3 py-1.5 rounded-full text-xs font-medium border ${
             activeCategory === 'All' ? 'border-bone' : 'border-surfaceRaised text-muted'
           }`}
         >
-          All
+          All categories
         </button>
-        {(activeType === 'conceptual' ? DOMAINS : CATEGORIES).map((cat) => (
+        {CATEGORIES.map((cat) => (
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
@@ -134,11 +174,33 @@ export default function UserPortal({ onLogout }) {
         ))}
       </div>
 
-      {loading && <p className="text-muted text-sm mb-4">Loading questions…</p>}
+      <div className="flex flex-wrap gap-2 mb-6">
+        <button
+          onClick={() => setActiveDifficulty('All')}
+          className={`px-3 py-1.5 rounded-full text-xs font-medium border ${
+            activeDifficulty === 'All' ? 'border-bone' : 'border-surfaceRaised text-muted'
+          }`}
+        >
+          All difficulties
+        </button>
+        {DIFFICULTIES.map((d) => (
+          <button
+            key={d}
+            onClick={() => setActiveDifficulty(d)}
+            className={`px-3 py-1.5 rounded-full text-xs font-medium border ${
+              activeDifficulty === d ? 'border-bone' : 'border-surfaceRaised text-muted'
+            }`}
+          >
+            {d}
+          </button>
+        ))}
+      </div>
 
-      {/* NOTE: swap this grid for react-window / @tanstack/react-virtual once
-          the real questions.json (700+ rows) replaces mock data — plain
-          .map() will start to feel janky well before that scale. */}
+      {loading && <p className="text-muted text-sm mb-4">Loading questions…</p>}
+      {!loading && (
+        <p className="text-xs text-muted mb-4">{filtered.length} of {allQuestions.length} questions shown</p>
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filtered.map((q) => (
           <div
@@ -147,10 +209,7 @@ export default function UserPortal({ onLogout }) {
             className="bg-surface border border-surfaceRaised rounded-xl p-4 flex flex-col gap-3 cursor-pointer hover:border-catDp transition"
           >
             <div className="flex items-center justify-between">
-              <div
-                className="flex items-center gap-2"
-                onClick={(e) => e.stopPropagation()}
-              >
+              <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
                 <input type="checkbox" checked={selected.has(q.id)} onChange={() => toggle(q.id)} />
                 <span className="font-mono text-xs text-muted">{q.id}</span>
               </div>
@@ -162,19 +221,10 @@ export default function UserPortal({ onLogout }) {
             </div>
             <p className="font-medium text-sm">{q.title}</p>
             <div className="flex flex-wrap gap-2">
-              <span className="text-xs px-2 py-0.5 rounded-full bg-ink text-muted">
-                {q.item_type === 'conceptual' ? q.domain : q.category}
-              </span>
-              <span
-                className={`text-xs px-2 py-0.5 rounded-full bg-ink ${DIFFICULTY_TEXT_CLASS[q.difficultyColor]}`}
-              >
+              <span className="text-xs px-2 py-0.5 rounded-full bg-ink text-muted">{q.category}</span>
+              <span className={`text-xs px-2 py-0.5 rounded-full bg-ink ${DIFFICULTY_TEXT_CLASS[DIFFICULTY_ROLE[q.difficulty]] || 'text-muted'}`}>
                 {q.difficulty}
               </span>
-              {q.item_type === 'conceptual' && (
-                <span className="text-xs px-2 py-0.5 rounded-full bg-ink text-catDc">
-                  Conceptual
-                </span>
-              )}
             </div>
             <span className="text-xs text-muted">{q.company}</span>
           </div>

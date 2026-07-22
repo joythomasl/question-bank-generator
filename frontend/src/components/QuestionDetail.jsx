@@ -1,4 +1,6 @@
 import { useState } from 'react'
+
+const DIFFICULTY_ROLE = { Easy: 'verified', Medium: 'warn', Hard: 'danger' }
 const DIFFICULTY_TEXT_CLASS = {
   verified: 'text-verified',
   warn: 'text-warn',
@@ -7,7 +9,8 @@ const DIFFICULTY_TEXT_CLASS = {
 
 export default function QuestionDetail({ question, onClose }) {
   if (!question) return null
-  const isConceptual = question.item_type === 'conceptual'
+
+  const diffClass = DIFFICULTY_TEXT_CLASS[DIFFICULTY_ROLE[question.difficulty]] || 'text-muted'
 
   return (
     <div className="fixed inset-0 z-50 flex justify-end">
@@ -18,10 +21,8 @@ export default function QuestionDetail({ question, onClose }) {
             <span className="font-mono text-xs text-muted">{question.id}</span>
             <h2 className="text-xl font-semibold mt-1">{question.title}</h2>
             <div className="flex flex-wrap gap-2 mt-2">
-              <span className="text-xs px-2 py-0.5 rounded-full bg-ink text-muted">
-                {isConceptual ? question.domain : question.category}
-              </span>
-              <span className={`text-xs px-2 py-0.5 rounded-full bg-ink ${DIFFICULTY_TEXT_CLASS[question.difficultyColor]}`}>
+              <span className="text-xs px-2 py-0.5 rounded-full bg-ink text-muted">{question.category}</span>
+              <span className={`text-xs px-2 py-0.5 rounded-full bg-ink ${diffClass}`}>
                 {question.difficulty}
               </span>
               <span className="text-xs px-2 py-0.5 rounded-full bg-ink text-muted">{question.company}</span>
@@ -35,7 +36,7 @@ export default function QuestionDetail({ question, onClose }) {
           <button onClick={onClose} className="text-muted hover:text-bone text-xl leading-none">×</button>
         </div>
 
-        {isConceptual ? (
+        {question.type === 'conceptual' ? (
           <>
             <section>
               <h3 className="font-mono text-xs text-muted uppercase tracking-widest mb-2">Question</h3>
@@ -43,14 +44,16 @@ export default function QuestionDetail({ question, onClose }) {
             </section>
             <section>
               <h3 className="font-mono text-xs text-muted uppercase tracking-widest mb-2">Answer</h3>
-              <p className="text-sm leading-relaxed">{question.answer}</p>
+              <p className="text-sm leading-relaxed text-muted">{question.answer}</p>
             </section>
-            <section>
-              <h3 className="font-mono text-xs text-muted uppercase tracking-widest mb-2">Key points</h3>
-              <ul className="text-sm font-mono text-muted flex flex-col gap-1">
-                {question.key_points?.map((k, i) => <li key={i}>• {k}</li>)}
-              </ul>
-            </section>
+            {question.key_points?.length > 0 && (
+              <section>
+                <h3 className="font-mono text-xs text-muted uppercase tracking-widest mb-2">Key points</h3>
+                <ul className="text-sm text-muted flex flex-col gap-1">
+                  {question.key_points.map((k, i) => <li key={i}>• {k}</li>)}
+                </ul>
+              </section>
+            )}
           </>
         ) : (
           <>
@@ -61,12 +64,14 @@ export default function QuestionDetail({ question, onClose }) {
 
             {question.examples?.map((ex, i) => (
               <section key={i}>
-                <h3 className="font-mono text-xs text-muted uppercase tracking-widest mb-2">Example{question.examples.length > 1 ? ` ${i + 1}` : ''}</h3>
+                <h3 className="font-mono text-xs text-muted uppercase tracking-widest mb-2">
+                  Example{question.examples.length > 1 ? ` ${i + 1}` : ''}
+                </h3>
                 <div className="bg-ink rounded-lg p-3 font-mono text-xs flex flex-col gap-1">
                   <p><span className="text-muted">Input: </span>{ex.input}</p>
                   <p><span className="text-muted">Output: </span>{ex.output}</p>
                 </div>
-                <p className="text-sm text-muted mt-2">{ex.explanation}</p>
+                {ex.explanation && <p className="text-sm text-muted mt-2">{ex.explanation}</p>}
               </section>
             ))}
 
