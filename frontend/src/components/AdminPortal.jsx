@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import { MOCK_QUESTIONS } from '../data/mockQuestions.js'
+import { useQuestions } from '../hooks/useQuestions.js'
 import { editQuestion, getCuratedQuestions, removeQuestion, resetOverrides } from '../utils/overrides.js'
 
 const DIFFICULTY_ROLE = { Easy: 'verified', Medium: 'warn', Hard: 'danger' }
@@ -8,7 +8,11 @@ export default function AdminPortal({ onLogout }) {
   const [tab, setTab] = useState('manage')
   const [refreshKey, setRefreshKey] = useState(0)
 
-  const questions = useMemo(() => getCuratedQuestions(MOCK_QUESTIONS), [refreshKey])
+  const { questions: rawQuestions } = useQuestions()
+const questions = useMemo(
+  () => (rawQuestions ? getCuratedQuestions(rawQuestions) : []),
+  [refreshKey, rawQuestions],
+)
 
   function handleRemove(id) {
     removeQuestion(id)
@@ -38,7 +42,8 @@ export default function AdminPortal({ onLogout }) {
   const categoryCounts = useMemo(() => {
     const counts = {}
     questions.forEach((q) => {
-      counts[q.category] = (counts[q.category] || 0) + 1
+      const bucket = q.item_type === 'conceptual' ? q.domain : q.category
+      counts[bucket] = (counts[bucket] || 0) + 1
     })
     return counts
   }, [questions])
@@ -117,7 +122,7 @@ export default function AdminPortal({ onLogout }) {
               >
                 <span className="font-mono text-xs text-muted w-16">{q.id}</span>
                 <span className="flex-1 text-sm font-medium">{q.title}</span>
-                <span className="text-xs text-muted w-40">{q.category}</span>
+                <span className="text-xs text-muted w-40">{q.item_type === 'conceptual' ? q.domain : q.category}</span>
                 <select
                   value={q.difficulty}
                   onChange={(e) => handleEditDifficulty(q.id, e.target.value)}

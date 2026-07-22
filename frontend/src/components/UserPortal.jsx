@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react'
-import { MOCK_QUESTIONS } from '../data/mockQuestions.js'
+import { useQuestions } from '../hooks/useQuestions.js'
 import { getCuratedQuestions } from '../utils/overrides.js'
+import QuestionDetail from './QuestionDetail.jsx'
 
 const CATEGORIES = [
   'Dynamic Programming',
@@ -9,6 +10,8 @@ const CATEGORIES = [
   'Divide and Conquer',
   'Two Pointers',
 ]
+
+const DOMAINS = ['Operating Systems', 'Machine Learning', 'DBMS', 'Networks', 'General CS']
 
 // Written as literal class names (not template-interpolated) so Tailwind's
 // build-time scanner can actually find and keep them.
@@ -19,16 +22,38 @@ const DIFFICULTY_TEXT_CLASS = {
 }
 
 export default function UserPortal({ onLogout }) {
-  const allQuestions = useMemo(() => getCuratedQuestions(MOCK_QUESTIONS), [])
+  const { questions: rawQuestions, loading } = useQuestions()
+  const allQuestions = useMemo(
+    () => (rawQuestions ? getCuratedQuestions(rawQuestions) : []),
+    [rawQuestions],
+  )
+
+  const [activeType, setActiveType] = useState('All') // 'All' | 'coding' | 'conceptual'
   const [activeCategory, setActiveCategory] = useState('All')
   const [query, setQuery] = useState('')
-  const [selected, setSelected] = useState(() => new Set(allQuestions.map((q) => q.id)))
+  const [selected, setSelected] = useState(new Set())
+  const [openQuestion, setOpenQuestion] = useState(null)
 
-  const filtered = allQuestions.filter(
-    (q) =>
-      (activeCategory === 'All' || q.category === activeCategory) &&
-      q.title.toLowerCase().includes(query.toLowerCase()),
-  )
+  // Selection defaults to "all" once data actually arrives — can't build a
+  // Set from allQuestions before it's loaded, so this syncs it in once.
+  useMemo(() => {
+    if (rawQuestions) setSelected(new Set(allQuestions.map((q) => q.id)))
+  }, [rawQuestions]) // eslint-disable-line react-hooks/exhaustive-deps
+
+  function handleTypeChange(nextType) {
+    setActiveType(nextType)
+    setActiveCategory('All')
+  }
+
+  const filtered = allQuestions.filter((q) => {
+    const itemType = q.item_type || 'coding'
+    if (activeType !== 'All' && itemType !== activeType) return false
+    if (activeCategory !== 'All') {
+      const bucket = itemType === 'conceptual' ? q.domain : q.category
+      if (bucket !== activeCategory) return false
+    }
+    return q.title.toLowerCase().includes(query.toLowerCase())
+  })
 
   function toggle(id) {
     setSelected((prev) => {
@@ -73,6 +98,20 @@ export default function UserPortal({ onLogout }) {
         className="w-full bg-surface border border-surfaceRaised rounded-lg px-4 py-2.5 text-sm mb-4 focus:outline-none focus:border-catDp"
       />
 
+      <div className="flex flex-wrap gap-2 mb-3">
+        {['All', 'coding', 'conceptual'].map((t) => (
+          <button
+            key={t}
+            onClick={() => handleTypeChange(t)}
+            className={`px-3 py-1.5 rounded-full text-xs font-medium border ${
+              activeType === t ? 'border-bone bg-surfaceRaised' : 'border-surfaceRaised text-muted'
+            }`}
+          >
+            {t === 'All' ? 'All types' : t === 'coding' ? 'Coding' : 'Conceptual (bonus)'}
+          </button>
+        ))}
+      </div>
+
       <div className="flex flex-wrap gap-2 mb-6">
         <button
           onClick={() => setActiveCategory('All')}
@@ -82,7 +121,7 @@ export default function UserPortal({ onLogout }) {
         >
           All
         </button>
-        {CATEGORIES.map((cat) => (
+        {(activeType === 'conceptual' ? DOMAINS : CATEGORIES).map((cat) => (
           <button
             key={cat}
             onClick={() => setActiveCategory(cat)}
@@ -95,17 +134,23 @@ export default function UserPortal({ onLogout }) {
         ))}
       </div>
 
+      {loading && <p className="text-muted text-sm mb-4">Loading questions…</p>}
+
       {/* NOTE: swap this grid for react-window / @tanstack/react-virtual once
-          the real questions.json (700-1200+ rows) replaces mock data — plain
+          the real questions.json (700+ rows) replaces mock data — plain
           .map() will start to feel janky well before that scale. */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filtered.map((q) => (
           <div
             key={q.id}
-            className="bg-surface border border-surfaceRaised rounded-xl p-4 flex flex-col gap-3"
+            onClick={() => setOpenQuestion(q)}
+            className="bg-surface border border-surfaceRaised rounded-xl p-4 flex flex-col gap-3 cursor-pointer hover:border-catDp transition"
           >
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
+              <div
+                className="flex items-center gap-2"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <input type="checkbox" checked={selected.has(q.id)} onChange={() => toggle(q.id)} />
                 <span className="font-mono text-xs text-muted">{q.id}</span>
               </div>
@@ -118,13 +163,18 @@ export default function UserPortal({ onLogout }) {
             <p className="font-medium text-sm">{q.title}</p>
             <div className="flex flex-wrap gap-2">
               <span className="text-xs px-2 py-0.5 rounded-full bg-ink text-muted">
-                {q.category}
+                {q.item_type === 'conceptual' ? q.domain : q.category}
               </span>
               <span
                 className={`text-xs px-2 py-0.5 rounded-full bg-ink ${DIFFICULTY_TEXT_CLASS[q.difficultyColor]}`}
               >
                 {q.difficulty}
               </span>
+              {q.item_type === 'conceptual' && (
+                <span className="text-xs px-2 py-0.5 rounded-full bg-ink text-catDc">
+                  Conceptual
+                </span>
+              )}
             </div>
             <span className="text-xs text-muted">{q.company}</span>
           </div>
@@ -140,6 +190,8 @@ export default function UserPortal({ onLogout }) {
           Download selected
         </button>
       </div>
+
+      <QuestionDetail question={openQuestion} onClose={() => setOpenQuestion(null)} />
     </div>
   )
 }

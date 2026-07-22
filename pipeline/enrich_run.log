@@ -1,0 +1,27 @@
+Resuming — 11 items already enriched, skipping those.
+680 items left to enrich.
+
+[1/680] enriching: Summer Vacation
+[2/680] enriching: Two Digit Strings
+[3/680] enriching: An Alternative Way
+[4/680] enriching: Colorful Works
+[5/680] enriching: Hunting the Beast
+[6/680] enriching: Cake Trial
+[7/680] enriching: Village Guilds
+[8/680] enriching: Crimson Triples
+[9/680] enriching: DBFS Order (Hard Version)
+[10/680] enriching: Elections in Saransk (hard version)
+  DROPPED (incomplete_generation): Elections in Saransk (hard version)
+[11/680] enriching: Magical Tiered Cake
+[12/680] enriching: Seating Arrangement (Easy Version)
+[13/680] enriching: Graph Cutting
+  DROPPED (transient_error): Graph Cutting
+[14/680] enriching: Game on Growing Tree
+
+>>> Hit today's Groq daily token limit at item 14/680.
+>>> STOPPING HERE — this is expected, not a bug.
+>>> Just run `python enrich.py` again later (budget refills over hours);
+>>> everything done so far is saved, nothing will be redone.
+
+
+Progress: 22 enriched items in data/enriched_items.json (669 not yet done)
