@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+.env
+
+# Pipeline-generated data (regenerate via the pipeline, don't commit raw output)
+pipeline/data/*.json
+pipeline/data/*.db
+
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
+
+# OS
+.DS_Store
