@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useQuestions } from '../hooks/useQuestions.js'
 import { getCuratedQuestions } from '../utils/overrides.js'
 import QuestionDetail from './QuestionDetail.jsx'
+import LiveGenerateButton from './LiveGenerateButton.jsx'
 
 const CATEGORIES = [
   'Dynamic Programming',
@@ -32,6 +33,9 @@ export default function UserPortal({ onLogout }) {
     () => (rawQuestions ? getCuratedQuestions(rawQuestions) : []),
     [rawQuestions],
   )
+
+  // Live-generated questions — session-only, prepended to the visible grid
+  const [liveQuestions, setLiveQuestions] = useState([])
 
   const [activeCategory, setActiveCategory] = useState('All')
   const [activeDifficulty, setActiveDifficulty] = useState('All')
@@ -106,6 +110,13 @@ export default function UserPortal({ onLogout }) {
           Log out
         </button>
       </div>
+
+      <LiveGenerateButton
+        onGenerated={(q) => {
+          setLiveQuestions((prev) => [q, ...prev])
+          setSelected((prev) => new Set([...prev, q.id]))
+        }}
+      />
 
       {companies.length > 0 && (
         <div className="mb-4 overflow-x-auto">
@@ -202,6 +213,41 @@ export default function UserPortal({ onLogout }) {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Live-generated questions always appear first with a purple 'Live' badge */}
+        {liveQuestions.map((q) => (
+          <div
+            key={q.id}
+            onClick={() => setOpenQuestion(q)}
+            className="bg-surface border border-violet-500/40 rounded-xl p-4 flex flex-col gap-3 cursor-pointer hover:border-violet-400 transition shadow-lg shadow-violet-900/10"
+          >
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2" onClick={(e) => e.stopPropagation()}>
+                <input type="checkbox" checked={selected.has(q.id)} onChange={() => toggle(q.id)} />
+                <span className="font-mono text-xs text-muted">{q.id}</span>
+              </div>
+              <div className="flex items-center gap-1.5">
+                <span className="text-violet-400 text-xs font-mono uppercase tracking-wide border border-violet-500/50 rounded px-1.5 py-0.5">
+                  Live
+                </span>
+                {q.verified && (
+                  <span className="text-verified text-xs font-mono uppercase tracking-wide border border-verified rounded px-1.5 py-0.5 -rotate-2">
+                    Verified
+                  </span>
+                )}
+              </div>
+            </div>
+            <p className="font-medium text-sm">{q.title}</p>
+            <div className="flex flex-wrap gap-2">
+              <span className="text-xs px-2 py-0.5 rounded-full bg-ink text-muted">{q.category}</span>
+              <span className={`text-xs px-2 py-0.5 rounded-full bg-ink ${DIFFICULTY_TEXT_CLASS[DIFFICULTY_ROLE[q.difficulty]] || 'text-muted'}`}>
+                {q.difficulty}
+              </span>
+            </div>
+            <span className="text-xs text-muted">{q.company}</span>
+          </div>
+        ))}
+
+        {/* Static questions from questions.json, filtered/sorted as usual */}
         {filtered.map((q) => (
           <div
             key={q.id}
