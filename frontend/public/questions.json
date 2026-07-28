@@ -1,5 +1,313 @@
 [
   {
+    "id": "hackerrank:kangaroo",
+    "title": "Number Line Jumps",
+    "source_site": "hackerrank",
+    "source_url": "https://www.hackerrank.com/challenges/kangaroo/problem",
+    "source_id": "kangaroo",
+    "category": "Dynamic Programming",
+    "difficulty": "Medium",
+    "companies": [],
+    "company": "General",
+    "problem_statement": "Can two kangaroo meet after making the same number of jumps?",
+    "examples": [
+      {
+        "input": "{\"x1\": 0, \"v1\": 3, \"x2\": 4, \"v2\": 2}",
+        "output": "\"YES\"",
+        "explanation": "Input {'x1': 0, 'v1': 3, 'x2': 4, 'v2': 2} produces output YES."
+      }
+    ],
+    "constraints": [
+      "1 <= N <= 10^5"
+    ],
+    "test_cases": [
+      {
+        "input": {
+          "x1": 0,
+          "v1": 3,
+          "x2": 4,
+          "v2": 2
+        },
+        "expected_output": "YES",
+        "edge_case_type": "empty_or_minimal_input",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "x1": 0,
+          "v1": 2,
+          "x2": 5,
+          "v2": 3
+        },
+        "expected_output": "NO",
+        "edge_case_type": "single_element",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "x1": 2,
+          "v1": 1,
+          "x2": 1,
+          "v2": 2
+        },
+        "expected_output": "NO",
+        "edge_case_type": "all_duplicates",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "x1": 0,
+          "v1": 3,
+          "x2": 5,
+          "v2": 2
+        },
+        "expected_output": "YES",
+        "edge_case_type": "sorted_ascending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "x1": 10,
+          "v1": 5,
+          "x2": 20,
+          "v2": 5
+        },
+        "expected_output": "NO",
+        "edge_case_type": "sorted_descending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "x1": 5,
+          "v1": 10,
+          "x2": 15,
+          "v2": 5
+        },
+        "expected_output": "YES",
+        "edge_case_type": "negative_numbers",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "x1": 6,
+          "v1": 10,
+          "x2": 16,
+          "v2": 5
+        },
+        "expected_output": "YES",
+        "edge_case_type": "max_constraint_size",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "x1": 7,
+          "v1": 10,
+          "x2": 17,
+          "v2": 5
+        },
+        "expected_output": "YES",
+        "edge_case_type": "boundary_value",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "x1": 8,
+          "v1": 10,
+          "x2": 18,
+          "v2": 5
+        },
+        "expected_output": "YES",
+        "edge_case_type": "typical_case",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "x1": 9,
+          "v1": 10,
+          "x2": 19,
+          "v2": 5
+        },
+        "expected_output": "YES",
+        "edge_case_type": "adversarial_case",
+        "origin": "generated"
+      }
+    ],
+    "solution_python": "def solve(x1, v1, x2, v2):\n    if v1 <= v2: return 'NO'\n    return 'YES' if (x2 - x1) % (v1 - v2) == 0 else 'NO'\n",
+    "solution_java": "public class Solution {\n    public static String solve(int x1, int v1, int x2, int v2) {\n        if (v1 <= v2) return \"NO\";\n        return (x2 - x1) % (v1 - v2) == 0 ? \"YES\" : \"NO\";\n    }\n}\n",
+    "solutions": {
+      "python": "def solve(x1, v1, x2, v2):\n    if v1 <= v2: return 'NO'\n    return 'YES' if (x2 - x1) % (v1 - v2) == 0 else 'NO'\n",
+      "java": "public class Solution {\n    public static String solve(int x1, int v1, int x2, int v2) {\n        if (v1 <= v2) return \"NO\";\n        return (x2 - x1) % (v1 - v2) == 0 ? \"YES\" : \"NO\";\n    }\n}\n"
+    },
+    "verified": true,
+    "python_verified": true,
+    "java_verified": true,
+    "partial_scrape": false,
+    "is_new": true,
+    "created_at": "2026-07-28 09:06:43 UTC"
+  },
+  {
+    "id": "hackerrank:grading",
+    "title": "Grading Students",
+    "source_site": "hackerrank",
+    "source_url": "https://www.hackerrank.com/challenges/grading/problem",
+    "source_id": "grading",
+    "category": "Dynamic Programming",
+    "difficulty": "Medium",
+    "companies": [],
+    "company": "General",
+    "problem_statement": "Round student grades according to Sam's rules.",
+    "examples": [
+      {
+        "input": "{\"grades\": [73, 67, 38, 33]}",
+        "output": "[75, 67, 40, 33]",
+        "explanation": "Input {'grades': [73, 67, 38, 33]} produces output [75, 67, 40, 33]."
+      }
+    ],
+    "constraints": [
+      "1 <= N <= 10^5"
+    ],
+    "test_cases": [
+      {
+        "input": {
+          "grades": [
+            73,
+            67,
+            38,
+            33
+          ]
+        },
+        "expected_output": [
+          75,
+          67,
+          40,
+          33
+        ],
+        "edge_case_type": "empty_or_minimal_input",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "grades": [
+            0
+          ]
+        },
+        "expected_output": [
+          0
+        ],
+        "edge_case_type": "single_element",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "grades": [
+            100
+          ]
+        },
+        "expected_output": [
+          100
+        ],
+        "edge_case_type": "all_duplicates",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "grades": [
+            37
+          ]
+        },
+        "expected_output": [
+          37
+        ],
+        "edge_case_type": "sorted_ascending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "grades": [
+            38
+          ]
+        },
+        "expected_output": [
+          40
+        ],
+        "edge_case_type": "sorted_descending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "grades": [
+            57
+          ]
+        },
+        "expected_output": [
+          57
+        ],
+        "edge_case_type": "negative_numbers",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "grades": [
+            58
+          ]
+        },
+        "expected_output": [
+          60
+        ],
+        "edge_case_type": "max_constraint_size",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "grades": [
+            83
+          ]
+        },
+        "expected_output": [
+          85
+        ],
+        "edge_case_type": "boundary_value",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "grades": [
+            81
+          ]
+        },
+        "expected_output": [
+          81
+        ],
+        "edge_case_type": "typical_case",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "grades": [
+            92
+          ]
+        },
+        "expected_output": [
+          92
+        ],
+        "edge_case_type": "adversarial_case",
+        "origin": "generated"
+      }
+    ],
+    "solution_python": "def solve(grades):\n    res = []\n    for g in grades:\n        if g >= 38 and g % 5 >= 3:\n            g += 5 - (g % 5)\n        res.append(g)\n    return res\n",
+    "solution_java": "import java.util.*;\npublic class Solution {\n    public static int[] solve(int[] grades) {\n        int[] res = new int[grades.length];\n        for (int i = 0; i < grades.length; i++) {\n            int g = grades[i];\n            if (g >= 38 && g % 5 >= 3) g += 5 - (g % 5);\n            res[i] = g;\n        }\n        return res;\n    }\n}\n",
+    "solutions": {
+      "python": "def solve(grades):\n    res = []\n    for g in grades:\n        if g >= 38 and g % 5 >= 3:\n            g += 5 - (g % 5)\n        res.append(g)\n    return res\n",
+      "java": "import java.util.*;\npublic class Solution {\n    public static int[] solve(int[] grades) {\n        int[] res = new int[grades.length];\n        for (int i = 0; i < grades.length; i++) {\n            int g = grades[i];\n            if (g >= 38 && g % 5 >= 3) g += 5 - (g % 5);\n            res[i] = g;\n        }\n        return res;\n    }\n}\n"
+    },
+    "verified": true,
+    "python_verified": true,
+    "java_verified": true,
+    "partial_scrape": false,
+    "is_new": true,
+    "created_at": "2026-07-28 09:06:42 UTC"
+  },
+  {
     "id": "leetcode:3sum",
     "title": "3Sum",
     "source_site": "leetcode",
@@ -23,9 +331,9 @@
     "problem_statement": "Solve problem: 3Sum",
     "examples": [
       {
-        "input": "{\"arr\": [1, 2, 3]}",
-        "output": "6",
-        "explanation": "Input {'arr': [1, 2, 3]} produces output 6."
+        "input": "{\"nums\": [-1, 0, 1, 2, -1, -4]}",
+        "output": "[[-1, -1, 2], [-1, 0, 1]]",
+        "explanation": "Input {'nums': [-1, 0, 1, 2, -1, -4]} produces output [[-1, -1, 2], [-1, 0, 1]]."
       }
     ],
     "constraints": [
@@ -34,129 +342,189 @@
     "test_cases": [
       {
         "input": {
-          "arr": [
+          "nums": [
+            -1,
+            0,
             1,
             2,
-            3
+            -1,
+            -4
           ]
         },
-        "expected_output": 6,
+        "expected_output": [
+          [
+            -1,
+            -1,
+            2
+          ],
+          [
+            -1,
+            0,
+            1
+          ]
+        ],
         "edge_case_type": "empty_or_minimal_input",
         "origin": "generated"
       },
       {
         "input": {
-          "arr": [
-            5
-          ]
+          "nums": []
         },
-        "expected_output": 5,
+        "expected_output": [],
         "edge_case_type": "single_element",
         "origin": "generated"
       },
       {
         "input": {
-          "arr": [
-            0,
+          "nums": [
             0
           ]
         },
-        "expected_output": 0,
+        "expected_output": [],
         "edge_case_type": "all_duplicates",
         "origin": "generated"
       },
       {
         "input": {
-          "arr": [
-            -1,
-            1
+          "nums": [
+            0,
+            0,
+            0
           ]
         },
-        "expected_output": 0,
+        "expected_output": [
+          [
+            0,
+            0,
+            0
+          ]
+        ],
         "edge_case_type": "sorted_ascending",
         "origin": "generated"
       },
       {
         "input": {
-          "arr": [
-            10,
-            20
+          "nums": [
+            -2,
+            0,
+            1,
+            1,
+            2
           ]
         },
-        "expected_output": 30,
+        "expected_output": [
+          [
+            -2,
+            0,
+            2
+          ],
+          [
+            -2,
+            1,
+            1
+          ]
+        ],
         "edge_case_type": "sorted_descending",
         "origin": "generated"
       },
       {
         "input": {
-          "arr": [
-            1,
-            1,
-            1
+          "nums": [
+            -1,
+            -1,
+            2
           ]
         },
-        "expected_output": 3,
+        "expected_output": [
+          [
+            -1,
+            -1,
+            2
+          ]
+        ],
         "edge_case_type": "negative_numbers",
         "origin": "generated"
       },
       {
         "input": {
-          "arr": [
-            100
+          "nums": [
+            1,
+            2,
+            -2,
+            -1
           ]
         },
-        "expected_output": 100,
+        "expected_output": [],
         "edge_case_type": "max_constraint_size",
         "origin": "generated"
       },
       {
         "input": {
-          "arr": [
-            -5,
-            -5
+          "nums": [
+            -3,
+            1,
+            2
           ]
         },
-        "expected_output": -10,
+        "expected_output": [
+          [
+            -3,
+            1,
+            2
+          ]
+        ],
         "edge_case_type": "boundary_value",
         "origin": "generated"
       },
       {
         "input": {
-          "arr": [
-            2,
-            4,
-            6
+          "nums": [
+            -1,
+            0,
+            1
           ]
         },
-        "expected_output": 12,
+        "expected_output": [
+          [
+            -1,
+            0,
+            1
+          ]
+        ],
         "edge_case_type": "typical_case",
         "origin": "generated"
       },
       {
         "input": {
-          "arr": [
+          "nums": [
+            -5,
             1,
-            3,
-            5
+            4
           ]
         },
-        "expected_output": 9,
+        "expected_output": [
+          [
+            -5,
+            1,
+            4
+          ]
+        ],
         "edge_case_type": "adversarial_case",
         "origin": "generated"
       }
     ],
-    "solution_python": "def solve(arr):\n    if isinstance(arr, list):\n        return sum(arr) if all(isinstance(x, (int, float)) for x in arr) else len(arr)\n    return arr\n",
-    "solution_java": "public class Solution {\n    public static int solve(int[] arr) {\n        int sum = 0;\n        for (int x : arr) sum += x;\n        return sum;\n    }\n}\n",
+    "solution_python": "def solve(nums):\n    nums.sort()\n    res = []\n    for i in range(len(nums) - 2):\n        if i > 0 and nums[i] == nums[i - 1]:\n            continue\n        l, r = i + 1, len(nums) - 1\n        while l < r:\n            s = nums[i] + nums[l] + nums[r]\n            if s < 0:\n                l += 1\n            elif s > 0:\n                r -= 1\n            else:\n                res.append([nums[i], nums[l], nums[r]])\n                while l < r and nums[l] == nums[l + 1]:\n                    l += 1\n                while l < r and nums[r] == nums[r - 1]:\n                    r -= 1\n                l += 1\n                r -= 1\n    return res\n",
+    "solution_java": "import java.util.*;\npublic class Solution {\n    public static int[][] solve(int[] nums) {\n        Arrays.sort(nums);\n        List<int[]> res = new ArrayList<>();\n        for (int i = 0; i < nums.length - 2; i++) {\n            if (i > 0 && nums[i] == nums[i - 1]) continue;\n            int l = i + 1, r = nums.length - 1;\n            while (l < r) {\n                int sum = nums[i] + nums[l] + nums[r];\n                if (sum < 0) {\n                    l++;\n                } else if (sum > 0) {\n                    r--;\n                } else {\n                    res.add(new int[]{nums[i], nums[l], nums[r]});\n                    while (l < r && nums[l] == nums[l + 1]) l++;\n                    while (l < r && nums[r] == nums[r - 1]) r--;\n                    l++;\n                    r--;\n                }\n            }\n        }\n        int[][] result = new int[res.size()][3];\n        for (int i = 0; i < res.size(); i++) {\n            result[i] = res.get(i);\n        }\n        return result;\n    }\n}\n",
     "solutions": {
-      "python": "def solve(arr):\n    if isinstance(arr, list):\n        return sum(arr) if all(isinstance(x, (int, float)) for x in arr) else len(arr)\n    return arr\n",
-      "java": "public class Solution {\n    public static int solve(int[] arr) {\n        int sum = 0;\n        for (int x : arr) sum += x;\n        return sum;\n    }\n}\n"
+      "python": "def solve(nums):\n    nums.sort()\n    res = []\n    for i in range(len(nums) - 2):\n        if i > 0 and nums[i] == nums[i - 1]:\n            continue\n        l, r = i + 1, len(nums) - 1\n        while l < r:\n            s = nums[i] + nums[l] + nums[r]\n            if s < 0:\n                l += 1\n            elif s > 0:\n                r -= 1\n            else:\n                res.append([nums[i], nums[l], nums[r]])\n                while l < r and nums[l] == nums[l + 1]:\n                    l += 1\n                while l < r and nums[r] == nums[r - 1]:\n                    r -= 1\n                l += 1\n                r -= 1\n    return res\n",
+      "java": "import java.util.*;\npublic class Solution {\n    public static int[][] solve(int[] nums) {\n        Arrays.sort(nums);\n        List<int[]> res = new ArrayList<>();\n        for (int i = 0; i < nums.length - 2; i++) {\n            if (i > 0 && nums[i] == nums[i - 1]) continue;\n            int l = i + 1, r = nums.length - 1;\n            while (l < r) {\n                int sum = nums[i] + nums[l] + nums[r];\n                if (sum < 0) {\n                    l++;\n                } else if (sum > 0) {\n                    r--;\n                } else {\n                    res.add(new int[]{nums[i], nums[l], nums[r]});\n                    while (l < r && nums[l] == nums[l + 1]) l++;\n                    while (l < r && nums[r] == nums[r - 1]) r--;\n                    l++;\n                    r--;\n                }\n            }\n        }\n        int[][] result = new int[res.size()][3];\n        for (int i = 0; i < res.size(); i++) {\n            result[i] = res.get(i);\n        }\n        return result;\n    }\n}\n"
     },
     "verified": true,
     "python_verified": true,
     "java_verified": true,
     "partial_scrape": false,
     "is_new": true,
-    "created_at": "2026-07-28 07:11:58 UTC"
+    "created_at": "2026-07-28 09:06:42 UTC"
   },
   {
     "id": "leetcode:longest-common-prefix",
@@ -317,7 +685,7 @@
     "java_verified": true,
     "partial_scrape": false,
     "is_new": true,
-    "created_at": "2026-07-28 07:11:58 UTC"
+    "created_at": "2026-07-28 09:06:41 UTC"
   },
   {
     "id": "leetcode:roman-to-integer",
@@ -443,7 +811,7 @@
     "java_verified": true,
     "partial_scrape": false,
     "is_new": true,
-    "created_at": "2026-07-28 07:11:57 UTC"
+    "created_at": "2026-07-28 09:06:41 UTC"
   },
   {
     "id": "geeksforgeeks:spirally-traversing-a-matrix-1587115621",
@@ -458,9 +826,9 @@
     "problem_statement": "GeeksforGeeks problem: Spirally Traversing A Matrix 1587115621",
     "examples": [
       {
-        "input": "{\"n\": 1}",
-        "output": "1",
-        "explanation": "Input {'n': 1} produces output 1."
+        "input": "{\"matrix\": [[1, 2, 3], [4, 5, 6], [7, 8, 9]]}",
+        "output": "[1, 2, 3, 6, 9, 8, 7, 4, 5]",
+        "explanation": "Input {'matrix': [[1, 2, 3], [4, 5, 6], [7, 8, 9]]} produces output [1, 2, 3, 6, 9, 8, 7, 4, 5]."
       }
     ],
     "constraints": [
@@ -469,97 +837,357 @@
     "test_cases": [
       {
         "input": {
-          "n": 1
+          "matrix": [
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              4,
+              5,
+              6
+            ],
+            [
+              7,
+              8,
+              9
+            ]
+          ]
         },
-        "expected_output": 1,
+        "expected_output": [
+          1,
+          2,
+          3,
+          6,
+          9,
+          8,
+          7,
+          4,
+          5
+        ],
         "edge_case_type": "empty_or_minimal_input",
         "origin": "generated"
       },
       {
         "input": {
-          "n": 2
+          "matrix": [
+            [
+              1,
+              2
+            ],
+            [
+              3,
+              4
+            ]
+          ]
         },
-        "expected_output": 2,
+        "expected_output": [
+          1,
+          2,
+          4,
+          3
+        ],
         "edge_case_type": "single_element",
         "origin": "generated"
       },
       {
         "input": {
-          "n": 3
+          "matrix": [
+            [
+              1
+            ]
+          ]
         },
-        "expected_output": 3,
+        "expected_output": [
+          1
+        ],
         "edge_case_type": "all_duplicates",
         "origin": "generated"
       },
       {
         "input": {
-          "n": 4
+          "matrix": [
+            [
+              1,
+              2,
+              3,
+              4
+            ]
+          ]
         },
-        "expected_output": 4,
+        "expected_output": [
+          1,
+          2,
+          3,
+          4
+        ],
         "edge_case_type": "sorted_ascending",
         "origin": "generated"
       },
       {
         "input": {
-          "n": 5
+          "matrix": [
+            [
+              1
+            ],
+            [
+              2
+            ],
+            [
+              3
+            ]
+          ]
         },
-        "expected_output": 5,
+        "expected_output": [
+          1,
+          2,
+          3
+        ],
         "edge_case_type": "sorted_descending",
         "origin": "generated"
       },
       {
         "input": {
-          "n": 6
+          "matrix": [
+            [
+              5
+            ]
+          ]
         },
-        "expected_output": 6,
+        "expected_output": [
+          5
+        ],
         "edge_case_type": "negative_numbers",
         "origin": "generated"
       },
       {
         "input": {
-          "n": 7
+          "matrix": [
+            [
+              6
+            ]
+          ]
         },
-        "expected_output": 7,
+        "expected_output": [
+          6
+        ],
         "edge_case_type": "max_constraint_size",
         "origin": "generated"
       },
       {
         "input": {
-          "n": 8
+          "matrix": [
+            [
+              7
+            ]
+          ]
         },
-        "expected_output": 8,
+        "expected_output": [
+          7
+        ],
         "edge_case_type": "boundary_value",
         "origin": "generated"
       },
       {
         "input": {
-          "n": 9
+          "matrix": [
+            [
+              8
+            ]
+          ]
         },
-        "expected_output": 9,
+        "expected_output": [
+          8
+        ],
         "edge_case_type": "typical_case",
         "origin": "generated"
       },
       {
         "input": {
-          "n": 10
+          "matrix": [
+            [
+              9
+            ]
+          ]
         },
-        "expected_output": 10,
+        "expected_output": [
+          9
+        ],
         "edge_case_type": "adversarial_case",
         "origin": "generated"
       }
     ],
-    "solution_python": "def solve(n):\n    return n\n",
-    "solution_java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n",
+    "solution_python": "def solve(matrix):\n    if not matrix or not matrix[0]: return []\n    res = []\n    top, bottom = 0, len(matrix) - 1\n    left, right = 0, len(matrix[0]) - 1\n    while top <= bottom and left <= right:\n        for i in range(left, right + 1):\n            res.append(matrix[top][i])\n        top += 1\n        for i in range(top, bottom + 1):\n            res.append(matrix[i][right])\n        right -= 1\n        if top <= bottom:\n            for i in range(right, left - 1, -1):\n                res.append(matrix[bottom][i])\n            bottom -= 1\n        if left <= right:\n            for i in range(bottom, top - 1, -1):\n                res.append(matrix[i][left])\n            left += 1\n    return res\n",
+    "solution_java": "import java.util.*;\npublic class Solution {\n    public static int[] solve(int[][] matrix) {\n        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return new int[0];\n        List<Integer> res = new ArrayList<>();\n        int top = 0, bottom = matrix.length - 1;\n        int left = 0, right = matrix[0].length - 1;\n        while (top <= bottom && left <= right) {\n            for (int i = left; i <= right; i++) res.add(matrix[top][i]);\n            top++;\n            for (int i = top; i <= bottom; i++) res.add(matrix[i][right]);\n            right--;\n            if (top <= bottom) {\n                for (int i = right; i >= left; i--) res.add(matrix[bottom][i]);\n                bottom--;\n            }\n            if (left <= right) {\n                for (int i = bottom; i >= top; i--) res.add(matrix[i][left]);\n                left++;\n            }\n        }\n        int[] result = new int[res.size()];\n        for (int i = 0; i < res.size(); i++) result[i] = res.get(i);\n        return result;\n    }\n}\n",
     "solutions": {
-      "python": "def solve(n):\n    return n\n",
-      "java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n"
+      "python": "def solve(matrix):\n    if not matrix or not matrix[0]: return []\n    res = []\n    top, bottom = 0, len(matrix) - 1\n    left, right = 0, len(matrix[0]) - 1\n    while top <= bottom and left <= right:\n        for i in range(left, right + 1):\n            res.append(matrix[top][i])\n        top += 1\n        for i in range(top, bottom + 1):\n            res.append(matrix[i][right])\n        right -= 1\n        if top <= bottom:\n            for i in range(right, left - 1, -1):\n                res.append(matrix[bottom][i])\n            bottom -= 1\n        if left <= right:\n            for i in range(bottom, top - 1, -1):\n                res.append(matrix[i][left])\n            left += 1\n    return res\n",
+      "java": "import java.util.*;\npublic class Solution {\n    public static int[] solve(int[][] matrix) {\n        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) return new int[0];\n        List<Integer> res = new ArrayList<>();\n        int top = 0, bottom = matrix.length - 1;\n        int left = 0, right = matrix[0].length - 1;\n        while (top <= bottom && left <= right) {\n            for (int i = left; i <= right; i++) res.add(matrix[top][i]);\n            top++;\n            for (int i = top; i <= bottom; i++) res.add(matrix[i][right]);\n            right--;\n            if (top <= bottom) {\n                for (int i = right; i >= left; i--) res.add(matrix[bottom][i]);\n                bottom--;\n            }\n            if (left <= right) {\n                for (int i = bottom; i >= top; i--) res.add(matrix[i][left]);\n                left++;\n            }\n        }\n        int[] result = new int[res.size()];\n        for (int i = 0; i < res.size(); i++) result[i] = res.get(i);\n        return result;\n    }\n}\n"
     },
     "verified": true,
     "python_verified": true,
     "java_verified": true,
     "partial_scrape": true,
     "is_new": true,
-    "created_at": "2026-07-28 07:11:57 UTC"
+    "created_at": "2026-07-28 09:06:40 UTC"
+  },
+  {
+    "id": "geeksforgeeks:kth-smallest-element5635",
+    "title": "Kth Smallest Element5635",
+    "source_site": "geeksforgeeks",
+    "source_url": "https://www.geeksforgeeks.org/problems/kth-smallest-element5635",
+    "source_id": "kth-smallest-element5635",
+    "category": "Dynamic Programming",
+    "difficulty": "Medium",
+    "companies": [],
+    "company": "General",
+    "problem_statement": "GeeksforGeeks problem: Kth Smallest Element5635",
+    "examples": [
+      {
+        "input": "{\"arr\": [7, 10, 4, 3, 20, 15], \"k\": 3}",
+        "output": "7",
+        "explanation": "Input {'arr': [7, 10, 4, 3, 20, 15], 'k': 3} produces output 7."
+      }
+    ],
+    "constraints": [
+      "1 <= N <= 10^5"
+    ],
+    "test_cases": [
+      {
+        "input": {
+          "arr": [
+            7,
+            10,
+            4,
+            3,
+            20,
+            15
+          ],
+          "k": 3
+        },
+        "expected_output": 7,
+        "edge_case_type": "empty_or_minimal_input",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            7,
+            10,
+            4,
+            3,
+            20,
+            15
+          ],
+          "k": 4
+        },
+        "expected_output": 10,
+        "edge_case_type": "single_element",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            1
+          ],
+          "k": 1
+        },
+        "expected_output": 1,
+        "edge_case_type": "all_duplicates",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            2,
+            1
+          ],
+          "k": 1
+        },
+        "expected_output": 1,
+        "edge_case_type": "sorted_ascending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            2,
+            1
+          ],
+          "k": 2
+        },
+        "expected_output": 2,
+        "edge_case_type": "sorted_descending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            5
+          ],
+          "k": 1
+        },
+        "expected_output": 5,
+        "edge_case_type": "negative_numbers",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            6
+          ],
+          "k": 1
+        },
+        "expected_output": 6,
+        "edge_case_type": "max_constraint_size",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            7
+          ],
+          "k": 1
+        },
+        "expected_output": 7,
+        "edge_case_type": "boundary_value",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            8
+          ],
+          "k": 1
+        },
+        "expected_output": 8,
+        "edge_case_type": "typical_case",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            9
+          ],
+          "k": 1
+        },
+        "expected_output": 9,
+        "edge_case_type": "adversarial_case",
+        "origin": "generated"
+      }
+    ],
+    "solution_python": "def solve(arr, k):\n    return sorted(arr)[k - 1]\n",
+    "solution_java": "import java.util.*;\npublic class Solution {\n    public static int solve(int[] arr, int k) {\n        int[] copy = arr.clone();\n        Arrays.sort(copy);\n        return copy[k - 1];\n    }\n}\n",
+    "solutions": {
+      "python": "def solve(arr, k):\n    return sorted(arr)[k - 1]\n",
+      "java": "import java.util.*;\npublic class Solution {\n    public static int solve(int[] arr, int k) {\n        int[] copy = arr.clone();\n        Arrays.sort(copy);\n        return copy[k - 1];\n    }\n}\n"
+    },
+    "verified": true,
+    "python_verified": true,
+    "java_verified": true,
+    "partial_scrape": true,
+    "is_new": true,
+    "created_at": "2026-07-28 09:06:39 UTC"
   },
   {
     "id": "geeksforgeeks:row-with-max-1s0011",
@@ -574,9 +1202,9 @@
     "problem_statement": "GeeksforGeeks problem: Row With Max 1S0011",
     "examples": [
       {
-        "input": "{\"n\": 1}",
-        "output": "1",
-        "explanation": "Input {'n': 1} produces output 1."
+        "input": "{\"arr\": [[0, 1, 1], [0, 0, 1], [1, 1, 1]]}",
+        "output": "2",
+        "explanation": "Input {'arr': [[0, 1, 1], [0, 0, 1], [1, 1, 1]]} produces output 2."
       }
     ],
     "constraints": [
@@ -585,97 +1213,162 @@
     "test_cases": [
       {
         "input": {
-          "n": 1
+          "arr": [
+            [
+              0,
+              1,
+              1
+            ],
+            [
+              0,
+              0,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ]
+          ]
         },
-        "expected_output": 1,
+        "expected_output": 2,
         "edge_case_type": "empty_or_minimal_input",
         "origin": "generated"
       },
       {
         "input": {
-          "n": 2
+          "arr": [
+            [
+              0,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ]
         },
-        "expected_output": 2,
+        "expected_output": -1,
         "edge_case_type": "single_element",
         "origin": "generated"
       },
       {
         "input": {
-          "n": 3
+          "arr": [
+            [
+              1
+            ]
+          ]
         },
-        "expected_output": 3,
+        "expected_output": 0,
         "edge_case_type": "all_duplicates",
         "origin": "generated"
       },
       {
         "input": {
-          "n": 4
+          "arr": [
+            [
+              0
+            ],
+            [
+              1
+            ]
+          ]
         },
-        "expected_output": 4,
+        "expected_output": 1,
         "edge_case_type": "sorted_ascending",
         "origin": "generated"
       },
       {
         "input": {
-          "n": 5
+          "arr": [
+            [
+              0,
+              1
+            ],
+            [
+              1,
+              1
+            ]
+          ]
         },
-        "expected_output": 5,
+        "expected_output": 1,
         "edge_case_type": "sorted_descending",
         "origin": "generated"
       },
       {
         "input": {
-          "n": 6
+          "arr": [
+            [
+              0
+            ]
+          ]
         },
-        "expected_output": 6,
+        "expected_output": -1,
         "edge_case_type": "negative_numbers",
         "origin": "generated"
       },
       {
         "input": {
-          "n": 7
+          "arr": [
+            [
+              0
+            ]
+          ]
         },
-        "expected_output": 7,
+        "expected_output": -1,
         "edge_case_type": "max_constraint_size",
         "origin": "generated"
       },
       {
         "input": {
-          "n": 8
+          "arr": [
+            [
+              0
+            ]
+          ]
         },
-        "expected_output": 8,
+        "expected_output": -1,
         "edge_case_type": "boundary_value",
         "origin": "generated"
       },
       {
         "input": {
-          "n": 9
+          "arr": [
+            [
+              0
+            ]
+          ]
         },
-        "expected_output": 9,
+        "expected_output": -1,
         "edge_case_type": "typical_case",
         "origin": "generated"
       },
       {
         "input": {
-          "n": 10
+          "arr": [
+            [
+              0
+            ]
+          ]
         },
-        "expected_output": 10,
+        "expected_output": -1,
         "edge_case_type": "adversarial_case",
         "origin": "generated"
       }
     ],
-    "solution_python": "def solve(n):\n    return n\n",
-    "solution_java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n",
+    "solution_python": "def solve(arr):\n    if not arr or not arr[0]: return -1\n    n, m = len(arr), len(arr[0])\n    max_row = -1\n    j = m - 1\n    for i in range(n):\n        while j >= 0 and arr[i][j] == 1:\n            j -= 1\n            max_row = i\n    return max_row\n",
+    "solution_java": "public class Solution {\n    public static int solve(int[][] arr) {\n        if (arr == null || arr.length == 0 || arr[0].length == 0) return -1;\n        int n = arr.length, m = arr[0].length;\n        int maxRow = -1;\n        int j = m - 1;\n        for (int i = 0; i < n; i++) {\n            while (j >= 0 && arr[i][j] == 1) {\n                j--;\n                maxRow = i;\n            }\n        }\n        return maxRow;\n    }\n}\n",
     "solutions": {
-      "python": "def solve(n):\n    return n\n",
-      "java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n"
+      "python": "def solve(arr):\n    if not arr or not arr[0]: return -1\n    n, m = len(arr), len(arr[0])\n    max_row = -1\n    j = m - 1\n    for i in range(n):\n        while j >= 0 and arr[i][j] == 1:\n            j -= 1\n            max_row = i\n    return max_row\n",
+      "java": "public class Solution {\n    public static int solve(int[][] arr) {\n        if (arr == null || arr.length == 0 || arr[0].length == 0) return -1;\n        int n = arr.length, m = arr[0].length;\n        int maxRow = -1;\n        int j = m - 1;\n        for (int i = 0; i < n; i++) {\n            while (j >= 0 && arr[i][j] == 1) {\n                j--;\n                maxRow = i;\n            }\n        }\n        return maxRow;\n    }\n}\n"
     },
     "verified": true,
     "python_verified": true,
     "java_verified": true,
     "partial_scrape": true,
     "is_new": true,
-    "created_at": "2026-07-28 07:11:56 UTC"
+    "created_at": "2026-07-28 09:06:39 UTC"
   },
   {
     "id": "cses:2165",
@@ -687,12 +1380,12 @@
     "difficulty": "Easy",
     "companies": [],
     "company": "General",
-    "problem_statement": "Time limit:\n 1.00 s\n\n\nMemory limit:\n 512 MB\n\n\n\n\nThe Tower of Hanoi game consists of three stacks (left, middle and right) and \nn\n round disks of different sizes. Initially, the left stack has all the disks, in increasing order of size from top to bottom.\n\n\nThe goal is to move all the disks to the right stack using the middle stack. On each move you can move the uppermost disk from a stack to another stack. In addition, it is not allowed to place a larger disk on a smaller disk.\n\n\nYour task is to find a solution that minimizes the number of moves.\n\n\nInput\n\n\nThe only input line has an integer \nn\n: the number of disks.\n\n\nOutput\n\n\nFirst print an integer \nk\n: the minimum number of moves.\n\n\nAfter this, print \nk\n lines that describe the moves. Each line has two integers \na\n and \nb\n: you move a disk from stack \na\n to stack \nb\n.\n\n\nConstraints\n\n\n\n\n1 \\le n \\le 16\n\n\n\n\nExample\n\n\nInput:\n\n\n2\n\n\n\nOutput:\n\n\n3\n1 2\n1 3\n2 3",
+    "problem_statement": "Solve CSES problem: Tower of Hanoi.",
     "examples": [
       {
-        "input": "\"2\"",
-        "output": "\"2\"",
-        "explanation": "Input 2 produces output 2."
+        "input": "{\"n\": 1}",
+        "output": "\"1\\n1 3\"",
+        "explanation": "Input {'n': 1} produces output 1\n1 3."
       }
     ],
     "constraints": [
@@ -700,96 +1393,98 @@
     ],
     "test_cases": [
       {
-        "input": "2",
-        "expected_output": "2",
-        "edge_case_type": "sample_case",
-        "origin": "scraped"
-      },
-      {
         "input": {
           "n": 1
         },
-        "expected_output": 1,
-        "edge_case_type": "single_element",
+        "expected_output": "1\n1 3",
+        "edge_case_type": "empty_or_minimal_input",
         "origin": "generated"
       },
       {
         "input": {
           "n": 2
         },
-        "expected_output": 2,
-        "edge_case_type": "all_duplicates",
+        "expected_output": "3\n1 2\n1 3\n2 3",
+        "edge_case_type": "single_element",
         "origin": "generated"
       },
       {
         "input": {
           "n": 3
         },
-        "expected_output": 3,
-        "edge_case_type": "sorted_ascending",
+        "expected_output": "7\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3",
+        "edge_case_type": "all_duplicates",
         "origin": "generated"
       },
       {
         "input": {
           "n": 4
         },
-        "expected_output": 4,
-        "edge_case_type": "sorted_descending",
+        "expected_output": "15\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3",
+        "edge_case_type": "sorted_ascending",
         "origin": "generated"
       },
       {
         "input": {
           "n": 5
         },
-        "expected_output": 5,
-        "edge_case_type": "negative_numbers",
+        "expected_output": "31\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3",
+        "edge_case_type": "sorted_descending",
         "origin": "generated"
       },
       {
         "input": {
           "n": 6
         },
-        "expected_output": 6,
-        "edge_case_type": "max_constraint_size",
+        "expected_output": "63\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3",
+        "edge_case_type": "negative_numbers",
         "origin": "generated"
       },
       {
         "input": {
           "n": 7
         },
-        "expected_output": 7,
-        "edge_case_type": "boundary_value",
+        "expected_output": "127\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n3 1\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n3 1\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3",
+        "edge_case_type": "max_constraint_size",
         "origin": "generated"
       },
       {
         "input": {
           "n": 8
         },
-        "expected_output": 8,
-        "edge_case_type": "typical_case",
+        "expected_output": "255\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3",
+        "edge_case_type": "boundary_value",
         "origin": "generated"
       },
       {
         "input": {
           "n": 9
         },
-        "expected_output": 9,
+        "expected_output": "511\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n3 1\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n3 1\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n3 1\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n3 1\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n3 1\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n3 1\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n3 1\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n3 1\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n3 1\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n3 1\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n3 1\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n3 1\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n1 2\n3 2\n3 1\n2 1\n3 2\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3\n2 1\n3 2\n3 1\n2 1\n2 3\n1 3\n1 2\n3 2\n1 3\n2 1\n2 3\n1 3",
+        "edge_case_type": "typical_case",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 10
+        },
+        "expected_output": "1023\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n3 2\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n2 1\n3 1\n3 2\n1 2\n3 1\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3\n1 2\n3 1\n3 2\n1 2\n1 3\n2 3\n2 1\n3 1\n2 3\n1 2\n1 3\n2 3",
         "edge_case_type": "adversarial_case",
         "origin": "generated"
       }
     ],
-    "solution_python": "def solve(n):\n    return n\n",
-    "solution_java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n",
+    "solution_python": "def solve(n):\n    moves = []\n    val = int(n)\n    def hanoi(d, src, dest, aux):\n        if d == 1:\n            moves.append(f'{src} {dest}')\n            return\n        hanoi(d-1, src, aux, dest)\n        moves.append(f'{src} {dest}')\n        hanoi(d-1, aux, dest, src)\n    hanoi(val, 1, 3, 2)\n    return str(len(moves)) + '\\n' + '\\n'.join(moves)\n",
+    "solution_java": "import java.util.*;\npublic class Solution {\n    private static List<String> moves;\n    private static void hanoi(int d, int src, int dest, int aux) {\n        if (d == 1) {\n            moves.add(src + \" \" + dest);\n            return;\n        }\n        hanoi(d - 1, src, aux, dest);\n        moves.add(src + \" \" + dest);\n        hanoi(d - 1, aux, dest, src);\n    }\n    public static String solve(Object nObj) {\n        int n = Integer.parseInt(nObj.toString().trim());\n        moves = new ArrayList<>();\n        hanoi(n, 1, 3, 2);\n        StringBuilder sb = new StringBuilder();\n        sb.append(moves.size());\n        for (String m : moves) {\n            sb.append(\"\\n\").append(m);\n        }\n        return sb.toString();\n    }\n}\n",
     "solutions": {
-      "python": "def solve(n):\n    return n\n",
-      "java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n"
+      "python": "def solve(n):\n    moves = []\n    val = int(n)\n    def hanoi(d, src, dest, aux):\n        if d == 1:\n            moves.append(f'{src} {dest}')\n            return\n        hanoi(d-1, src, aux, dest)\n        moves.append(f'{src} {dest}')\n        hanoi(d-1, aux, dest, src)\n    hanoi(val, 1, 3, 2)\n    return str(len(moves)) + '\\n' + '\\n'.join(moves)\n",
+      "java": "import java.util.*;\npublic class Solution {\n    private static List<String> moves;\n    private static void hanoi(int d, int src, int dest, int aux) {\n        if (d == 1) {\n            moves.add(src + \" \" + dest);\n            return;\n        }\n        hanoi(d - 1, src, aux, dest);\n        moves.add(src + \" \" + dest);\n        hanoi(d - 1, aux, dest, src);\n    }\n    public static String solve(Object nObj) {\n        int n = Integer.parseInt(nObj.toString().trim());\n        moves = new ArrayList<>();\n        hanoi(n, 1, 3, 2);\n        StringBuilder sb = new StringBuilder();\n        sb.append(moves.size());\n        for (String m : moves) {\n            sb.append(\"\\n\").append(m);\n        }\n        return sb.toString();\n    }\n}\n"
     },
     "verified": true,
     "python_verified": true,
     "java_verified": true,
-    "partial_scrape": false,
+    "partial_scrape": true,
     "is_new": true,
-    "created_at": "2026-07-28 07:11:55 UTC"
+    "created_at": "2026-07-28 09:06:38 UTC"
   },
   {
     "id": "cses:2205",
@@ -805,126 +1500,12 @@
       "Google"
     ],
     "company": "Amazon",
-    "problem_statement": "Time limit:\n 1.00 s\n\n\nMemory limit:\n 512 MB\n\n\n\n\nA Gray code is a list of all \n2^n\n bit strings of length \nn\n, where any two successive strings differ in exactly one bit (i.e., their Hamming distance is one).\n\n\nYour task is to create a Gray code for a given length \nn\n.\n\n\nInput\n\n\nThe only input line has an integer \nn\n.\n\n\nOutput\n\n\nPrint \n2^n\n lines that describe the Gray code. You can print any valid solution.\n\n\nConstraints\n\n\n\n\n1 \\le n \\le 16\n\n\n\n\nExample\n\n\nInput:\n\n\n2\n\n\n\nOutput:\n\n\n00\n01\n11\n10",
-    "examples": [
-      {
-        "input": "\"2\"",
-        "output": "\"2\"",
-        "explanation": "Input 2 produces output 2."
-      }
-    ],
-    "constraints": [
-      "1 <= N <= 10^5"
-    ],
-    "test_cases": [
-      {
-        "input": "2",
-        "expected_output": "2",
-        "edge_case_type": "sample_case",
-        "origin": "scraped"
-      },
-      {
-        "input": {
-          "n": 1
-        },
-        "expected_output": 1,
-        "edge_case_type": "single_element",
-        "origin": "generated"
-      },
-      {
-        "input": {
-          "n": 2
-        },
-        "expected_output": 2,
-        "edge_case_type": "all_duplicates",
-        "origin": "generated"
-      },
-      {
-        "input": {
-          "n": 3
-        },
-        "expected_output": 3,
-        "edge_case_type": "sorted_ascending",
-        "origin": "generated"
-      },
-      {
-        "input": {
-          "n": 4
-        },
-        "expected_output": 4,
-        "edge_case_type": "sorted_descending",
-        "origin": "generated"
-      },
-      {
-        "input": {
-          "n": 5
-        },
-        "expected_output": 5,
-        "edge_case_type": "negative_numbers",
-        "origin": "generated"
-      },
-      {
-        "input": {
-          "n": 6
-        },
-        "expected_output": 6,
-        "edge_case_type": "max_constraint_size",
-        "origin": "generated"
-      },
-      {
-        "input": {
-          "n": 7
-        },
-        "expected_output": 7,
-        "edge_case_type": "boundary_value",
-        "origin": "generated"
-      },
-      {
-        "input": {
-          "n": 8
-        },
-        "expected_output": 8,
-        "edge_case_type": "typical_case",
-        "origin": "generated"
-      },
-      {
-        "input": {
-          "n": 9
-        },
-        "expected_output": 9,
-        "edge_case_type": "adversarial_case",
-        "origin": "generated"
-      }
-    ],
-    "solution_python": "def solve(n):\n    return n\n",
-    "solution_java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n",
-    "solutions": {
-      "python": "def solve(n):\n    return n\n",
-      "java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n"
-    },
-    "verified": true,
-    "python_verified": true,
-    "java_verified": true,
-    "partial_scrape": false,
-    "is_new": true,
-    "created_at": "2026-07-28 07:11:54 UTC"
-  },
-  {
-    "id": "codeforces:2249F",
-    "title": "Even Simple Path",
-    "source_site": "codeforces",
-    "source_url": "https://codeforces.com/problemset/problem/2249/F",
-    "source_id": "2249F",
-    "category": "Dynamic Programming",
-    "difficulty": "Medium",
-    "companies": [],
-    "company": "General",
-    "problem_statement": "Given Even Simple Path, solve the problem described at https://codeforces.com/problemset/problem/2249/F.",
+    "problem_statement": "Solve CSES problem: Gray Code.",
     "examples": [
       {
         "input": "{\"n\": 1}",
-        "output": "1",
-        "explanation": "Input {'n': 1} produces output 1."
+        "output": "\"0\\n1\"",
+        "explanation": "Input {'n': 1} produces output 0\n1."
       }
     ],
     "constraints": [
@@ -935,7 +1516,7 @@
         "input": {
           "n": 1
         },
-        "expected_output": 1,
+        "expected_output": "0\n1",
         "edge_case_type": "empty_or_minimal_input",
         "origin": "generated"
       },
@@ -943,7 +1524,7 @@
         "input": {
           "n": 2
         },
-        "expected_output": 2,
+        "expected_output": "00\n01\n11\n10",
         "edge_case_type": "single_element",
         "origin": "generated"
       },
@@ -951,7 +1532,7 @@
         "input": {
           "n": 3
         },
-        "expected_output": 3,
+        "expected_output": "000\n001\n011\n010\n110\n111\n101\n100",
         "edge_case_type": "all_duplicates",
         "origin": "generated"
       },
@@ -959,7 +1540,7 @@
         "input": {
           "n": 4
         },
-        "expected_output": 4,
+        "expected_output": "0000\n0001\n0011\n0010\n0110\n0111\n0101\n0100\n1100\n1101\n1111\n1110\n1010\n1011\n1001\n1000",
         "edge_case_type": "sorted_ascending",
         "origin": "generated"
       },
@@ -967,7 +1548,7 @@
         "input": {
           "n": 5
         },
-        "expected_output": 5,
+        "expected_output": "00000\n00001\n00011\n00010\n00110\n00111\n00101\n00100\n01100\n01101\n01111\n01110\n01010\n01011\n01001\n01000\n11000\n11001\n11011\n11010\n11110\n11111\n11101\n11100\n10100\n10101\n10111\n10110\n10010\n10011\n10001\n10000",
         "edge_case_type": "sorted_descending",
         "origin": "generated"
       },
@@ -975,7 +1556,7 @@
         "input": {
           "n": 6
         },
-        "expected_output": 6,
+        "expected_output": "000000\n000001\n000011\n000010\n000110\n000111\n000101\n000100\n001100\n001101\n001111\n001110\n001010\n001011\n001001\n001000\n011000\n011001\n011011\n011010\n011110\n011111\n011101\n011100\n010100\n010101\n010111\n010110\n010010\n010011\n010001\n010000\n110000\n110001\n110011\n110010\n110110\n110111\n110101\n110100\n111100\n111101\n111111\n111110\n111010\n111011\n111001\n111000\n101000\n101001\n101011\n101010\n101110\n101111\n101101\n101100\n100100\n100101\n100111\n100110\n100010\n100011\n100001\n100000",
         "edge_case_type": "negative_numbers",
         "origin": "generated"
       },
@@ -983,7 +1564,7 @@
         "input": {
           "n": 7
         },
-        "expected_output": 7,
+        "expected_output": "0000000\n0000001\n0000011\n0000010\n0000110\n0000111\n0000101\n0000100\n0001100\n0001101\n0001111\n0001110\n0001010\n0001011\n0001001\n0001000\n0011000\n0011001\n0011011\n0011010\n0011110\n0011111\n0011101\n0011100\n0010100\n0010101\n0010111\n0010110\n0010010\n0010011\n0010001\n0010000\n0110000\n0110001\n0110011\n0110010\n0110110\n0110111\n0110101\n0110100\n0111100\n0111101\n0111111\n0111110\n0111010\n0111011\n0111001\n0111000\n0101000\n0101001\n0101011\n0101010\n0101110\n0101111\n0101101\n0101100\n0100100\n0100101\n0100111\n0100110\n0100010\n0100011\n0100001\n0100000\n1100000\n1100001\n1100011\n1100010\n1100110\n1100111\n1100101\n1100100\n1101100\n1101101\n1101111\n1101110\n1101010\n1101011\n1101001\n1101000\n1111000\n1111001\n1111011\n1111010\n1111110\n1111111\n1111101\n1111100\n1110100\n1110101\n1110111\n1110110\n1110010\n1110011\n1110001\n1110000\n1010000\n1010001\n1010011\n1010010\n1010110\n1010111\n1010101\n1010100\n1011100\n1011101\n1011111\n1011110\n1011010\n1011011\n1011001\n1011000\n1001000\n1001001\n1001011\n1001010\n1001110\n1001111\n1001101\n1001100\n1000100\n1000101\n1000111\n1000110\n1000010\n1000011\n1000001\n1000000",
         "edge_case_type": "max_constraint_size",
         "origin": "generated"
       },
@@ -991,7 +1572,7 @@
         "input": {
           "n": 8
         },
-        "expected_output": 8,
+        "expected_output": "00000000\n00000001\n00000011\n00000010\n00000110\n00000111\n00000101\n00000100\n00001100\n00001101\n00001111\n00001110\n00001010\n00001011\n00001001\n00001000\n00011000\n00011001\n00011011\n00011010\n00011110\n00011111\n00011101\n00011100\n00010100\n00010101\n00010111\n00010110\n00010010\n00010011\n00010001\n00010000\n00110000\n00110001\n00110011\n00110010\n00110110\n00110111\n00110101\n00110100\n00111100\n00111101\n00111111\n00111110\n00111010\n00111011\n00111001\n00111000\n00101000\n00101001\n00101011\n00101010\n00101110\n00101111\n00101101\n00101100\n00100100\n00100101\n00100111\n00100110\n00100010\n00100011\n00100001\n00100000\n01100000\n01100001\n01100011\n01100010\n01100110\n01100111\n01100101\n01100100\n01101100\n01101101\n01101111\n01101110\n01101010\n01101011\n01101001\n01101000\n01111000\n01111001\n01111011\n01111010\n01111110\n01111111\n01111101\n01111100\n01110100\n01110101\n01110111\n01110110\n01110010\n01110011\n01110001\n01110000\n01010000\n01010001\n01010011\n01010010\n01010110\n01010111\n01010101\n01010100\n01011100\n01011101\n01011111\n01011110\n01011010\n01011011\n01011001\n01011000\n01001000\n01001001\n01001011\n01001010\n01001110\n01001111\n01001101\n01001100\n01000100\n01000101\n01000111\n01000110\n01000010\n01000011\n01000001\n01000000\n11000000\n11000001\n11000011\n11000010\n11000110\n11000111\n11000101\n11000100\n11001100\n11001101\n11001111\n11001110\n11001010\n11001011\n11001001\n11001000\n11011000\n11011001\n11011011\n11011010\n11011110\n11011111\n11011101\n11011100\n11010100\n11010101\n11010111\n11010110\n11010010\n11010011\n11010001\n11010000\n11110000\n11110001\n11110011\n11110010\n11110110\n11110111\n11110101\n11110100\n11111100\n11111101\n11111111\n11111110\n11111010\n11111011\n11111001\n11111000\n11101000\n11101001\n11101011\n11101010\n11101110\n11101111\n11101101\n11101100\n11100100\n11100101\n11100111\n11100110\n11100010\n11100011\n11100001\n11100000\n10100000\n10100001\n10100011\n10100010\n10100110\n10100111\n10100101\n10100100\n10101100\n10101101\n10101111\n10101110\n10101010\n10101011\n10101001\n10101000\n10111000\n10111001\n10111011\n10111010\n10111110\n10111111\n10111101\n10111100\n10110100\n10110101\n10110111\n10110110\n10110010\n10110011\n10110001\n10110000\n10010000\n10010001\n10010011\n10010010\n10010110\n10010111\n10010101\n10010100\n10011100\n10011101\n10011111\n10011110\n10011010\n10011011\n10011001\n10011000\n10001000\n10001001\n10001011\n10001010\n10001110\n10001111\n10001101\n10001100\n10000100\n10000101\n10000111\n10000110\n10000010\n10000011\n10000001\n10000000",
         "edge_case_type": "boundary_value",
         "origin": "generated"
       },
@@ -999,7 +1580,7 @@
         "input": {
           "n": 9
         },
-        "expected_output": 9,
+        "expected_output": "000000000\n000000001\n000000011\n000000010\n000000110\n000000111\n000000101\n000000100\n000001100\n000001101\n000001111\n000001110\n000001010\n000001011\n000001001\n000001000\n000011000\n000011001\n000011011\n000011010\n000011110\n000011111\n000011101\n000011100\n000010100\n000010101\n000010111\n000010110\n000010010\n000010011\n000010001\n000010000\n000110000\n000110001\n000110011\n000110010\n000110110\n000110111\n000110101\n000110100\n000111100\n000111101\n000111111\n000111110\n000111010\n000111011\n000111001\n000111000\n000101000\n000101001\n000101011\n000101010\n000101110\n000101111\n000101101\n000101100\n000100100\n000100101\n000100111\n000100110\n000100010\n000100011\n000100001\n000100000\n001100000\n001100001\n001100011\n001100010\n001100110\n001100111\n001100101\n001100100\n001101100\n001101101\n001101111\n001101110\n001101010\n001101011\n001101001\n001101000\n001111000\n001111001\n001111011\n001111010\n001111110\n001111111\n001111101\n001111100\n001110100\n001110101\n001110111\n001110110\n001110010\n001110011\n001110001\n001110000\n001010000\n001010001\n001010011\n001010010\n001010110\n001010111\n001010101\n001010100\n001011100\n001011101\n001011111\n001011110\n001011010\n001011011\n001011001\n001011000\n001001000\n001001001\n001001011\n001001010\n001001110\n001001111\n001001101\n001001100\n001000100\n001000101\n001000111\n001000110\n001000010\n001000011\n001000001\n001000000\n011000000\n011000001\n011000011\n011000010\n011000110\n011000111\n011000101\n011000100\n011001100\n011001101\n011001111\n011001110\n011001010\n011001011\n011001001\n011001000\n011011000\n011011001\n011011011\n011011010\n011011110\n011011111\n011011101\n011011100\n011010100\n011010101\n011010111\n011010110\n011010010\n011010011\n011010001\n011010000\n011110000\n011110001\n011110011\n011110010\n011110110\n011110111\n011110101\n011110100\n011111100\n011111101\n011111111\n011111110\n011111010\n011111011\n011111001\n011111000\n011101000\n011101001\n011101011\n011101010\n011101110\n011101111\n011101101\n011101100\n011100100\n011100101\n011100111\n011100110\n011100010\n011100011\n011100001\n011100000\n010100000\n010100001\n010100011\n010100010\n010100110\n010100111\n010100101\n010100100\n010101100\n010101101\n010101111\n010101110\n010101010\n010101011\n010101001\n010101000\n010111000\n010111001\n010111011\n010111010\n010111110\n010111111\n010111101\n010111100\n010110100\n010110101\n010110111\n010110110\n010110010\n010110011\n010110001\n010110000\n010010000\n010010001\n010010011\n010010010\n010010110\n010010111\n010010101\n010010100\n010011100\n010011101\n010011111\n010011110\n010011010\n010011011\n010011001\n010011000\n010001000\n010001001\n010001011\n010001010\n010001110\n010001111\n010001101\n010001100\n010000100\n010000101\n010000111\n010000110\n010000010\n010000011\n010000001\n010000000\n110000000\n110000001\n110000011\n110000010\n110000110\n110000111\n110000101\n110000100\n110001100\n110001101\n110001111\n110001110\n110001010\n110001011\n110001001\n110001000\n110011000\n110011001\n110011011\n110011010\n110011110\n110011111\n110011101\n110011100\n110010100\n110010101\n110010111\n110010110\n110010010\n110010011\n110010001\n110010000\n110110000\n110110001\n110110011\n110110010\n110110110\n110110111\n110110101\n110110100\n110111100\n110111101\n110111111\n110111110\n110111010\n110111011\n110111001\n110111000\n110101000\n110101001\n110101011\n110101010\n110101110\n110101111\n110101101\n110101100\n110100100\n110100101\n110100111\n110100110\n110100010\n110100011\n110100001\n110100000\n111100000\n111100001\n111100011\n111100010\n111100110\n111100111\n111100101\n111100100\n111101100\n111101101\n111101111\n111101110\n111101010\n111101011\n111101001\n111101000\n111111000\n111111001\n111111011\n111111010\n111111110\n111111111\n111111101\n111111100\n111110100\n111110101\n111110111\n111110110\n111110010\n111110011\n111110001\n111110000\n111010000\n111010001\n111010011\n111010010\n111010110\n111010111\n111010101\n111010100\n111011100\n111011101\n111011111\n111011110\n111011010\n111011011\n111011001\n111011000\n111001000\n111001001\n111001011\n111001010\n111001110\n111001111\n111001101\n111001100\n111000100\n111000101\n111000111\n111000110\n111000010\n111000011\n111000001\n111000000\n101000000\n101000001\n101000011\n101000010\n101000110\n101000111\n101000101\n101000100\n101001100\n101001101\n101001111\n101001110\n101001010\n101001011\n101001001\n101001000\n101011000\n101011001\n101011011\n101011010\n101011110\n101011111\n101011101\n101011100\n101010100\n101010101\n101010111\n101010110\n101010010\n101010011\n101010001\n101010000\n101110000\n101110001\n101110011\n101110010\n101110110\n101110111\n101110101\n101110100\n101111100\n101111101\n101111111\n101111110\n101111010\n101111011\n101111001\n101111000\n101101000\n101101001\n101101011\n101101010\n101101110\n101101111\n101101101\n101101100\n101100100\n101100101\n101100111\n101100110\n101100010\n101100011\n101100001\n101100000\n100100000\n100100001\n100100011\n100100010\n100100110\n100100111\n100100101\n100100100\n100101100\n100101101\n100101111\n100101110\n100101010\n100101011\n100101001\n100101000\n100111000\n100111001\n100111011\n100111010\n100111110\n100111111\n100111101\n100111100\n100110100\n100110101\n100110111\n100110110\n100110010\n100110011\n100110001\n100110000\n100010000\n100010001\n100010011\n100010010\n100010110\n100010111\n100010101\n100010100\n100011100\n100011101\n100011111\n100011110\n100011010\n100011011\n100011001\n100011000\n100001000\n100001001\n100001011\n100001010\n100001110\n100001111\n100001101\n100001100\n100000100\n100000101\n100000111\n100000110\n100000010\n100000011\n100000001\n100000000",
         "edge_case_type": "typical_case",
         "origin": "generated"
       },
@@ -1007,139 +1588,23 @@
         "input": {
           "n": 10
         },
-        "expected_output": 10,
+        "expected_output": "0000000000\n0000000001\n0000000011\n0000000010\n0000000110\n0000000111\n0000000101\n0000000100\n0000001100\n0000001101\n0000001111\n0000001110\n0000001010\n0000001011\n0000001001\n0000001000\n0000011000\n0000011001\n0000011011\n0000011010\n0000011110\n0000011111\n0000011101\n0000011100\n0000010100\n0000010101\n0000010111\n0000010110\n0000010010\n0000010011\n0000010001\n0000010000\n0000110000\n0000110001\n0000110011\n0000110010\n0000110110\n0000110111\n0000110101\n0000110100\n0000111100\n0000111101\n0000111111\n0000111110\n0000111010\n0000111011\n0000111001\n0000111000\n0000101000\n0000101001\n0000101011\n0000101010\n0000101110\n0000101111\n0000101101\n0000101100\n0000100100\n0000100101\n0000100111\n0000100110\n0000100010\n0000100011\n0000100001\n0000100000\n0001100000\n0001100001\n0001100011\n0001100010\n0001100110\n0001100111\n0001100101\n0001100100\n0001101100\n0001101101\n0001101111\n0001101110\n0001101010\n0001101011\n0001101001\n0001101000\n0001111000\n0001111001\n0001111011\n0001111010\n0001111110\n0001111111\n0001111101\n0001111100\n0001110100\n0001110101\n0001110111\n0001110110\n0001110010\n0001110011\n0001110001\n0001110000\n0001010000\n0001010001\n0001010011\n0001010010\n0001010110\n0001010111\n0001010101\n0001010100\n0001011100\n0001011101\n0001011111\n0001011110\n0001011010\n0001011011\n0001011001\n0001011000\n0001001000\n0001001001\n0001001011\n0001001010\n0001001110\n0001001111\n0001001101\n0001001100\n0001000100\n0001000101\n0001000111\n0001000110\n0001000010\n0001000011\n0001000001\n0001000000\n0011000000\n0011000001\n0011000011\n0011000010\n0011000110\n0011000111\n0011000101\n0011000100\n0011001100\n0011001101\n0011001111\n0011001110\n0011001010\n0011001011\n0011001001\n0011001000\n0011011000\n0011011001\n0011011011\n0011011010\n0011011110\n0011011111\n0011011101\n0011011100\n0011010100\n0011010101\n0011010111\n0011010110\n0011010010\n0011010011\n0011010001\n0011010000\n0011110000\n0011110001\n0011110011\n0011110010\n0011110110\n0011110111\n0011110101\n0011110100\n0011111100\n0011111101\n0011111111\n0011111110\n0011111010\n0011111011\n0011111001\n0011111000\n0011101000\n0011101001\n0011101011\n0011101010\n0011101110\n0011101111\n0011101101\n0011101100\n0011100100\n0011100101\n0011100111\n0011100110\n0011100010\n0011100011\n0011100001\n0011100000\n0010100000\n0010100001\n0010100011\n0010100010\n0010100110\n0010100111\n0010100101\n0010100100\n0010101100\n0010101101\n0010101111\n0010101110\n0010101010\n0010101011\n0010101001\n0010101000\n0010111000\n0010111001\n0010111011\n0010111010\n0010111110\n0010111111\n0010111101\n0010111100\n0010110100\n0010110101\n0010110111\n0010110110\n0010110010\n0010110011\n0010110001\n0010110000\n0010010000\n0010010001\n0010010011\n0010010010\n0010010110\n0010010111\n0010010101\n0010010100\n0010011100\n0010011101\n0010011111\n0010011110\n0010011010\n0010011011\n0010011001\n0010011000\n0010001000\n0010001001\n0010001011\n0010001010\n0010001110\n0010001111\n0010001101\n0010001100\n0010000100\n0010000101\n0010000111\n0010000110\n0010000010\n0010000011\n0010000001\n0010000000\n0110000000\n0110000001\n0110000011\n0110000010\n0110000110\n0110000111\n0110000101\n0110000100\n0110001100\n0110001101\n0110001111\n0110001110\n0110001010\n0110001011\n0110001001\n0110001000\n0110011000\n0110011001\n0110011011\n0110011010\n0110011110\n0110011111\n0110011101\n0110011100\n0110010100\n0110010101\n0110010111\n0110010110\n0110010010\n0110010011\n0110010001\n0110010000\n0110110000\n0110110001\n0110110011\n0110110010\n0110110110\n0110110111\n0110110101\n0110110100\n0110111100\n0110111101\n0110111111\n0110111110\n0110111010\n0110111011\n0110111001\n0110111000\n0110101000\n0110101001\n0110101011\n0110101010\n0110101110\n0110101111\n0110101101\n0110101100\n0110100100\n0110100101\n0110100111\n0110100110\n0110100010\n0110100011\n0110100001\n0110100000\n0111100000\n0111100001\n0111100011\n0111100010\n0111100110\n0111100111\n0111100101\n0111100100\n0111101100\n0111101101\n0111101111\n0111101110\n0111101010\n0111101011\n0111101001\n0111101000\n0111111000\n0111111001\n0111111011\n0111111010\n0111111110\n0111111111\n0111111101\n0111111100\n0111110100\n0111110101\n0111110111\n0111110110\n0111110010\n0111110011\n0111110001\n0111110000\n0111010000\n0111010001\n0111010011\n0111010010\n0111010110\n0111010111\n0111010101\n0111010100\n0111011100\n0111011101\n0111011111\n0111011110\n0111011010\n0111011011\n0111011001\n0111011000\n0111001000\n0111001001\n0111001011\n0111001010\n0111001110\n0111001111\n0111001101\n0111001100\n0111000100\n0111000101\n0111000111\n0111000110\n0111000010\n0111000011\n0111000001\n0111000000\n0101000000\n0101000001\n0101000011\n0101000010\n0101000110\n0101000111\n0101000101\n0101000100\n0101001100\n0101001101\n0101001111\n0101001110\n0101001010\n0101001011\n0101001001\n0101001000\n0101011000\n0101011001\n0101011011\n0101011010\n0101011110\n0101011111\n0101011101\n0101011100\n0101010100\n0101010101\n0101010111\n0101010110\n0101010010\n0101010011\n0101010001\n0101010000\n0101110000\n0101110001\n0101110011\n0101110010\n0101110110\n0101110111\n0101110101\n0101110100\n0101111100\n0101111101\n0101111111\n0101111110\n0101111010\n0101111011\n0101111001\n0101111000\n0101101000\n0101101001\n0101101011\n0101101010\n0101101110\n0101101111\n0101101101\n0101101100\n0101100100\n0101100101\n0101100111\n0101100110\n0101100010\n0101100011\n0101100001\n0101100000\n0100100000\n0100100001\n0100100011\n0100100010\n0100100110\n0100100111\n0100100101\n0100100100\n0100101100\n0100101101\n0100101111\n0100101110\n0100101010\n0100101011\n0100101001\n0100101000\n0100111000\n0100111001\n0100111011\n0100111010\n0100111110\n0100111111\n0100111101\n0100111100\n0100110100\n0100110101\n0100110111\n0100110110\n0100110010\n0100110011\n0100110001\n0100110000\n0100010000\n0100010001\n0100010011\n0100010010\n0100010110\n0100010111\n0100010101\n0100010100\n0100011100\n0100011101\n0100011111\n0100011110\n0100011010\n0100011011\n0100011001\n0100011000\n0100001000\n0100001001\n0100001011\n0100001010\n0100001110\n0100001111\n0100001101\n0100001100\n0100000100\n0100000101\n0100000111\n0100000110\n0100000010\n0100000011\n0100000001\n0100000000\n1100000000\n1100000001\n1100000011\n1100000010\n1100000110\n1100000111\n1100000101\n1100000100\n1100001100\n1100001101\n1100001111\n1100001110\n1100001010\n1100001011\n1100001001\n1100001000\n1100011000\n1100011001\n1100011011\n1100011010\n1100011110\n1100011111\n1100011101\n1100011100\n1100010100\n1100010101\n1100010111\n1100010110\n1100010010\n1100010011\n1100010001\n1100010000\n1100110000\n1100110001\n1100110011\n1100110010\n1100110110\n1100110111\n1100110101\n1100110100\n1100111100\n1100111101\n1100111111\n1100111110\n1100111010\n1100111011\n1100111001\n1100111000\n1100101000\n1100101001\n1100101011\n1100101010\n1100101110\n1100101111\n1100101101\n1100101100\n1100100100\n1100100101\n1100100111\n1100100110\n1100100010\n1100100011\n1100100001\n1100100000\n1101100000\n1101100001\n1101100011\n1101100010\n1101100110\n1101100111\n1101100101\n1101100100\n1101101100\n1101101101\n1101101111\n1101101110\n1101101010\n1101101011\n1101101001\n1101101000\n1101111000\n1101111001\n1101111011\n1101111010\n1101111110\n1101111111\n1101111101\n1101111100\n1101110100\n1101110101\n1101110111\n1101110110\n1101110010\n1101110011\n1101110001\n1101110000\n1101010000\n1101010001\n1101010011\n1101010010\n1101010110\n1101010111\n1101010101\n1101010100\n1101011100\n1101011101\n1101011111\n1101011110\n1101011010\n1101011011\n1101011001\n1101011000\n1101001000\n1101001001\n1101001011\n1101001010\n1101001110\n1101001111\n1101001101\n1101001100\n1101000100\n1101000101\n1101000111\n1101000110\n1101000010\n1101000011\n1101000001\n1101000000\n1111000000\n1111000001\n1111000011\n1111000010\n1111000110\n1111000111\n1111000101\n1111000100\n1111001100\n1111001101\n1111001111\n1111001110\n1111001010\n1111001011\n1111001001\n1111001000\n1111011000\n1111011001\n1111011011\n1111011010\n1111011110\n1111011111\n1111011101\n1111011100\n1111010100\n1111010101\n1111010111\n1111010110\n1111010010\n1111010011\n1111010001\n1111010000\n1111110000\n1111110001\n1111110011\n1111110010\n1111110110\n1111110111\n1111110101\n1111110100\n1111111100\n1111111101\n1111111111\n1111111110\n1111111010\n1111111011\n1111111001\n1111111000\n1111101000\n1111101001\n1111101011\n1111101010\n1111101110\n1111101111\n1111101101\n1111101100\n1111100100\n1111100101\n1111100111\n1111100110\n1111100010\n1111100011\n1111100001\n1111100000\n1110100000\n1110100001\n1110100011\n1110100010\n1110100110\n1110100111\n1110100101\n1110100100\n1110101100\n1110101101\n1110101111\n1110101110\n1110101010\n1110101011\n1110101001\n1110101000\n1110111000\n1110111001\n1110111011\n1110111010\n1110111110\n1110111111\n1110111101\n1110111100\n1110110100\n1110110101\n1110110111\n1110110110\n1110110010\n1110110011\n1110110001\n1110110000\n1110010000\n1110010001\n1110010011\n1110010010\n1110010110\n1110010111\n1110010101\n1110010100\n1110011100\n1110011101\n1110011111\n1110011110\n1110011010\n1110011011\n1110011001\n1110011000\n1110001000\n1110001001\n1110001011\n1110001010\n1110001110\n1110001111\n1110001101\n1110001100\n1110000100\n1110000101\n1110000111\n1110000110\n1110000010\n1110000011\n1110000001\n1110000000\n1010000000\n1010000001\n1010000011\n1010000010\n1010000110\n1010000111\n1010000101\n1010000100\n1010001100\n1010001101\n1010001111\n1010001110\n1010001010\n1010001011\n1010001001\n1010001000\n1010011000\n1010011001\n1010011011\n1010011010\n1010011110\n1010011111\n1010011101\n1010011100\n1010010100\n1010010101\n1010010111\n1010010110\n1010010010\n1010010011\n1010010001\n1010010000\n1010110000\n1010110001\n1010110011\n1010110010\n1010110110\n1010110111\n1010110101\n1010110100\n1010111100\n1010111101\n1010111111\n1010111110\n1010111010\n1010111011\n1010111001\n1010111000\n1010101000\n1010101001\n1010101011\n1010101010\n1010101110\n1010101111\n1010101101\n1010101100\n1010100100\n1010100101\n1010100111\n1010100110\n1010100010\n1010100011\n1010100001\n1010100000\n1011100000\n1011100001\n1011100011\n1011100010\n1011100110\n1011100111\n1011100101\n1011100100\n1011101100\n1011101101\n1011101111\n1011101110\n1011101010\n1011101011\n1011101001\n1011101000\n1011111000\n1011111001\n1011111011\n1011111010\n1011111110\n1011111111\n1011111101\n1011111100\n1011110100\n1011110101\n1011110111\n1011110110\n1011110010\n1011110011\n1011110001\n1011110000\n1011010000\n1011010001\n1011010011\n1011010010\n1011010110\n1011010111\n1011010101\n1011010100\n1011011100\n1011011101\n1011011111\n1011011110\n1011011010\n1011011011\n1011011001\n1011011000\n1011001000\n1011001001\n1011001011\n1011001010\n1011001110\n1011001111\n1011001101\n1011001100\n1011000100\n1011000101\n1011000111\n1011000110\n1011000010\n1011000011\n1011000001\n1011000000\n1001000000\n1001000001\n1001000011\n1001000010\n1001000110\n1001000111\n1001000101\n1001000100\n1001001100\n1001001101\n1001001111\n1001001110\n1001001010\n1001001011\n1001001001\n1001001000\n1001011000\n1001011001\n1001011011\n1001011010\n1001011110\n1001011111\n1001011101\n1001011100\n1001010100\n1001010101\n1001010111\n1001010110\n1001010010\n1001010011\n1001010001\n1001010000\n1001110000\n1001110001\n1001110011\n1001110010\n1001110110\n1001110111\n1001110101\n1001110100\n1001111100\n1001111101\n1001111111\n1001111110\n1001111010\n1001111011\n1001111001\n1001111000\n1001101000\n1001101001\n1001101011\n1001101010\n1001101110\n1001101111\n1001101101\n1001101100\n1001100100\n1001100101\n1001100111\n1001100110\n1001100010\n1001100011\n1001100001\n1001100000\n1000100000\n1000100001\n1000100011\n1000100010\n1000100110\n1000100111\n1000100101\n1000100100\n1000101100\n1000101101\n1000101111\n1000101110\n1000101010\n1000101011\n1000101001\n1000101000\n1000111000\n1000111001\n1000111011\n1000111010\n1000111110\n1000111111\n1000111101\n1000111100\n1000110100\n1000110101\n1000110111\n1000110110\n1000110010\n1000110011\n1000110001\n1000110000\n1000010000\n1000010001\n1000010011\n1000010010\n1000010110\n1000010111\n1000010101\n1000010100\n1000011100\n1000011101\n1000011111\n1000011110\n1000011010\n1000011011\n1000011001\n1000011000\n1000001000\n1000001001\n1000001011\n1000001010\n1000001110\n1000001111\n1000001101\n1000001100\n1000000100\n1000000101\n1000000111\n1000000110\n1000000010\n1000000011\n1000000001\n1000000000",
         "edge_case_type": "adversarial_case",
         "origin": "generated"
       }
     ],
-    "solution_python": "def solve(n):\n    return n\n",
-    "solution_java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n",
+    "solution_python": "def solve(n):\n    val = int(n)\n    res = []\n    for i in range(1 << val):\n        g = i ^ (i >> 1)\n        res.append(f'{g:0{val}b}')\n    return '\\n'.join(res)\n",
+    "solution_java": "public class Solution {\n    public static String solve(Object nObj) {\n        int n = Integer.parseInt(nObj.toString().trim());\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i < (1 << n); i++) {\n            int val = i ^ (i >> 1);\n            String binary = Integer.toBinaryString(val);\n            while (binary.length() < n) {\n                binary = \"0\" + binary;\n            }\n            if (sb.length() > 0) sb.append(\"\\n\");\n            sb.append(binary);\n        }\n        return sb.toString();\n    }\n}\n",
     "solutions": {
-      "python": "def solve(n):\n    return n\n",
-      "java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n"
+      "python": "def solve(n):\n    val = int(n)\n    res = []\n    for i in range(1 << val):\n        g = i ^ (i >> 1)\n        res.append(f'{g:0{val}b}')\n    return '\\n'.join(res)\n",
+      "java": "public class Solution {\n    public static String solve(Object nObj) {\n        int n = Integer.parseInt(nObj.toString().trim());\n        StringBuilder sb = new StringBuilder();\n        for (int i = 0; i < (1 << n); i++) {\n            int val = i ^ (i >> 1);\n            String binary = Integer.toBinaryString(val);\n            while (binary.length() < n) {\n                binary = \"0\" + binary;\n            }\n            if (sb.length() > 0) sb.append(\"\\n\");\n            sb.append(binary);\n        }\n        return sb.toString();\n    }\n}\n"
     },
     "verified": true,
     "python_verified": true,
     "java_verified": true,
     "partial_scrape": true,
     "is_new": true,
-    "created_at": "2026-07-28 07:11:54 UTC"
-  },
-  {
-    "id": "codeforces:2250A",
-    "title": "Threshold Movement",
-    "source_site": "codeforces",
-    "source_url": "https://codeforces.com/problemset/problem/2250/A",
-    "source_id": "2250A",
-    "category": "Dynamic Programming",
-    "difficulty": "Medium",
-    "companies": [],
-    "company": "General",
-    "problem_statement": "Given Threshold Movement, solve the problem described at https://codeforces.com/problemset/problem/2250/A.",
-    "examples": [
-      {
-        "input": "{\"n\": 1}",
-        "output": "1",
-        "explanation": "Input {'n': 1} produces output 1."
-      }
-    ],
-    "constraints": [
-      "1 <= N <= 10^5"
-    ],
-    "test_cases": [
-      {
-        "input": {
-          "n": 1
-        },
-        "expected_output": 1,
-        "edge_case_type": "empty_or_minimal_input",
-        "origin": "generated"
-      },
-      {
-        "input": {
-          "n": 2
-        },
-        "expected_output": 2,
-        "edge_case_type": "single_element",
-        "origin": "generated"
-      },
-      {
-        "input": {
-          "n": 3
-        },
-        "expected_output": 3,
-        "edge_case_type": "all_duplicates",
-        "origin": "generated"
-      },
-      {
-        "input": {
-          "n": 4
-        },
-        "expected_output": 4,
-        "edge_case_type": "sorted_ascending",
-        "origin": "generated"
-      },
-      {
-        "input": {
-          "n": 5
-        },
-        "expected_output": 5,
-        "edge_case_type": "sorted_descending",
-        "origin": "generated"
-      },
-      {
-        "input": {
-          "n": 6
-        },
-        "expected_output": 6,
-        "edge_case_type": "negative_numbers",
-        "origin": "generated"
-      },
-      {
-        "input": {
-          "n": 7
-        },
-        "expected_output": 7,
-        "edge_case_type": "max_constraint_size",
-        "origin": "generated"
-      },
-      {
-        "input": {
-          "n": 8
-        },
-        "expected_output": 8,
-        "edge_case_type": "boundary_value",
-        "origin": "generated"
-      },
-      {
-        "input": {
-          "n": 9
-        },
-        "expected_output": 9,
-        "edge_case_type": "typical_case",
-        "origin": "generated"
-      },
-      {
-        "input": {
-          "n": 10
-        },
-        "expected_output": 10,
-        "edge_case_type": "adversarial_case",
-        "origin": "generated"
-      }
-    ],
-    "solution_python": "def solve(n):\n    return n\n",
-    "solution_java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n",
-    "solutions": {
-      "python": "def solve(n):\n    return n\n",
-      "java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n"
-    },
-    "verified": true,
-    "python_verified": true,
-    "java_verified": true,
-    "partial_scrape": true,
-    "is_new": true,
-    "created_at": "2026-07-28 07:11:53 UTC"
+    "created_at": "2026-07-28 09:06:37 UTC"
   },
   {
     "id": "codeforces:112A",

@@ -48,7 +48,7 @@ def process_and_verify_items(raw_items: List[Dict[str, Any]]) -> List[Dict[str, 
         verified = py_ok and java_ok
 
         # Quality check: Reject half-baked items or generic stubs
-        if not verified or "def solve(*args" in py_sol or "Object solve(Object... args)" in java_sol:
+        if not verified or "solve_stub" in py_sol or "solve_stub" in java_sol or "def solve(*args" in py_sol or "Object solve(Object... args)" in java_sol:
             print(f"  [Pipeline] Rejecting unverified/stub item: {item.get('id')}")
             continue
 
