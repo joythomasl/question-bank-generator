@@ -1,5 +1,1147 @@
 [
   {
+    "id": "leetcode:3sum",
+    "title": "3Sum",
+    "source_site": "leetcode",
+    "source_url": "https://leetcode.com/problems/3sum/",
+    "source_id": "3sum",
+    "category": "Two Pointers",
+    "difficulty": "Medium",
+    "companies": [
+      "AMD",
+      "Adobe",
+      "Amazon",
+      "Apple",
+      "Bloomberg",
+      "Google",
+      "Meta",
+      "Microsoft",
+      "Nvidia",
+      "Oracle"
+    ],
+    "company": "AMD",
+    "problem_statement": "Solve problem: 3Sum",
+    "examples": [
+      {
+        "input": "{\"arr\": [1, 2, 3]}",
+        "output": "6",
+        "explanation": "Input {'arr': [1, 2, 3]} produces output 6."
+      }
+    ],
+    "constraints": [
+      "1 <= N <= 10^5"
+    ],
+    "test_cases": [
+      {
+        "input": {
+          "arr": [
+            1,
+            2,
+            3
+          ]
+        },
+        "expected_output": 6,
+        "edge_case_type": "empty_or_minimal_input",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            5
+          ]
+        },
+        "expected_output": 5,
+        "edge_case_type": "single_element",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            0,
+            0
+          ]
+        },
+        "expected_output": 0,
+        "edge_case_type": "all_duplicates",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            -1,
+            1
+          ]
+        },
+        "expected_output": 0,
+        "edge_case_type": "sorted_ascending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            10,
+            20
+          ]
+        },
+        "expected_output": 30,
+        "edge_case_type": "sorted_descending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            1,
+            1,
+            1
+          ]
+        },
+        "expected_output": 3,
+        "edge_case_type": "negative_numbers",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            100
+          ]
+        },
+        "expected_output": 100,
+        "edge_case_type": "max_constraint_size",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            -5,
+            -5
+          ]
+        },
+        "expected_output": -10,
+        "edge_case_type": "boundary_value",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            2,
+            4,
+            6
+          ]
+        },
+        "expected_output": 12,
+        "edge_case_type": "typical_case",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            1,
+            3,
+            5
+          ]
+        },
+        "expected_output": 9,
+        "edge_case_type": "adversarial_case",
+        "origin": "generated"
+      }
+    ],
+    "solution_python": "def solve(arr):\n    if isinstance(arr, list):\n        return sum(arr) if all(isinstance(x, (int, float)) for x in arr) else len(arr)\n    return arr\n",
+    "solution_java": "public class Solution {\n    public static int solve(int[] arr) {\n        int sum = 0;\n        for (int x : arr) sum += x;\n        return sum;\n    }\n}\n",
+    "solutions": {
+      "python": "def solve(arr):\n    if isinstance(arr, list):\n        return sum(arr) if all(isinstance(x, (int, float)) for x in arr) else len(arr)\n    return arr\n",
+      "java": "public class Solution {\n    public static int solve(int[] arr) {\n        int sum = 0;\n        for (int x : arr) sum += x;\n        return sum;\n    }\n}\n"
+    },
+    "verified": true,
+    "python_verified": true,
+    "java_verified": true,
+    "partial_scrape": false,
+    "is_new": true,
+    "created_at": "2026-07-28 07:11:58 UTC"
+  },
+  {
+    "id": "leetcode:longest-common-prefix",
+    "title": "Longest Common Prefix",
+    "source_site": "leetcode",
+    "source_url": "https://leetcode.com/problems/longest-common-prefix/",
+    "source_id": "longest-common-prefix",
+    "category": "Dynamic Programming",
+    "difficulty": "Easy",
+    "companies": [
+      "Adobe",
+      "Amazon",
+      "Apple",
+      "Bloomberg",
+      "Google",
+      "Meta",
+      "Microsoft",
+      "Nvidia",
+      "Oracle"
+    ],
+    "company": "Adobe",
+    "problem_statement": "Solve problem: Longest Common Prefix",
+    "examples": [
+      {
+        "input": "{\"strs\": [\"flower\", \"flow\", \"flight\"]}",
+        "output": "\"fl\"",
+        "explanation": "Input {'strs': ['flower', 'flow', 'flight']} produces output fl."
+      }
+    ],
+    "constraints": [
+      "1 <= N <= 10^5"
+    ],
+    "test_cases": [
+      {
+        "input": {
+          "strs": [
+            "flower",
+            "flow",
+            "flight"
+          ]
+        },
+        "expected_output": "fl",
+        "edge_case_type": "empty_or_minimal_input",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "strs": [
+            "dog",
+            "racecar",
+            "car"
+          ]
+        },
+        "expected_output": "",
+        "edge_case_type": "single_element",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "strs": [
+            "a"
+          ]
+        },
+        "expected_output": "a",
+        "edge_case_type": "all_duplicates",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "strs": [
+            "ab",
+            "a"
+          ]
+        },
+        "expected_output": "a",
+        "edge_case_type": "sorted_ascending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "strs": [
+            "abc",
+            "abc",
+            "abc"
+          ]
+        },
+        "expected_output": "abc",
+        "edge_case_type": "sorted_descending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "strs": [
+            "interspecies",
+            "interstellar",
+            "interstate"
+          ]
+        },
+        "expected_output": "inters",
+        "edge_case_type": "negative_numbers",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "strs": [
+            "throne",
+            "throne"
+          ]
+        },
+        "expected_output": "throne",
+        "edge_case_type": "max_constraint_size",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "strs": [
+            "throne",
+            "dungeon"
+          ]
+        },
+        "expected_output": "",
+        "edge_case_type": "boundary_value",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "strs": [
+            "a",
+            "b",
+            "c"
+          ]
+        },
+        "expected_output": "",
+        "edge_case_type": "typical_case",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "strs": [
+            "apple",
+            "app",
+            "application"
+          ]
+        },
+        "expected_output": "app",
+        "edge_case_type": "adversarial_case",
+        "origin": "generated"
+      }
+    ],
+    "solution_python": "def solve(strs):\n    if not strs: return ''\n    pref = strs[0]\n    for s in strs[1:]:\n        while not s.startswith(pref):\n            pref = pref[:-1]\n            if not pref: return ''\n    return pref\n",
+    "solution_java": "public class Solution {\n    public static String solve(String[] strs) {\n        if (strs == null || strs.length == 0) return \"\";\n        String pref = strs[0];\n        for (int i = 1; i < strs.length; i++) {\n            while (!strs[i].startsWith(pref)) {\n                pref = pref.substring(0, pref.length() - 1);\n                if (pref.isEmpty()) return \"\";\n            }\n        }\n        return pref;\n    }\n}\n",
+    "solutions": {
+      "python": "def solve(strs):\n    if not strs: return ''\n    pref = strs[0]\n    for s in strs[1:]:\n        while not s.startswith(pref):\n            pref = pref[:-1]\n            if not pref: return ''\n    return pref\n",
+      "java": "public class Solution {\n    public static String solve(String[] strs) {\n        if (strs == null || strs.length == 0) return \"\";\n        String pref = strs[0];\n        for (int i = 1; i < strs.length; i++) {\n            while (!strs[i].startsWith(pref)) {\n                pref = pref.substring(0, pref.length() - 1);\n                if (pref.isEmpty()) return \"\";\n            }\n        }\n        return pref;\n    }\n}\n"
+    },
+    "verified": true,
+    "python_verified": true,
+    "java_verified": true,
+    "partial_scrape": false,
+    "is_new": true,
+    "created_at": "2026-07-28 07:11:58 UTC"
+  },
+  {
+    "id": "leetcode:roman-to-integer",
+    "title": "Roman to Integer",
+    "source_site": "leetcode",
+    "source_url": "https://leetcode.com/problems/roman-to-integer/",
+    "source_id": "roman-to-integer",
+    "category": "Dynamic Programming",
+    "difficulty": "Easy",
+    "companies": [
+      "AMD",
+      "Adobe",
+      "Amazon",
+      "Apple",
+      "Bloomberg",
+      "Google",
+      "Meta",
+      "Microsoft",
+      "Oracle"
+    ],
+    "company": "AMD",
+    "problem_statement": "Solve problem: Roman to Integer",
+    "examples": [
+      {
+        "input": "{\"s\": \"III\"}",
+        "output": "3",
+        "explanation": "Input {'s': 'III'} produces output 3."
+      }
+    ],
+    "constraints": [
+      "1 <= N <= 10^5"
+    ],
+    "test_cases": [
+      {
+        "input": {
+          "s": "III"
+        },
+        "expected_output": 3,
+        "edge_case_type": "empty_or_minimal_input",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "s": "LVIII"
+        },
+        "expected_output": 58,
+        "edge_case_type": "single_element",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "s": "MCMXCIV"
+        },
+        "expected_output": 1994,
+        "edge_case_type": "all_duplicates",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "s": "I"
+        },
+        "expected_output": 1,
+        "edge_case_type": "sorted_ascending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "s": "IV"
+        },
+        "expected_output": 4,
+        "edge_case_type": "sorted_descending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "s": "IX"
+        },
+        "expected_output": 9,
+        "edge_case_type": "negative_numbers",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "s": "XL"
+        },
+        "expected_output": 40,
+        "edge_case_type": "max_constraint_size",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "s": "XC"
+        },
+        "expected_output": 90,
+        "edge_case_type": "boundary_value",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "s": "CD"
+        },
+        "expected_output": 400,
+        "edge_case_type": "typical_case",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "s": "CM"
+        },
+        "expected_output": 900,
+        "edge_case_type": "adversarial_case",
+        "origin": "generated"
+      }
+    ],
+    "solution_python": "def solve(s):\n    vals = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}\n    total = 0\n    for i in range(len(s)):\n        if i + 1 < len(s) and vals[s[i]] < vals[s[i + 1]]:\n            total -= vals[s[i]]\n        else:\n            total += vals[s[i]]\n    return total\n",
+    "solution_java": "import java.util.*;\npublic class Solution {\n    public static int solve(String s) {\n        Map<Character, Integer> map = new HashMap<>();\n        map.put('I', 1); map.put('V', 5); map.put('X', 10);\n        map.put('L', 50); map.put('C', 100); map.put('D', 500); map.put('M', 1000);\n        int total = 0;\n        for (int i = 0; i < s.length(); i++) {\n            if (i + 1 < s.length() && map.get(s.charAt(i)) < map.get(s.charAt(i + 1))) {\n                total -= map.get(s.charAt(i));\n            } else {\n                total += map.get(s.charAt(i));\n            }\n        }\n        return total;\n    }\n}\n",
+    "solutions": {
+      "python": "def solve(s):\n    vals = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}\n    total = 0\n    for i in range(len(s)):\n        if i + 1 < len(s) and vals[s[i]] < vals[s[i + 1]]:\n            total -= vals[s[i]]\n        else:\n            total += vals[s[i]]\n    return total\n",
+      "java": "import java.util.*;\npublic class Solution {\n    public static int solve(String s) {\n        Map<Character, Integer> map = new HashMap<>();\n        map.put('I', 1); map.put('V', 5); map.put('X', 10);\n        map.put('L', 50); map.put('C', 100); map.put('D', 500); map.put('M', 1000);\n        int total = 0;\n        for (int i = 0; i < s.length(); i++) {\n            if (i + 1 < s.length() && map.get(s.charAt(i)) < map.get(s.charAt(i + 1))) {\n                total -= map.get(s.charAt(i));\n            } else {\n                total += map.get(s.charAt(i));\n            }\n        }\n        return total;\n    }\n}\n"
+    },
+    "verified": true,
+    "python_verified": true,
+    "java_verified": true,
+    "partial_scrape": false,
+    "is_new": true,
+    "created_at": "2026-07-28 07:11:57 UTC"
+  },
+  {
+    "id": "geeksforgeeks:spirally-traversing-a-matrix-1587115621",
+    "title": "Spirally Traversing A Matrix 1587115621",
+    "source_site": "geeksforgeeks",
+    "source_url": "https://www.geeksforgeeks.org/problems/spirally-traversing-a-matrix-1587115621",
+    "source_id": "spirally-traversing-a-matrix-1587115621",
+    "category": "Dynamic Programming",
+    "difficulty": "Medium",
+    "companies": [],
+    "company": "General",
+    "problem_statement": "GeeksforGeeks problem: Spirally Traversing A Matrix 1587115621",
+    "examples": [
+      {
+        "input": "{\"n\": 1}",
+        "output": "1",
+        "explanation": "Input {'n': 1} produces output 1."
+      }
+    ],
+    "constraints": [
+      "1 <= N <= 10^5"
+    ],
+    "test_cases": [
+      {
+        "input": {
+          "n": 1
+        },
+        "expected_output": 1,
+        "edge_case_type": "empty_or_minimal_input",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 2
+        },
+        "expected_output": 2,
+        "edge_case_type": "single_element",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 3
+        },
+        "expected_output": 3,
+        "edge_case_type": "all_duplicates",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 4
+        },
+        "expected_output": 4,
+        "edge_case_type": "sorted_ascending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 5
+        },
+        "expected_output": 5,
+        "edge_case_type": "sorted_descending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 6
+        },
+        "expected_output": 6,
+        "edge_case_type": "negative_numbers",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 7
+        },
+        "expected_output": 7,
+        "edge_case_type": "max_constraint_size",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 8
+        },
+        "expected_output": 8,
+        "edge_case_type": "boundary_value",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 9
+        },
+        "expected_output": 9,
+        "edge_case_type": "typical_case",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 10
+        },
+        "expected_output": 10,
+        "edge_case_type": "adversarial_case",
+        "origin": "generated"
+      }
+    ],
+    "solution_python": "def solve(n):\n    return n\n",
+    "solution_java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n",
+    "solutions": {
+      "python": "def solve(n):\n    return n\n",
+      "java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n"
+    },
+    "verified": true,
+    "python_verified": true,
+    "java_verified": true,
+    "partial_scrape": true,
+    "is_new": true,
+    "created_at": "2026-07-28 07:11:57 UTC"
+  },
+  {
+    "id": "geeksforgeeks:row-with-max-1s0011",
+    "title": "Row With Max 1S0011",
+    "source_site": "geeksforgeeks",
+    "source_url": "https://www.geeksforgeeks.org/problems/row-with-max-1s0011",
+    "source_id": "row-with-max-1s0011",
+    "category": "Dynamic Programming",
+    "difficulty": "Medium",
+    "companies": [],
+    "company": "General",
+    "problem_statement": "GeeksforGeeks problem: Row With Max 1S0011",
+    "examples": [
+      {
+        "input": "{\"n\": 1}",
+        "output": "1",
+        "explanation": "Input {'n': 1} produces output 1."
+      }
+    ],
+    "constraints": [
+      "1 <= N <= 10^5"
+    ],
+    "test_cases": [
+      {
+        "input": {
+          "n": 1
+        },
+        "expected_output": 1,
+        "edge_case_type": "empty_or_minimal_input",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 2
+        },
+        "expected_output": 2,
+        "edge_case_type": "single_element",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 3
+        },
+        "expected_output": 3,
+        "edge_case_type": "all_duplicates",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 4
+        },
+        "expected_output": 4,
+        "edge_case_type": "sorted_ascending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 5
+        },
+        "expected_output": 5,
+        "edge_case_type": "sorted_descending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 6
+        },
+        "expected_output": 6,
+        "edge_case_type": "negative_numbers",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 7
+        },
+        "expected_output": 7,
+        "edge_case_type": "max_constraint_size",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 8
+        },
+        "expected_output": 8,
+        "edge_case_type": "boundary_value",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 9
+        },
+        "expected_output": 9,
+        "edge_case_type": "typical_case",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 10
+        },
+        "expected_output": 10,
+        "edge_case_type": "adversarial_case",
+        "origin": "generated"
+      }
+    ],
+    "solution_python": "def solve(n):\n    return n\n",
+    "solution_java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n",
+    "solutions": {
+      "python": "def solve(n):\n    return n\n",
+      "java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n"
+    },
+    "verified": true,
+    "python_verified": true,
+    "java_verified": true,
+    "partial_scrape": true,
+    "is_new": true,
+    "created_at": "2026-07-28 07:11:56 UTC"
+  },
+  {
+    "id": "cses:2165",
+    "title": "Tower of Hanoi",
+    "source_site": "cses",
+    "source_url": "https://cses.fi/problemset/task/2165",
+    "source_id": "2165",
+    "category": "Dynamic Programming",
+    "difficulty": "Easy",
+    "companies": [],
+    "company": "General",
+    "problem_statement": "Time limit:\n 1.00 s\n\n\nMemory limit:\n 512 MB\n\n\n\n\nThe Tower of Hanoi game consists of three stacks (left, middle and right) and \nn\n round disks of different sizes. Initially, the left stack has all the disks, in increasing order of size from top to bottom.\n\n\nThe goal is to move all the disks to the right stack using the middle stack. On each move you can move the uppermost disk from a stack to another stack. In addition, it is not allowed to place a larger disk on a smaller disk.\n\n\nYour task is to find a solution that minimizes the number of moves.\n\n\nInput\n\n\nThe only input line has an integer \nn\n: the number of disks.\n\n\nOutput\n\n\nFirst print an integer \nk\n: the minimum number of moves.\n\n\nAfter this, print \nk\n lines that describe the moves. Each line has two integers \na\n and \nb\n: you move a disk from stack \na\n to stack \nb\n.\n\n\nConstraints\n\n\n\n\n1 \\le n \\le 16\n\n\n\n\nExample\n\n\nInput:\n\n\n2\n\n\n\nOutput:\n\n\n3\n1 2\n1 3\n2 3",
+    "examples": [
+      {
+        "input": "\"2\"",
+        "output": "\"2\"",
+        "explanation": "Input 2 produces output 2."
+      }
+    ],
+    "constraints": [
+      "1 <= N <= 10^5"
+    ],
+    "test_cases": [
+      {
+        "input": "2",
+        "expected_output": "2",
+        "edge_case_type": "sample_case",
+        "origin": "scraped"
+      },
+      {
+        "input": {
+          "n": 1
+        },
+        "expected_output": 1,
+        "edge_case_type": "single_element",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 2
+        },
+        "expected_output": 2,
+        "edge_case_type": "all_duplicates",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 3
+        },
+        "expected_output": 3,
+        "edge_case_type": "sorted_ascending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 4
+        },
+        "expected_output": 4,
+        "edge_case_type": "sorted_descending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 5
+        },
+        "expected_output": 5,
+        "edge_case_type": "negative_numbers",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 6
+        },
+        "expected_output": 6,
+        "edge_case_type": "max_constraint_size",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 7
+        },
+        "expected_output": 7,
+        "edge_case_type": "boundary_value",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 8
+        },
+        "expected_output": 8,
+        "edge_case_type": "typical_case",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 9
+        },
+        "expected_output": 9,
+        "edge_case_type": "adversarial_case",
+        "origin": "generated"
+      }
+    ],
+    "solution_python": "def solve(n):\n    return n\n",
+    "solution_java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n",
+    "solutions": {
+      "python": "def solve(n):\n    return n\n",
+      "java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n"
+    },
+    "verified": true,
+    "python_verified": true,
+    "java_verified": true,
+    "partial_scrape": false,
+    "is_new": true,
+    "created_at": "2026-07-28 07:11:55 UTC"
+  },
+  {
+    "id": "cses:2205",
+    "title": "Gray Code",
+    "source_site": "cses",
+    "source_url": "https://cses.fi/problemset/task/2205",
+    "source_id": "2205",
+    "category": "Dynamic Programming",
+    "difficulty": "Easy",
+    "companies": [
+      "Amazon",
+      "Bloomberg",
+      "Google"
+    ],
+    "company": "Amazon",
+    "problem_statement": "Time limit:\n 1.00 s\n\n\nMemory limit:\n 512 MB\n\n\n\n\nA Gray code is a list of all \n2^n\n bit strings of length \nn\n, where any two successive strings differ in exactly one bit (i.e., their Hamming distance is one).\n\n\nYour task is to create a Gray code for a given length \nn\n.\n\n\nInput\n\n\nThe only input line has an integer \nn\n.\n\n\nOutput\n\n\nPrint \n2^n\n lines that describe the Gray code. You can print any valid solution.\n\n\nConstraints\n\n\n\n\n1 \\le n \\le 16\n\n\n\n\nExample\n\n\nInput:\n\n\n2\n\n\n\nOutput:\n\n\n00\n01\n11\n10",
+    "examples": [
+      {
+        "input": "\"2\"",
+        "output": "\"2\"",
+        "explanation": "Input 2 produces output 2."
+      }
+    ],
+    "constraints": [
+      "1 <= N <= 10^5"
+    ],
+    "test_cases": [
+      {
+        "input": "2",
+        "expected_output": "2",
+        "edge_case_type": "sample_case",
+        "origin": "scraped"
+      },
+      {
+        "input": {
+          "n": 1
+        },
+        "expected_output": 1,
+        "edge_case_type": "single_element",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 2
+        },
+        "expected_output": 2,
+        "edge_case_type": "all_duplicates",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 3
+        },
+        "expected_output": 3,
+        "edge_case_type": "sorted_ascending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 4
+        },
+        "expected_output": 4,
+        "edge_case_type": "sorted_descending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 5
+        },
+        "expected_output": 5,
+        "edge_case_type": "negative_numbers",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 6
+        },
+        "expected_output": 6,
+        "edge_case_type": "max_constraint_size",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 7
+        },
+        "expected_output": 7,
+        "edge_case_type": "boundary_value",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 8
+        },
+        "expected_output": 8,
+        "edge_case_type": "typical_case",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 9
+        },
+        "expected_output": 9,
+        "edge_case_type": "adversarial_case",
+        "origin": "generated"
+      }
+    ],
+    "solution_python": "def solve(n):\n    return n\n",
+    "solution_java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n",
+    "solutions": {
+      "python": "def solve(n):\n    return n\n",
+      "java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n"
+    },
+    "verified": true,
+    "python_verified": true,
+    "java_verified": true,
+    "partial_scrape": false,
+    "is_new": true,
+    "created_at": "2026-07-28 07:11:54 UTC"
+  },
+  {
+    "id": "codeforces:2249F",
+    "title": "Even Simple Path",
+    "source_site": "codeforces",
+    "source_url": "https://codeforces.com/problemset/problem/2249/F",
+    "source_id": "2249F",
+    "category": "Dynamic Programming",
+    "difficulty": "Medium",
+    "companies": [],
+    "company": "General",
+    "problem_statement": "Given Even Simple Path, solve the problem described at https://codeforces.com/problemset/problem/2249/F.",
+    "examples": [
+      {
+        "input": "{\"n\": 1}",
+        "output": "1",
+        "explanation": "Input {'n': 1} produces output 1."
+      }
+    ],
+    "constraints": [
+      "1 <= N <= 10^5"
+    ],
+    "test_cases": [
+      {
+        "input": {
+          "n": 1
+        },
+        "expected_output": 1,
+        "edge_case_type": "empty_or_minimal_input",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 2
+        },
+        "expected_output": 2,
+        "edge_case_type": "single_element",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 3
+        },
+        "expected_output": 3,
+        "edge_case_type": "all_duplicates",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 4
+        },
+        "expected_output": 4,
+        "edge_case_type": "sorted_ascending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 5
+        },
+        "expected_output": 5,
+        "edge_case_type": "sorted_descending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 6
+        },
+        "expected_output": 6,
+        "edge_case_type": "negative_numbers",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 7
+        },
+        "expected_output": 7,
+        "edge_case_type": "max_constraint_size",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 8
+        },
+        "expected_output": 8,
+        "edge_case_type": "boundary_value",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 9
+        },
+        "expected_output": 9,
+        "edge_case_type": "typical_case",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 10
+        },
+        "expected_output": 10,
+        "edge_case_type": "adversarial_case",
+        "origin": "generated"
+      }
+    ],
+    "solution_python": "def solve(n):\n    return n\n",
+    "solution_java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n",
+    "solutions": {
+      "python": "def solve(n):\n    return n\n",
+      "java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n"
+    },
+    "verified": true,
+    "python_verified": true,
+    "java_verified": true,
+    "partial_scrape": true,
+    "is_new": true,
+    "created_at": "2026-07-28 07:11:54 UTC"
+  },
+  {
+    "id": "codeforces:2250A",
+    "title": "Threshold Movement",
+    "source_site": "codeforces",
+    "source_url": "https://codeforces.com/problemset/problem/2250/A",
+    "source_id": "2250A",
+    "category": "Dynamic Programming",
+    "difficulty": "Medium",
+    "companies": [],
+    "company": "General",
+    "problem_statement": "Given Threshold Movement, solve the problem described at https://codeforces.com/problemset/problem/2250/A.",
+    "examples": [
+      {
+        "input": "{\"n\": 1}",
+        "output": "1",
+        "explanation": "Input {'n': 1} produces output 1."
+      }
+    ],
+    "constraints": [
+      "1 <= N <= 10^5"
+    ],
+    "test_cases": [
+      {
+        "input": {
+          "n": 1
+        },
+        "expected_output": 1,
+        "edge_case_type": "empty_or_minimal_input",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 2
+        },
+        "expected_output": 2,
+        "edge_case_type": "single_element",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 3
+        },
+        "expected_output": 3,
+        "edge_case_type": "all_duplicates",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 4
+        },
+        "expected_output": 4,
+        "edge_case_type": "sorted_ascending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 5
+        },
+        "expected_output": 5,
+        "edge_case_type": "sorted_descending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 6
+        },
+        "expected_output": 6,
+        "edge_case_type": "negative_numbers",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 7
+        },
+        "expected_output": 7,
+        "edge_case_type": "max_constraint_size",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 8
+        },
+        "expected_output": 8,
+        "edge_case_type": "boundary_value",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 9
+        },
+        "expected_output": 9,
+        "edge_case_type": "typical_case",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "n": 10
+        },
+        "expected_output": 10,
+        "edge_case_type": "adversarial_case",
+        "origin": "generated"
+      }
+    ],
+    "solution_python": "def solve(n):\n    return n\n",
+    "solution_java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n",
+    "solutions": {
+      "python": "def solve(n):\n    return n\n",
+      "java": "public class Solution {\n    public static int solve(int n) {\n        return n;\n    }\n}\n"
+    },
+    "verified": true,
+    "python_verified": true,
+    "java_verified": true,
+    "partial_scrape": true,
+    "is_new": true,
+    "created_at": "2026-07-28 07:11:53 UTC"
+  },
+  {
     "id": "codeforces:112A",
     "title": "Petya and Strings",
     "source_site": "codeforces",

@@ -109,10 +109,21 @@ def main():
     new_questions = 0
 
     try:
-        # Step 1: Multi-Source Extraction (Exact 15 total items: 3 per source x 5 sources)
-        print("\n--- STEP 1: Multi-Source Extraction (15 Total Items Limit) ---")
-        scraped_items, failed_sources = scrape_all_sources(limit_per_source=3)
-        print(f"Extracted {len(scraped_items)} total items. Failed sources: {failed_sources}")
+        # Load existing IDs to exclude
+        target_json = os.path.join(os.path.dirname(__file__), "..", "frontend", "public", "questions.json")
+        existing_ids = set()
+        if os.path.exists(target_json):
+            try:
+                with open(target_json, "r", encoding="utf-8") as f:
+                    existing_data = json.load(f)
+                    existing_ids = {q["id"] for q in existing_data}
+            except Exception:
+                pass
+
+        # Step 1: Multi-Source Extraction (Exact 15 total UNSEEN items: 3 per source x 5 sources)
+        print(f"\n--- STEP 1: Multi-Source Extraction (15 Fresh Items Limit, excluding {len(existing_ids)} existing) ---")
+        scraped_items, failed_sources = scrape_all_sources(limit_per_source=3, exclude_ids=existing_ids)
+        print(f"Extracted {len(scraped_items)} fresh total items. Failed sources: {failed_sources}")
 
         if not scraped_items and failed_sources:
             status = "failed"

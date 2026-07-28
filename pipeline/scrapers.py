@@ -20,7 +20,8 @@ REQUEST_HEADERS = {
 # ---------------------------------------------------------------------------
 # Codeforces Scraper
 # ---------------------------------------------------------------------------
-def scrape_codeforces(limit: int = 3) -> List[Dict[str, Any]]:
+def scrape_codeforces(limit: int = 3, exclude_ids: set = None) -> List[Dict[str, Any]]:
+    exclude_ids = exclude_ids or set()
     print(f"[Scraper] Fetching Codeforces metadata from API (limit: {limit})...")
     api_url = "https://codeforces.com/api/problemset.problems"
     res = requests.get(api_url, headers=REQUEST_HEADERS, timeout=15)
@@ -31,10 +32,13 @@ def scrape_codeforces(limit: int = 3) -> List[Dict[str, Any]]:
     if data.get("status") != "OK":
         raise Exception(f"Codeforces API status not OK: {data.get('comment')}")
 
-    problems = data["result"]["problems"][:limit]
+    problems = data["result"]["problems"]
     items = []
 
     for prob in problems:
+        if len(items) >= limit:
+            break
+
         contest_id = prob.get("contestId")
         index = prob.get("index")
         name = prob.get("name")
@@ -47,6 +51,9 @@ def scrape_codeforces(limit: int = 3) -> List[Dict[str, Any]]:
         source_id = f"{contest_id}{index}"
         source_url = f"https://codeforces.com/problemset/problem/{contest_id}/{index}"
         question_id = f"codeforces:{source_id}"
+
+        if question_id in exclude_ids:
+            continue
 
         statement_text = ""
         scraped_test_cases = []
@@ -106,7 +113,8 @@ def scrape_codeforces(limit: int = 3) -> List[Dict[str, Any]]:
 # ---------------------------------------------------------------------------
 # CSES Scraper
 # ---------------------------------------------------------------------------
-def scrape_cses(limit: int = 3) -> List[Dict[str, Any]]:
+def scrape_cses(limit: int = 3, exclude_ids: set = None) -> List[Dict[str, Any]]:
+    exclude_ids = exclude_ids or set()
     print(f"[Scraper] Fetching CSES problemset list (limit: {limit})...")
     list_url = "https://cses.fi/problemset/list/"
     res = requests.get(list_url, headers=REQUEST_HEADERS, timeout=15)
@@ -132,9 +140,14 @@ def scrape_cses(limit: int = 3) -> List[Dict[str, Any]]:
                         title = a.get_text().strip()
                         task_nodes.append((task_id, title, current_section))
 
-    for task_id, title, section in task_nodes[:limit]:
-        source_url = f"https://cses.fi/problemset/task/{task_id}"
+    for task_id, title, section in task_nodes:
+        if len(items) >= limit:
+            break
         question_id = f"cses:{task_id}"
+        if question_id in exclude_ids:
+            continue
+
+        source_url = f"https://cses.fi/problemset/task/{task_id}"
         statement_text = ""
         scraped_test_cases = []
 
@@ -177,7 +190,8 @@ def scrape_cses(limit: int = 3) -> List[Dict[str, Any]]:
 # ---------------------------------------------------------------------------
 # GeeksforGeeks Scraper
 # ---------------------------------------------------------------------------
-def scrape_geeksforgeeks(limit: int = 3) -> List[Dict[str, Any]]:
+def scrape_geeksforgeeks(limit: int = 3, exclude_ids: set = None) -> List[Dict[str, Any]]:
+    exclude_ids = exclude_ids or set()
     print(f"[Scraper] Scraping GeeksforGeeks items (limit: {limit})...")
     gfg_slugs = [
         "subarray-with-given-sum-1587115621",
@@ -189,13 +203,26 @@ def scrape_geeksforgeeks(limit: int = 3) -> List[Dict[str, Any]]:
         "nth-node-from-end-of-linked-list",
         "detect-loop-in-linked-list",
         "reverse-a-linked-list",
-        "left-view-of-binary-tree"
-    ][:limit]
+        "left-view-of-binary-tree",
+        "row-with-max-1s0011",
+        "kth-smallest-element5635",
+        "spirally-traversing-a-matrix-1587115621",
+        "majority-element-1587115620",
+        "sort-an-array-of-0s-1s-and-2s4231",
+        "indexes-of-subarray-sum-1587115620",
+        "leaders-in-an-array-1587115620",
+        "equilibrium-point-1587115620"
+    ]
 
     items = []
     for slug in gfg_slugs:
-        source_url = f"https://www.geeksforgeeks.org/problems/{slug}"
+        if len(items) >= limit:
+            break
         question_id = f"geeksforgeeks:{slug}"
+        if question_id in exclude_ids:
+            continue
+
+        source_url = f"https://www.geeksforgeeks.org/problems/{slug}"
         title = slug.replace("-", " ").title()
 
         partial = True
@@ -230,7 +257,8 @@ def scrape_geeksforgeeks(limit: int = 3) -> List[Dict[str, Any]]:
 # ---------------------------------------------------------------------------
 # LeetCode Scraper (Public GraphQL - METADATA ONLY)
 # ---------------------------------------------------------------------------
-def scrape_leetcode(limit: int = 3) -> List[Dict[str, Any]]:
+def scrape_leetcode(limit: int = 3, exclude_ids: set = None) -> List[Dict[str, Any]]:
+    exclude_ids = exclude_ids or set()
     print(f"[Scraper] Fetching LeetCode metadata from public GraphQL (limit: {limit})...")
     graphql_url = "https://leetcode.com/graphql"
     query = """
@@ -260,7 +288,7 @@ def scrape_leetcode(limit: int = 3) -> List[Dict[str, Any]]:
         "variables": {
             "categorySlug": "",
             "skip": 0,
-            "limit": limit,
+            "limit": 50,
             "filters": {}
         }
     }
@@ -274,6 +302,8 @@ def scrape_leetcode(limit: int = 3) -> List[Dict[str, Any]]:
     items = []
 
     for q in questions:
+        if len(items) >= limit:
+            break
         title = q.get("title")
         slug = q.get("titleSlug")
         difficulty = q.get("difficulty")
@@ -282,8 +312,11 @@ def scrape_leetcode(limit: int = 3) -> List[Dict[str, Any]]:
         if not slug or not title:
             continue
 
-        source_url = f"https://leetcode.com/problems/{slug}/"
         question_id = f"leetcode:{slug}"
+        if question_id in exclude_ids:
+            continue
+
+        source_url = f"https://leetcode.com/problems/{slug}/"
 
         items.append({
             "id": question_id,
@@ -304,9 +337,10 @@ def scrape_leetcode(limit: int = 3) -> List[Dict[str, Any]]:
 # ---------------------------------------------------------------------------
 # HackerRank Scraper (Best Effort)
 # ---------------------------------------------------------------------------
-def scrape_hackerrank(limit: int = 3) -> List[Dict[str, Any]]:
+def scrape_hackerrank(limit: int = 3, exclude_ids: set = None) -> List[Dict[str, Any]]:
+    exclude_ids = exclude_ids or set()
     print(f"[Scraper] Attempting HackerRank fetch (limit: {limit})...")
-    url = f"https://www.hackerrank.com/rest/contests/master/tracks/algorithms/challenges?offset=0&limit={limit}"
+    url = f"https://www.hackerrank.com/rest/contests/master/tracks/algorithms/challenges?offset=0&limit=50"
     
     res = requests.get(url, headers=REQUEST_HEADERS, timeout=10)
     if res.status_code != 200:
@@ -319,13 +353,18 @@ def scrape_hackerrank(limit: int = 3) -> List[Dict[str, Any]]:
 
     items = []
     for model in models:
+        if len(items) >= limit:
+            break
         slug = model.get("slug")
         title = model.get("name")
         if not slug or not title:
             continue
 
-        source_url = f"https://www.hackerrank.com/challenges/{slug}/problem"
         question_id = f"hackerrank:{slug}"
+        if question_id in exclude_ids:
+            continue
+
+        source_url = f"https://www.hackerrank.com/challenges/{slug}/problem"
 
         items.append({
             "id": question_id,
@@ -344,16 +383,17 @@ def scrape_hackerrank(limit: int = 3) -> List[Dict[str, Any]]:
 # ---------------------------------------------------------------------------
 # Master Scrape Orchestrator
 # ---------------------------------------------------------------------------
-def scrape_all_sources(limit_per_source: int = 3) -> Tuple[List[Dict[str, Any]], List[str]]:
+def scrape_all_sources(limit_per_source: int = 3, exclude_ids: set = None) -> Tuple[List[Dict[str, Any]], List[str]]:
+    exclude_ids = exclude_ids or set()
     all_items = []
     failed_sources = []
 
     sources = [
-        ("codeforces", lambda: scrape_codeforces(limit=limit_per_source)),
-        ("cses", lambda: scrape_cses(limit=limit_per_source)),
-        ("geeksforgeeks", lambda: scrape_geeksforgeeks(limit=limit_per_source)),
-        ("leetcode", lambda: scrape_leetcode(limit=limit_per_source)),
-        ("hackerrank", lambda: scrape_hackerrank(limit=limit_per_source)),
+        ("codeforces", lambda: scrape_codeforces(limit=limit_per_source, exclude_ids=exclude_ids)),
+        ("cses", lambda: scrape_cses(limit=limit_per_source, exclude_ids=exclude_ids)),
+        ("geeksforgeeks", lambda: scrape_geeksforgeeks(limit=limit_per_source, exclude_ids=exclude_ids)),
+        ("leetcode", lambda: scrape_leetcode(limit=limit_per_source, exclude_ids=exclude_ids)),
+        ("hackerrank", lambda: scrape_hackerrank(limit=limit_per_source, exclude_ids=exclude_ids)),
     ]
 
     for name, scraper_fn in sources:
@@ -365,6 +405,5 @@ def scrape_all_sources(limit_per_source: int = 3) -> Tuple[List[Dict[str, Any]],
             print(f"[Scraper] [FAIL] {name} failed: {e}")
             failed_sources.append(name)
 
-    # Cap total scraped items per run to exactly 15 total (3 per source x 5 sources)
     return all_items[:15], failed_sources
 
