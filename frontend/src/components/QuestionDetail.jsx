@@ -60,56 +60,66 @@ export default function QuestionDetail({ question, onClose }) {
 
       {/* Panel */}
       <div
-        className={`relative w-full max-w-xl bg-surface/95 backdrop-blur-xl h-full overflow-y-auto p-7 flex flex-col gap-7 shadow-glass transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`relative w-full max-w-xl bg-surface/95 h-full overflow-y-auto flex flex-col shadow-glass transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] terminal-window ${
           visible ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        {/* Header */}
-        <div className="flex items-start justify-between">
+        {/* Futuristic Terminal Window Header */}
+        <div className="terminal-header px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+            <span className="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+            <span className="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
+            <span className="font-mono text-xs text-muted ml-3 uppercase tracking-wider">guest@console:~/catalog$</span>
+          </div>
+          <button
+            onClick={handleClose}
+            className="text-muted hover:text-bone text-lg font-mono leading-none hover:bg-surfaceRaised/60 w-6 h-6 rounded flex items-center justify-center transition-all duration-200"
+          >
+            ESC
+          </button>
+        </div>
+
+        {/* Content Box */}
+        <div className="p-7 flex flex-col gap-7 overflow-y-auto">
+          {/* Main Info */}
           <div>
-            <span className="font-mono text-xs text-muted">{question.id}</span>
-            <h2 className="text-xl font-bold mt-1.5 font-display leading-snug">{question.title}</h2>
+            <span className="font-mono text-xs text-catDp uppercase tracking-widest">[{question.id.toUpperCase()}]</span>
+            <h2 className="text-xl font-bold mt-2 font-display text-bone leading-snug">{question.title}</h2>
             
-            <div className="flex flex-wrap gap-2 mt-3">
+            <div className="flex flex-wrap gap-2 mt-4">
               {/* Source Badge with link */}
               <a
                 href={sourceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-xs px-2.5 py-1 rounded-full bg-catDp/10 text-catDp border border-catDp/30 hover:bg-catDp/20 transition-colors font-mono"
+                className="text-[10px] px-2.5 py-1 rounded bg-catDp/10 text-catDp border border-catDp/30 hover:bg-catDp/20 transition-colors font-mono uppercase tracking-wider"
               >
                 {sourceSite} ↗
               </a>
-              <span className="text-xs px-2.5 py-1 rounded-full bg-ink/60 text-muted border border-white/5">
+              <span className="text-[10px] px-2.5 py-1 rounded bg-ink/60 text-muted border border-white/5 font-mono uppercase tracking-wider">
                 {question.category}
               </span>
-              <span className={`text-xs px-2.5 py-1 rounded-full bg-ink/60 ${diffClass} border border-white/5`}>
+              <span className={`text-[10px] px-2.5 py-1 rounded bg-ink/60 ${diffClass} border border-white/5 font-mono uppercase tracking-wider`}>
                 {question.difficulty}
               </span>
               {comps.map((c) => (
-                <span key={c} className="text-xs px-2.5 py-1 rounded-full bg-ink/60 text-muted border border-white/5 font-mono">
-                  {c}
+                <span key={c} className="text-[10px] px-2.5 py-1 rounded bg-ink/60 text-muted border border-white/5 font-mono uppercase tracking-wider">
+                  🏢 {c}
                 </span>
               ))}
               {question.is_new && (
-                <span className="text-emerald-400 text-[10px] font-mono font-bold uppercase tracking-widest border border-emerald-500/50 rounded-md px-2 py-0.5 bg-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.3)] animate-pulse">
-                  ⚡ NEW
+                <span className="text-emerald-400 text-[9px] font-mono font-bold uppercase tracking-wider border border-emerald-500/50 rounded px-2 py-0.5 bg-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.3)] animate-pulse">
+                  NEW
                 </span>
               )}
               {question.verified && (
-                <span className="text-verified text-[10px] font-mono uppercase tracking-widest border border-verified/40 rounded-md px-2 py-0.5 bg-verified/10">
-                  Verified
+                <span className="text-emerald-400 text-[9px] font-mono uppercase tracking-wider border border-emerald-500/30 rounded px-2 py-0.5 bg-emerald-500/10">
+                  VERIFIED
                 </span>
               )}
             </div>
           </div>
-          <button
-            onClick={handleClose}
-            className="text-muted hover:text-bone text-xl leading-none w-8 h-8 rounded-lg hover:bg-surfaceRaised/60 flex items-center justify-center transition-all duration-200 hover:rotate-90"
-          >
-            ×
-          </button>
-        </div>
 
         {question.type === 'conceptual' || question.item_type === 'conceptual' ? (
           <>
@@ -206,6 +216,7 @@ export default function QuestionDetail({ question, onClose }) {
             <SolutionViewer pythonSol={pythonSol} javaSol={javaSol} accentColor={accentColor} />
           </>
         )}
+        </div>
       </div>
     </div>
   )
