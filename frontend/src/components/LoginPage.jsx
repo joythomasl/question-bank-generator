@@ -8,6 +8,7 @@ const ADMIN_PASSWORD = 'admin123'
 export default function LoginPage({ onLogin }) {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+  const [shakeError, setShakeError] = useState(false)
 
   function handleAdminSubmit(e) {
     e.preventDefault()
@@ -15,52 +16,68 @@ export default function LoginPage({ onLogin }) {
       onLogin('admin')
     } else {
       setError('Incorrect password')
+      setShakeError(true)
+      setTimeout(() => setShakeError(false), 500)
     }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-6">
-      <div className="w-full max-w-3xl">
-        <p className="text-center text-muted font-mono text-xs uppercase tracking-widest mb-2">
-          Question bank portal
-        </p>
-        <h1 className="text-center text-2xl font-semibold mb-10">
-          Choose how you're signing in
-        </h1>
+    <div className="bg-orbs min-h-screen flex items-center justify-center px-6 relative">
+      <div className="w-full max-w-3xl relative z-10">
+        {/* ── Header ── */}
+        <div className="opacity-0 animate-slide-up text-center mb-10">
+          <p className="text-muted font-mono text-xs uppercase tracking-[0.25em] mb-3">
+            Question Bank Portal
+          </p>
+          <h1 className="font-display text-3xl md:text-4xl font-bold bg-gradient-to-r from-bone via-catDp to-catDc bg-clip-text text-transparent">
+            Choose how you're signing in
+          </h1>
+        </div>
 
+        {/* ── Cards ── */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="bg-surface border border-surfaceRaised rounded-xl p-6 flex flex-col gap-4">
+          {/* User card */}
+          <div className="opacity-0 animate-slide-up-delay-1 glass-card glass-card-hover rounded-2xl p-7 flex flex-col gap-5 group">
             <div>
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-catTwoPointers/20 to-catTwoPointers/5 flex items-center justify-center text-lg mb-4 group-hover:animate-float">
+                ⚡
+              </div>
               <p className="font-mono text-xs text-muted uppercase tracking-widest">
                 Standard access
               </p>
-              <p className="text-lg font-medium mt-1">Continue as user</p>
-              <p className="text-sm text-muted mt-2">
+              <p className="text-lg font-semibold mt-1 font-display">Continue as user</p>
+              <p className="text-sm text-muted mt-2 leading-relaxed">
                 Browse, filter, and download verified questions. No account needed.
               </p>
             </div>
             <button
+              id="login-user-btn"
               onClick={() => onLogin('user')}
-              className="mt-auto bg-catTwoPointers text-ink font-medium rounded-lg py-2.5 hover:opacity-90 transition"
+              className="mt-auto btn-gradient py-3 text-sm rounded-xl"
             >
-              Enter portal
+              Enter portal →
             </button>
           </div>
 
+          {/* Admin card */}
           <form
             onSubmit={handleAdminSubmit}
-            className="bg-surface border border-surfaceRaised rounded-xl p-6 flex flex-col gap-4"
+            className="opacity-0 animate-slide-up-delay-2 glass-card glass-card-hover rounded-2xl p-7 flex flex-col gap-5 group"
           >
             <div>
+              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-catDc/20 to-catDc/5 flex items-center justify-center text-lg mb-4 group-hover:animate-float">
+                🔒
+              </div>
               <p className="font-mono text-xs text-muted uppercase tracking-widest">
                 Restricted access
               </p>
-              <p className="text-lg font-medium mt-1">Admin login</p>
-              <p className="text-sm text-muted mt-2">
+              <p className="text-lg font-semibold mt-1 font-display">Admin login</p>
+              <p className="text-sm text-muted mt-2 leading-relaxed">
                 Manage the question bank and view generation analytics.
               </p>
             </div>
             <input
+              id="admin-password-input"
               type="password"
               placeholder="Admin password"
               value={password}
@@ -68,22 +85,41 @@ export default function LoginPage({ onLogin }) {
                 setPassword(e.target.value)
                 setError('')
               }}
-              className="bg-ink border border-surfaceRaised rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-catDp"
+              className="bg-ink/60 border border-surfaceRaised rounded-xl px-4 py-3 text-sm input-glow"
             />
-            {error && <p className="text-danger text-xs">{error}</p>}
+            {error && (
+              <p
+                className={`text-danger text-xs transition-transform ${shakeError ? 'animate-[shake_0.3s_ease-in-out]' : ''}`}
+                style={shakeError ? { animation: 'shake 0.3s ease-in-out' } : {}}
+              >
+                {error}
+              </p>
+            )}
             <button
+              id="login-admin-btn"
               type="submit"
-              className="mt-auto bg-transparent border border-surfaceRaised rounded-lg py-2.5 font-medium hover:bg-surfaceRaised transition"
+              className="mt-auto bg-transparent border border-surfaceRaised/60 rounded-xl py-3 font-medium text-sm text-muted hover:text-bone hover:border-catDc/40 hover:bg-catDc/5 transition-all duration-200"
             >
               Sign in as admin
             </button>
           </form>
         </div>
 
-        <p className="text-center text-xs text-muted mt-8">
+        <p className="opacity-0 animate-slide-up-delay-3 text-center text-xs text-muted/60 mt-10">
           This is a demo-scale login for a college project, not a production auth system.
         </p>
       </div>
+
+      {/* Shake keyframes (inline for the error animation) */}
+      <style>{`
+        @keyframes shake {
+          0%, 100% { transform: translateX(0); }
+          20% { transform: translateX(-6px); }
+          40% { transform: translateX(6px); }
+          60% { transform: translateX(-4px); }
+          80% { transform: translateX(4px); }
+        }
+      `}</style>
     </div>
   )
 }

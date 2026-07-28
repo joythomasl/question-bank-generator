@@ -5,10 +5,9 @@ export default defineConfig({
   plugins: [react()],
   server: {
     proxy: {
-      // Forward /api/* to the local Express devServer during `npm run dev`
-      // In production Vercel routes api/ natively — this block is ignored.
+      // Proxy /api requests to local FastAPI backend during development
       '/api': {
-        target: 'http://localhost:3001',
+        target: 'http://127.0.0.1:8000',
         changeOrigin: true,
       },
     },

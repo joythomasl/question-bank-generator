@@ -2,6 +2,242 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ── Smooth dark scrollbar ──────────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(139, 142, 156, 0.25);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(139, 142, 156, 0.45);
+}
+
+/* ── Base body ──────────────────────────────────────────────────────────── */
 body {
   @apply bg-ink text-bone font-sans;
+  overflow-x: hidden;
+}
+
+/* ── Animated gradient orb background ───────────────────────────────────── */
+.bg-orbs::before,
+.bg-orbs::after {
+  content: '';
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.12;
+  pointer-events: none;
+  z-index: 0;
+}
+.bg-orbs::before {
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, #7C9EFF 0%, transparent 70%);
+  top: -10%;
+  left: -8%;
+  animation: orb-drift-1 18s ease-in-out infinite;
+}
+.bg-orbs::after {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, #C084FC 0%, transparent 70%);
+  bottom: -10%;
+  right: -8%;
+  animation: orb-drift-2 22s ease-in-out infinite;
+}
+
+@keyframes orb-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(60px, 40px) scale(1.1); }
+  66% { transform: translate(-30px, 70px) scale(0.95); }
+}
+@keyframes orb-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-50px, -30px) scale(1.08); }
+  66% { transform: translate(40px, -60px) scale(0.92); }
+}
+
+/* ── Glassmorphism card ─────────────────────────────────────────────────── */
+.glass-card {
+  background: rgba(27, 30, 42, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(233, 230, 222, 0.06);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+}
+
+.glass-card-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.glass-card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35), 0 0 20px rgba(124, 158, 255, 0.08);
+  border-color: rgba(124, 158, 255, 0.2);
+}
+
+/* ── Shimmer skeleton ───────────────────────────────────────────────────── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(34, 37, 47, 0.4) 25%,
+    rgba(34, 37, 47, 0.8) 50%,
+    rgba(34, 37, 47, 0.4) 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+  border-radius: 8px;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ── Stagger entrance helper (used via inline style --delay) ────────────── */
+.stagger-in {
+  opacity: 0;
+  animation: slide-up 0.45s ease-out forwards;
+  animation-delay: var(--delay, 0ms);
+}
+
+@keyframes slide-up {
+  0% { opacity: 0; transform: translateY(16px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Styled checkbox ────────────────────────────────────────────────────── */
+.styled-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 2px solid rgba(139, 142, 156, 0.4);
+  background: rgba(18, 20, 26, 0.6);
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+.styled-checkbox:hover {
+  border-color: rgba(124, 158, 255, 0.6);
+  box-shadow: 0 0 8px rgba(124, 158, 255, 0.15);
+}
+.styled-checkbox:checked {
+  background: linear-gradient(135deg, #7C9EFF, #C084FC);
+  border-color: transparent;
+}
+.styled-checkbox:checked::after {
+  content: '✓';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  color: #12141A;
+}
+
+/* ── Animated bar fill ──────────────────────────────────────────────────── */
+.bar-animate {
+  animation: bar-grow 0.8s ease-out forwards;
+}
+@keyframes bar-grow {
+  0% { width: 0%; }
+}
+
+/* ── Frosted bottom bar ─────────────────────────────────────────────────── */
+.frosted-bar {
+  background: rgba(27, 30, 42, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(233, 230, 222, 0.06);
+  box-shadow: 0 -4px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* ── Gradient border button ─────────────────────────────────────────────── */
+.btn-gradient {
+  background: linear-gradient(135deg, #7C9EFF 0%, #38BDF8 100%);
+  color: #12141A;
+  font-weight: 600;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(124, 158, 255, 0.25);
+}
+.btn-gradient:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 25px rgba(124, 158, 255, 0.35);
+}
+.btn-gradient:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(124, 158, 255, 0.2);
+}
+
+/* ── Pill button ────────────────────────────────────────────────────────── */
+.pill-active {
+  background: linear-gradient(135deg, rgba(124,158,255,0.15), rgba(192,132,252,0.15));
+  border-color: rgba(124, 158, 255, 0.4);
+  color: #E9E6DE;
+  box-shadow: 0 0 12px rgba(124, 158, 255, 0.1);
+}
+.pill-inactive {
+  border-color: rgba(34, 37, 47, 0.8);
+  color: #8B8E9C;
+  transition: all 0.2s ease;
+}
+.pill-inactive:hover {
+  border-color: rgba(124, 158, 255, 0.25);
+  color: #E9E6DE;
+  background: rgba(124, 158, 255, 0.05);
+}
+
+/* ── Focus ring for inputs ──────────────────────────────────────────────── */
+.input-glow {
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.input-glow:focus {
+  border-color: rgba(124, 158, 255, 0.5);
+  box-shadow: 0 0 0 3px rgba(124, 158, 255, 0.1), 0 0 15px rgba(124, 158, 255, 0.08);
+  outline: none;
+}
+
+/* ── Copy button inside code blocks ─────────────────────────────────────── */
+.copy-btn {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.code-block:hover .copy-btn {
+  opacity: 1;
+}
+
+/* ── Slide panel backdrop ───────────────────────────────────────────────── */
+.panel-backdrop {
+  animation: backdrop-in 0.3s ease-out forwards;
+}
+@keyframes backdrop-in {
+  0% { opacity: 0; backdrop-filter: blur(0px); }
+  100% { opacity: 1; backdrop-filter: blur(4px); }
+}
+
+/* ── Stat card gradient top border ──────────────────────────────────────── */
+.stat-card {
+  position: relative;
+  overflow: hidden;
+}
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--stat-color-1, #7C9EFF), var(--stat-color-2, #C084FC));
+  border-radius: 3px 3px 0 0;
 }

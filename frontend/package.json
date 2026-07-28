@@ -1,17 +1,16 @@
 {
   "name": "question-bank-portal",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"vite\" \"node devServer.js\" --names \"vite,api\" --prefix-colors \"cyan,yellow\"",
+    "dev": "concurrently \"vite\" \"python -m uvicorn backend.main:app --app-dir .. --reload --port 8000\" --names \"vite,api\" --prefix-colors \"cyan,yellow\"",
     "dev:vite": "vite",
-    "dev:api": "node devServer.js",
+    "dev:api": "python -m uvicorn backend.main:app --app-dir .. --reload --port 8000",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
-    "openai": "^4.56.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
@@ -20,7 +19,6 @@
     "autoprefixer": "^10.4.19",
     "concurrently": "^8.2.2",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.4",
     "vite": "^5.3.1"
