@@ -99,7 +99,45 @@ export function useQuestions(params = {}) {
 
   useEffect(() => {
     checkHealthAndFetch()
-  }, [checkHealthAndFetch])
+
+    // Auto-refresh questions every 30 seconds so newly generated questions appear automatically
+    const pollInterval = setInterval(() => {
+      // Silent refetch (without toggling full page loading spinner)
+      const fetchSilent = async () => {
+        try {
+          const query = new URLSearchParams()
+          if (sourceSite && sourceSite !== 'All') query.set('source_site', sourceSite)
+          if (category && category !== 'All') query.set('category', category)
+          if (difficulty && difficulty !== 'All') query.set('difficulty', difficulty)
+          if (company && company !== 'All') query.set('company', company)
+          if (search) query.set('search', search)
+          query.set('limit', String(limit))
+          query.set('offset', String(offset))
+
+          const [qRes, statsRes] = await Promise.all([
+            fetch(`${API_BASE_URL}/api/questions?${query.toString()}`),
+            fetch(`${API_BASE_URL}/api/stats`)
+          ])
+
+          if (qRes.ok) {
+            const qData = await qRes.json()
+            setQuestions(qData.items || [])
+            setTotal(qData.total || 0)
+          }
+
+          if (statsRes.ok) {
+            const sData = await statsRes.json()
+            setStats(sData)
+          }
+        } catch (e) {
+          // Silent catch for background poll
+        }
+      }
+      fetchSilent()
+    }, 30000)
+
+    return () => clearInterval(pollInterval)
+  }, [checkHealthAndFetch, sourceSite, category, difficulty, company, search, limit, offset])
 
   return {
     questions,
