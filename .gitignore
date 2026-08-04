@@ -7,6 +7,9 @@ __pycache__/
 pipeline/data/*.json
 pipeline/data/*.db
 
+# Admin curation state (local-fallback mode only — runtime-generated, not source data)
+backend/admin_overrides.json
+
 # Node / frontend
 frontend/node_modules/
 frontend/dist/

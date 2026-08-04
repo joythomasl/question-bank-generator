@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react'
+import { XIcon, CopyIcon, CheckIcon, StarIcon, CheckCircleIcon } from './icons.jsx'
+import CompanyLogo from './CompanyLogo.jsx'
+import { getCategoryColor, getSourceColor } from '../utils/colors.js'
 
 const DIFFICULTY_ROLE = { Easy: 'verified', Medium: 'warn', Hard: 'danger' }
 const DIFFICULTY_TEXT_CLASS = {
@@ -7,15 +10,14 @@ const DIFFICULTY_TEXT_CLASS = {
   danger: 'text-danger',
 }
 
-const ACCENT_COLORS = {
-  'Dynamic Programming': '#7C9EFF',
-  'Backtracking': '#F0806B',
-  'Greedy': '#34D399',
-  'Divide and Conquer': '#C084FC',
-  'Two Pointers': '#38BDF8',
-}
+// Mirrors UserPortal's filter — competitive-programming questions are tagged
+// with their own source site as a placeholder "company" when none is known.
+const PLACEHOLDER_COMPANY_NAMES = new Set([
+  'codeforces', 'cses', 'geeksforgeeks', 'leetcode', 'hackerrank', 'general',
+])
+const isRealCompany = (name) => Boolean(name) && !PLACEHOLDER_COMPANY_NAMES.has(name.toLowerCase())
 
-export default function QuestionDetail({ question, onClose }) {
+export default function QuestionDetail({ question, onClose, bookmarked, solved, onToggleBookmark, onToggleSolved }) {
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -34,10 +36,11 @@ export default function QuestionDetail({ question, onClose }) {
   if (!question) return null
 
   const diffClass = DIFFICULTY_TEXT_CLASS[DIFFICULTY_ROLE[question.difficulty]] || 'text-muted'
-  const accentColor = ACCENT_COLORS[question.category] || '#7C9EFF'
+  const accentColor = getCategoryColor(question.category)
   const sourceSite = question.source_site || question.source || 'codeforces'
   const sourceUrl = question.source_url || '#'
-  const comps = question.companies || (question.company ? [question.company] : [])
+  const sourceColor = getSourceColor(sourceSite)
+  const comps = (question.companies || (question.company ? [question.company] : [])).filter(isRealCompany)
 
   const pythonSol = question.solution_python || question.solutions?.python
   const javaSol = question.solution_java || question.solutions?.java
@@ -51,71 +54,94 @@ export default function QuestionDetail({ question, onClose }) {
     <div className="fixed inset-0 z-50 flex justify-end">
       {/* Backdrop */}
       <div
-        className={`absolute inset-0 bg-black/60 transition-opacity duration-300 ${
+        className={`absolute inset-0 bg-black/50 transition-opacity duration-300 ${
           visible ? 'opacity-100' : 'opacity-0'
         }`}
-        style={{ backdropFilter: visible ? 'blur(4px)' : 'blur(0px)' }}
+        style={{ backdropFilter: visible ? 'blur(6px)' : 'blur(0px)' }}
         onClick={handleClose}
       />
 
       {/* Panel */}
       <div
-        className={`relative w-full max-w-xl bg-surface/95 h-full overflow-y-auto flex flex-col shadow-glass transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] terminal-window ${
+        className={`hud-sheet relative w-full max-w-xl h-full overflow-y-auto flex flex-col transition-transform duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           visible ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        {/* Futuristic Terminal Window Header */}
-        <div className="terminal-header px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <span className="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
-            <span className="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
-            <span className="w-3 h-3 rounded-full bg-green-500/80 inline-block"></span>
-            <span className="font-mono text-xs text-muted ml-3 uppercase tracking-wider">guest@console:~/catalog$</span>
+        {/* Panel header */}
+        <div className="hud-sheet-header sticky top-0 z-10 px-7 py-5 flex items-center justify-between">
+          <span className="data-readout text-xs text-muted font-medium uppercase tracking-wide">
+            Question details
+          </span>
+          <div className="flex items-center gap-1">
+            {onToggleSolved && (
+              <button
+                onClick={onToggleSolved}
+                title={solved ? 'Marked solved' : 'Mark as solved'}
+                className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 ${solved ? 'text-verified' : 'text-muted hover:text-verified'}`}
+              >
+                <CheckCircleIcon filled={solved} />
+              </button>
+            )}
+            {onToggleBookmark && (
+              <button
+                onClick={onToggleBookmark}
+                title={bookmarked ? 'Bookmarked' : 'Bookmark'}
+                className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 ${bookmarked ? 'text-warn' : 'text-muted hover:text-warn'}`}
+              >
+                <StarIcon filled={bookmarked} />
+              </button>
+            )}
+            <button
+              onClick={handleClose}
+              aria-label="Close"
+              className="text-muted hover:text-bone w-8 h-8 rounded-full flex items-center justify-center hover:bg-veil/8 transition-all duration-200"
+            >
+              <XIcon />
+            </button>
           </div>
-          <button
-            onClick={handleClose}
-            className="text-muted hover:text-bone text-lg font-mono leading-none hover:bg-surfaceRaised/60 w-6 h-6 rounded flex items-center justify-center transition-all duration-200"
-          >
-            ESC
-          </button>
         </div>
 
         {/* Content Box */}
-        <div className="p-7 flex flex-col gap-7 overflow-y-auto">
+        <div className="p-7 pt-2 flex flex-col gap-7 overflow-y-auto">
           {/* Main Info */}
           <div>
-            <span className="font-mono text-xs text-catDp uppercase tracking-widest">[{question.id.toUpperCase()}]</span>
-            <h2 className="text-xl font-bold mt-2 font-display text-bone leading-snug">{question.title}</h2>
-            
+            <h2 className="text-xl font-semibold mt-2 font-display text-bone leading-snug">{question.title}</h2>
+
             <div className="flex flex-wrap gap-2 mt-4">
               {/* Source Badge with link */}
               <a
                 href={sourceUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[10px] px-2.5 py-1 rounded bg-catDp/10 text-catDp border border-catDp/30 hover:bg-catDp/20 transition-colors font-mono uppercase tracking-wider"
+                className="flex items-center gap-1.5 text-[11px] font-medium pl-1.5 pr-2.5 py-1 rounded-full border transition-colors capitalize"
+                style={{ color: sourceColor, borderColor: `${sourceColor}4D`, background: `${sourceColor}1A` }}
               >
+                <CompanyLogo name={sourceSite} color={sourceColor} size={15} />
                 {sourceSite} ↗
               </a>
-              <span className="text-[10px] px-2.5 py-1 rounded bg-ink/60 text-muted border border-white/5 font-mono uppercase tracking-wider">
+              <span
+                className="text-[11px] font-medium px-2.5 py-1 rounded-full border"
+                style={{ color: accentColor, borderColor: `${accentColor}4D`, background: `${accentColor}1A` }}
+              >
                 {question.category}
               </span>
-              <span className={`text-[10px] px-2.5 py-1 rounded bg-ink/60 ${diffClass} border border-white/5 font-mono uppercase tracking-wider`}>
+              <span className={`text-[11px] font-medium px-2.5 py-1 rounded-full bg-veil/5 ${diffClass} border border-line/8`}>
                 {question.difficulty}
               </span>
               {comps.map((c) => (
-                <span key={c} className="text-[10px] px-2.5 py-1 rounded bg-ink/60 text-muted border border-white/5 font-mono uppercase tracking-wider">
-                  🏢 {c}
+                <span key={c} className="flex items-center gap-1.5 text-[11px] font-medium pl-1.5 pr-2.5 py-1 rounded-full bg-veil/5 text-muted border border-line/8">
+                  <CompanyLogo name={c} size={15} />
+                  {c}
                 </span>
               ))}
               {question.is_new && (
-                <span className="text-emerald-400 text-[9px] font-mono font-bold uppercase tracking-wider border border-emerald-500/50 rounded px-2 py-0.5 bg-emerald-500/20 shadow-[0_0_10px_rgba(16,185,129,0.3)] animate-pulse">
-                  NEW
+                <span className="text-emerald-400 text-[11px] font-semibold rounded-full px-2.5 py-1 bg-emerald-500/15 border border-emerald-500/40">
+                  New
                 </span>
               )}
               {question.verified && (
-                <span className="text-emerald-400 text-[9px] font-mono uppercase tracking-wider border border-emerald-500/30 rounded px-2 py-0.5 bg-emerald-500/10">
-                  VERIFIED
+                <span className="text-emerald-400 text-[11px] font-medium rounded-full px-2.5 py-1 bg-emerald-500/10 border border-emerald-500/30">
+                  Verified
                 </span>
               )}
             </div>
@@ -189,14 +215,14 @@ export default function QuestionDetail({ question, onClose }) {
                   return (
                     <div
                       key={i}
-                      className="stagger-in bg-ink/60 rounded-xl p-3 font-mono text-xs flex flex-col gap-1 border border-white/5"
+                      className="stagger-in hud-code rounded-2xl p-3 font-mono text-xs flex flex-col gap-1"
                       style={{ '--delay': `${i * 50}ms` }}
                     >
                       <div className="flex items-center justify-between">
                         <span className="text-muted text-[10px] uppercase tracking-wider">{tc.edge_case_type || 'case'}</span>
                         {/* Origin badge */}
                         <span
-                          className={`text-[9px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded border ${
+                          className={`text-[9px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded-full border ${
                             origin === 'scraped'
                               ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
                               : 'bg-indigo-500/10 text-indigo-400 border-indigo-500/30'
@@ -227,9 +253,9 @@ function Section({ title, accentColor, children }) {
     <section className="relative pl-4">
       <div
         className="absolute left-0 top-0 bottom-0 w-[3px] rounded-full"
-        style={{ backgroundColor: accentColor, opacity: 0.4 }}
+        style={{ backgroundColor: accentColor, opacity: 0.45 }}
       />
-      <h3 className="font-mono text-xs text-muted uppercase tracking-widest mb-3">{title}</h3>
+      <h3 className="text-xs text-muted font-semibold uppercase tracking-wide mb-3">{title}</h3>
       {children}
     </section>
   )
@@ -250,16 +276,17 @@ function CodeBlock({ children, code }) {
   }
 
   return (
-    <div className="code-block relative group">
-      <div className="bg-ink/80 rounded-xl p-4 font-mono text-xs overflow-x-auto border border-white/5">
+    <div className="relative group">
+      <div className="hud-code rounded-2xl p-4 font-mono text-xs overflow-x-auto">
         {children}
       </div>
       {code && (
         <button
           onClick={handleCopy}
-          className="copy-btn absolute top-2 right-2 text-[10px] font-mono text-muted bg-surfaceRaised/80 rounded-md px-2 py-1 hover:text-bone transition-colors"
+          className="absolute top-2.5 right-2.5 flex items-center gap-1.5 text-[10px] font-medium text-muted bg-veil/8 border border-line/10 rounded-full px-2.5 py-1 hover:text-bone hover:bg-veil/12 transition-colors"
         >
-          {copied ? '✓ Copied' : 'Copy'}
+          {copied ? <CheckIcon /> : <CopyIcon />}
+          {copied ? 'Copied' : 'Copy'}
         </button>
       )}
     </div>
@@ -274,11 +301,11 @@ function SolutionViewer({ pythonSol, javaSol, accentColor }) {
   return (
     <Section title="Solution" accentColor={accentColor}>
       <div className="flex items-center justify-between mb-3">
-        <div className="flex gap-1 bg-ink/60 rounded-lg p-0.5 border border-white/5">
+        <div className="flex gap-1 bg-veil/5 rounded-full p-1 border border-line/8">
           <button
             onClick={() => setLang('python')}
-            className={`text-xs px-3 py-1.5 rounded-md transition-all duration-200 ${
-              lang === 'python' ? 'bg-surfaceRaised text-bone shadow-sm' : 'text-muted hover:text-bone'
+            className={`text-xs px-3 py-1.5 rounded-full transition-all duration-200 ${
+              lang === 'python' ? 'bg-veil/12 text-bone' : 'text-muted hover:text-bone'
             }`}
           >
             Python
@@ -286,8 +313,8 @@ function SolutionViewer({ pythonSol, javaSol, accentColor }) {
           <button
             onClick={() => hasJava && setLang('java')}
             disabled={!hasJava}
-            className={`text-xs px-3 py-1.5 rounded-md transition-all duration-200 ${
-              lang === 'java' ? 'bg-surfaceRaised text-bone shadow-sm' : 'text-muted hover:text-bone'
+            className={`text-xs px-3 py-1.5 rounded-full transition-all duration-200 ${
+              lang === 'java' ? 'bg-veil/12 text-bone' : 'text-muted hover:text-bone'
             } ${!hasJava ? 'opacity-40 cursor-not-allowed' : ''}`}
           >
             Java{!hasJava ? ' (pending)' : ''}

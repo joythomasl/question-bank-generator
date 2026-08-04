@@ -78,6 +78,51 @@ def load_local_fallback_questions():
 
     return LOCAL_QUESTIONS_CACHE
 
+
+# ---------------------------------------------------------------------------
+# Admin overrides (local-fallback mode only)
+#
+# When Supabase isn't configured, admin edits/removals can't be written to a
+# real database — instead they're recorded here as a small overrides layer
+# and re-applied on top of the scraped data on every read. This is what makes
+# admin curation visible to every client hitting /api/questions (previously
+# this lived in browser localStorage, so only the admin's own browser ever
+# saw it — the public catalog never changed). When Supabase IS configured,
+# admin endpoints mutate rows directly and this layer is unused.
+# ---------------------------------------------------------------------------
+ADMIN_OVERRIDES_PATH = os.path.join(os.path.dirname(__file__), "admin_overrides.json")
+
+def load_admin_overrides() -> Dict[str, Any]:
+    if os.path.exists(ADMIN_OVERRIDES_PATH):
+        try:
+            with open(ADMIN_OVERRIDES_PATH, "r", encoding="utf-8") as f:
+                data = json.load(f)
+                return {"removed": data.get("removed", []), "edits": data.get("edits", {})}
+        except Exception as e:
+            print(f"[Backend] Error loading admin overrides: {e}")
+    return {"removed": [], "edits": {}}
+
+def save_admin_overrides(overrides: Dict[str, Any]):
+    try:
+        with open(ADMIN_OVERRIDES_PATH, "w", encoding="utf-8") as f:
+            json.dump(overrides, f, indent=2)
+    except Exception as e:
+        print(f"[Backend] Error saving admin overrides: {e}")
+
+def apply_admin_overrides(questions: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    overrides = load_admin_overrides()
+    removed = set(overrides["removed"])
+    edits = overrides["edits"]
+    result = []
+    for q in questions:
+        qid = q.get("id")
+        if qid in removed:
+            continue
+        if qid in edits:
+            q = {**q, **edits[qid]}
+        result.append(q)
+    return result
+
 # Background pipeline runner state
 PIPELINE_RUNNING = False
 LAST_PIPELINE_RUN_TIME = None
@@ -125,6 +170,10 @@ def startup_event():
 # ---------------------------------------------------------------------------
 class ExportRequest(BaseModel):
     ids: List[str]
+
+
+class QuestionEditRequest(BaseModel):
+    difficulty: Optional[str] = None
 
 
 # ---------------------------------------------------------------------------
@@ -205,7 +254,7 @@ def list_questions(
             print(f"[Backend] Error querying Supabase: {e}")
 
     # Fallback in-memory querying
-    questions = load_local_fallback_questions()
+    questions = apply_admin_overrides(load_local_fallback_questions())
     filtered = []
 
     for q in questions:
@@ -256,7 +305,7 @@ def get_question_by_id(question_id: str = Path(..., description="Target question
             print(f"[Backend] Error getting question by ID: {e}")
 
     # Fallback
-    questions = load_local_fallback_questions()
+    questions = apply_admin_overrides(load_local_fallback_questions())
     for q in questions:
         if q.get("id") == question_id or q.get("source_id") == question_id:
             return q
@@ -310,7 +359,7 @@ def get_stats():
             print(f"[Backend] Error fetching stats: {e}")
 
     # Fallback stats
-    questions = load_local_fallback_questions()
+    questions = apply_admin_overrides(load_local_fallback_questions())
     total = len(questions)
     verified_count = sum(1 for q in questions if q.get("verified"))
     verified_pct = round((verified_count / total * 100), 1) if total > 0 else 0.0
@@ -364,7 +413,7 @@ def get_companies():
             print(f"[Backend] Error fetching companies: {e}")
 
     # Fallback
-    questions = load_local_fallback_questions()
+    questions = apply_admin_overrides(load_local_fallback_questions())
     counts: Dict[str, int] = {}
     for q in questions:
         comps = q.get("companies") or ([q.get("company")] if q.get("company") else [])
@@ -391,6 +440,82 @@ def export_questions(req: ExportRequest):
             print(f"[Backend] Error exporting questions: {e}")
 
     # Fallback
-    questions = load_local_fallback_questions()
+    questions = apply_admin_overrides(load_local_fallback_questions())
     target_ids = set(req.ids)
     return [q for q in questions if q.get("id") in target_ids or q.get("source_id") in target_ids]
+
+
+# ---------------------------------------------------------------------------
+# Admin mutation endpoints
+#
+# These are what the admin portal actually uses to curate the catalog. They
+# write through to Supabase when it's configured; otherwise they update the
+# local overrides layer, which every read endpoint above applies — so a
+# change made here is immediately visible to any client hitting /api/questions,
+# not just the browser that made it.
+# ---------------------------------------------------------------------------
+@app.patch("/api/admin/questions/{question_id:path}")
+def admin_edit_question(question_id: str, req: QuestionEditRequest):
+    """Applies a partial update (currently just difficulty) to a question."""
+    fields = {k: v for k, v in req.dict().items() if v is not None}
+    if not fields:
+        raise HTTPException(status_code=400, detail="No fields to update")
+
+    client = get_supabase_client()
+    if client:
+        try:
+            res = client.table("questions").update(fields).eq("id", question_id).execute()
+            if not res.data:
+                raise HTTPException(status_code=404, detail="Question not found")
+            return {"status": "ok", "id": question_id, "fields": fields}
+        except HTTPException:
+            raise
+        except Exception as e:
+            print(f"[Backend] Error editing question in Supabase: {e}")
+            raise HTTPException(status_code=500, detail="Failed to update question")
+
+    # Fallback: record the edit in the local overrides layer
+    questions = load_local_fallback_questions()
+    if not any(q.get("id") == question_id for q in questions):
+        raise HTTPException(status_code=404, detail="Question not found")
+
+    overrides = load_admin_overrides()
+    overrides["edits"][question_id] = {**overrides["edits"].get(question_id, {}), **fields}
+    save_admin_overrides(overrides)
+    return {"status": "ok", "id": question_id, "fields": fields}
+
+
+@app.delete("/api/admin/questions/{question_id:path}")
+def admin_remove_question(question_id: str):
+    """Removes a question from the public catalog."""
+    client = get_supabase_client()
+    if client:
+        try:
+            client.table("questions").delete().eq("id", question_id).execute()
+            return {"status": "ok", "id": question_id}
+        except Exception as e:
+            print(f"[Backend] Error removing question in Supabase: {e}")
+            raise HTTPException(status_code=500, detail="Failed to remove question")
+
+    # Fallback: record the removal in the local overrides layer
+    questions = load_local_fallback_questions()
+    if not any(q.get("id") == question_id for q in questions):
+        raise HTTPException(status_code=404, detail="Question not found")
+
+    overrides = load_admin_overrides()
+    if question_id not in overrides["removed"]:
+        overrides["removed"].append(question_id)
+    save_admin_overrides(overrides)
+    return {"status": "ok", "id": question_id}
+
+
+@app.post("/api/admin/reset")
+def admin_reset_overrides():
+    """
+    Clears all local admin edits/removals, restoring the raw scraped data.
+    No effect when running against Supabase — there, edits are direct row
+    mutations rather than a separate overrides layer, so there's nothing to
+    reset back to short of restoring a database backup.
+    """
+    save_admin_overrides({"removed": [], "edits": {}})
+    return {"status": "ok"}

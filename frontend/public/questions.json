@@ -1,5 +1,372 @@
 [
   {
+    "id": "leetcode:3sum-closest",
+    "title": "3Sum Closest",
+    "source_site": "leetcode",
+    "source_url": "https://leetcode.com/problems/3sum-closest/",
+    "source_id": "3sum-closest",
+    "category": "Two Pointers",
+    "difficulty": "Medium",
+    "companies": [
+      "Amazon",
+      "Bloomberg",
+      "Google",
+      "Meta",
+      "Microsoft"
+    ],
+    "company": "Amazon",
+    "problem_statement": "Solve problem: 3Sum Closest",
+    "examples": [
+      {
+        "input": "{\"nums\": [-1, 2, 1, -4], \"target\": 1}",
+        "output": "2",
+        "explanation": "Input {'nums': [-1, 2, 1, -4], 'target': 1} produces output 2."
+      }
+    ],
+    "constraints": [
+      "1 <= N <= 10^5"
+    ],
+    "test_cases": [
+      {
+        "input": {
+          "nums": [
+            -1,
+            2,
+            1,
+            -4
+          ],
+          "target": 1
+        },
+        "expected_output": 2,
+        "edge_case_type": "empty_or_minimal_input",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "nums": [
+            0,
+            0,
+            0
+          ],
+          "target": 1
+        },
+        "expected_output": 0,
+        "edge_case_type": "single_element",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "nums": [
+            1,
+            1,
+            1,
+            0
+          ],
+          "target": -100
+        },
+        "expected_output": 2,
+        "edge_case_type": "all_duplicates",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "nums": [
+            1,
+            1,
+            -1,
+            -1,
+            3
+          ],
+          "target": -1
+        },
+        "expected_output": -1,
+        "edge_case_type": "sorted_ascending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "nums": [
+            1,
+            2,
+            3
+          ],
+          "target": 6
+        },
+        "expected_output": 6,
+        "edge_case_type": "sorted_descending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "nums": [
+            1,
+            2,
+            3
+          ],
+          "target": 5
+        },
+        "expected_output": 6,
+        "edge_case_type": "negative_numbers",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "nums": [
+            1,
+            2,
+            3
+          ],
+          "target": 6
+        },
+        "expected_output": 6,
+        "edge_case_type": "max_constraint_size",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "nums": [
+            1,
+            2,
+            3
+          ],
+          "target": 7
+        },
+        "expected_output": 6,
+        "edge_case_type": "boundary_value",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "nums": [
+            1,
+            2,
+            3
+          ],
+          "target": 8
+        },
+        "expected_output": 6,
+        "edge_case_type": "typical_case",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "nums": [
+            1,
+            2,
+            3
+          ],
+          "target": 9
+        },
+        "expected_output": 6,
+        "edge_case_type": "adversarial_case",
+        "origin": "generated"
+      }
+    ],
+    "solution_python": "def solve(nums, target):\n    nums.sort()\n    closest = float('inf')\n    for i in range(len(nums) - 2):\n        l, r = i + 1, len(nums) - 1\n        while l < r:\n            s = nums[i] + nums[l] + nums[r]\n            if abs(target - s) < abs(target - closest):\n                closest = s\n            if s < target:\n                l += 1\n            elif s > target:\n                r -= 1\n            else:\n                return s\n    return closest\n",
+    "solution_java": "import java.util.*;\npublic class Solution {\n    public static int solve(int[] nums, int target) {\n        Arrays.sort(nums);\n        int closest = nums[0] + nums[1] + nums[2];\n        for (int i = 0; i < nums.length - 2; i++) {\n            int l = i + 1, r = nums.length - 1;\n            while (l < r) {\n                int sum = nums[i] + nums[l] + nums[r];\n                if (Math.abs(target - sum) < Math.abs(target - closest)) {\n                    closest = sum;\n                }\n                if (sum < target) {\n                    l++;\n                } else if (sum > target) {\n                    r--;\n                } else {\n                    return sum;\n                }\n            }\n        }\n        return closest;\n    }\n}\n",
+    "solutions": {
+      "python": "def solve(nums, target):\n    nums.sort()\n    closest = float('inf')\n    for i in range(len(nums) - 2):\n        l, r = i + 1, len(nums) - 1\n        while l < r:\n            s = nums[i] + nums[l] + nums[r]\n            if abs(target - s) < abs(target - closest):\n                closest = s\n            if s < target:\n                l += 1\n            elif s > target:\n                r -= 1\n            else:\n                return s\n    return closest\n",
+      "java": "import java.util.*;\npublic class Solution {\n    public static int solve(int[] nums, int target) {\n        Arrays.sort(nums);\n        int closest = nums[0] + nums[1] + nums[2];\n        for (int i = 0; i < nums.length - 2; i++) {\n            int l = i + 1, r = nums.length - 1;\n            while (l < r) {\n                int sum = nums[i] + nums[l] + nums[r];\n                if (Math.abs(target - sum) < Math.abs(target - closest)) {\n                    closest = sum;\n                }\n                if (sum < target) {\n                    l++;\n                } else if (sum > target) {\n                    r--;\n                } else {\n                    return sum;\n                }\n            }\n        }\n        return closest;\n    }\n}\n"
+    },
+    "verified": true,
+    "python_verified": true,
+    "java_verified": true,
+    "partial_scrape": false,
+    "is_new": true,
+    "created_at": "2026-07-28 10:43:15 UTC"
+  },
+  {
+    "id": "geeksforgeeks:indexes-of-subarray-sum-1587115620",
+    "title": "Indexes Of Subarray Sum 1587115620",
+    "source_site": "geeksforgeeks",
+    "source_url": "https://www.geeksforgeeks.org/problems/indexes-of-subarray-sum-1587115620",
+    "source_id": "indexes-of-subarray-sum-1587115620",
+    "category": "Dynamic Programming",
+    "difficulty": "Medium",
+    "companies": [],
+    "company": "General",
+    "problem_statement": "GeeksforGeeks problem: Indexes Of Subarray Sum 1587115620",
+    "examples": [
+      {
+        "input": "{\"arr\": [1, 2, 3, 7, 5], \"target\": 12}",
+        "output": "[2, 4]",
+        "explanation": "Input {'arr': [1, 2, 3, 7, 5], 'target': 12} produces output [2, 4]."
+      }
+    ],
+    "constraints": [
+      "1 <= N <= 10^5"
+    ],
+    "test_cases": [
+      {
+        "input": {
+          "arr": [
+            1,
+            2,
+            3,
+            7,
+            5
+          ],
+          "target": 12
+        },
+        "expected_output": [
+          2,
+          4
+        ],
+        "edge_case_type": "empty_or_minimal_input",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10
+          ],
+          "target": 15
+        },
+        "expected_output": [
+          1,
+          5
+        ],
+        "edge_case_type": "single_element",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            7,
+            2,
+            1
+          ],
+          "target": 10
+        },
+        "expected_output": [
+          1,
+          3
+        ],
+        "edge_case_type": "all_duplicates",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            1,
+            2
+          ],
+          "target": 5
+        },
+        "expected_output": [
+          -1
+        ],
+        "edge_case_type": "sorted_ascending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            5
+          ],
+          "target": 5
+        },
+        "expected_output": [
+          1,
+          1
+        ],
+        "edge_case_type": "sorted_descending",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            5
+          ],
+          "target": 5
+        },
+        "expected_output": [
+          1,
+          1
+        ],
+        "edge_case_type": "negative_numbers",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            6
+          ],
+          "target": 6
+        },
+        "expected_output": [
+          1,
+          1
+        ],
+        "edge_case_type": "max_constraint_size",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            7
+          ],
+          "target": 7
+        },
+        "expected_output": [
+          1,
+          1
+        ],
+        "edge_case_type": "boundary_value",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            8
+          ],
+          "target": 8
+        },
+        "expected_output": [
+          1,
+          1
+        ],
+        "edge_case_type": "typical_case",
+        "origin": "generated"
+      },
+      {
+        "input": {
+          "arr": [
+            9
+          ],
+          "target": 9
+        },
+        "expected_output": [
+          1,
+          1
+        ],
+        "edge_case_type": "adversarial_case",
+        "origin": "generated"
+      }
+    ],
+    "solution_python": "def solve(arr, target):\n    n = len(arr)\n    l = 0\n    curr_sum = 0\n    for r in range(n):\n        curr_sum += arr[r]\n        while curr_sum > target and l < r:\n            curr_sum -= arr[l]\n            l += 1\n        if curr_sum == target:\n            return [l + 1, r + 1]\n    return [-1]\n",
+    "solution_java": "public class Solution {\n    public static int[] solve(int[] arr, int target) {\n        int n = arr.length;\n        int l = 0;\n        int currSum = 0;\n        for (int r = 0; r < n; r++) {\n            currSum += arr[r];\n            while (currSum > target && l < r) {\n                currSum -= arr[l];\n                l++;\n            }\n            if (currSum == target) {\n                return new int[]{l + 1, r + 1};\n            }\n        }\n        return new int[]{-1};\n    }\n}\n",
+    "solutions": {
+      "python": "def solve(arr, target):\n    n = len(arr)\n    l = 0\n    curr_sum = 0\n    for r in range(n):\n        curr_sum += arr[r]\n        while curr_sum > target and l < r:\n            curr_sum -= arr[l]\n            l += 1\n        if curr_sum == target:\n            return [l + 1, r + 1]\n    return [-1]\n",
+      "java": "public class Solution {\n    public static int[] solve(int[] arr, int target) {\n        int n = arr.length;\n        int l = 0;\n        int currSum = 0;\n        for (int r = 0; r < n; r++) {\n            currSum += arr[r];\n            while (currSum > target && l < r) {\n                currSum -= arr[l];\n                l++;\n            }\n            if (currSum == target) {\n                return new int[]{l + 1, r + 1};\n            }\n        }\n        return new int[]{-1};\n    }\n}\n"
+    },
+    "verified": true,
+    "python_verified": true,
+    "java_verified": true,
+    "partial_scrape": true,
+    "is_new": true,
+    "created_at": "2026-07-28 10:43:15 UTC"
+  },
+  {
     "id": "hackerrank:kangaroo",
     "title": "Number Line Jumps",
     "source_site": "hackerrank",
@@ -11714,5 +12081,680 @@
     "verified": true,
     "partial_scrape": false,
     "is_new": false
+  },
+  {
+    "id": "codeforces:2237F",
+    "title": "Paint the Array",
+    "source_site": "codeforces",
+    "source_url": "https://codeforces.com/problemset/problem/2237/F",
+    "source_id": "2237F",
+    "category": "Greedy",
+    "difficulty": "Hard",
+    "companies": [
+      "General"
+    ],
+    "company": "General",
+    "problem_statement": "You are given an array `target` of $n$ integers and a positive integer $m$ ($1 \\le m \\le n$). You start with an array $A$ of length $n$ initialized entirely with $0$s.\n\nIn one painting operation, you choose a starting index $l$ ($0 \\le l \\le n - m$) and paint the interval of length $m$ starting at $l$. Specifically, for each $1 \\le i \\le m$, position $l + i - 1$ is assigned the value $i$. If a position is painted multiple times by different operations, its final value is determined by the most recent operation applied to it.\n\nDetermine the minimum number of painting operations required to make array $A$ identical to `target`. If it is impossible to construct `target`, return `-1`.",
+    "examples": [
+      {
+        "input": "{\"target\": [1, 2, 1, 2, 3], \"m\": 3}",
+        "output": "2",
+        "explanation": "Step 1: Paint at starting index l = 0. Array A becomes [1, 2, 3, 0, 0].\nStep 2: Paint at starting index l = 2. Indices 2, 3, 4 are painted with values 1, 2, 3. Array A becomes [1, 2, 1, 2, 3].\nBoth operations are valid, matching the target array in 2 operations."
+      },
+      {
+        "input": "{\"target\": [1, 2, 2, 3], \"m\": 3}",
+        "output": "-1",
+        "explanation": "To get target[1] = 2, an operation must start at l = 0 (placing 2 at index 1). To get target[2] = 2, an operation must start at l = 1 (placing 2 at index 2).\nOperation at l = 0 covers index 2 with value 3, so l = 1 must be performed after l = 0.\nOperation at l = 1 covers index 1 with value 1, so l = 0 must be performed after l = 1.\nThis creates a cyclic dependency (0 must precede 1, and 1 must precede 0), making it impossible."
+      }
+    ],
+    "constraints": [
+      "1 <= n <= 2000",
+      "1 <= m <= n",
+      "0 <= target[i] <= m for all 0 <= i < n"
+    ],
+    "test_cases": [
+      {
+        "input": {
+          "target": [
+            1
+          ],
+          "m": 1
+        },
+        "expected_output": 1,
+        "edge_case_type": "empty_or_minimal_input"
+      },
+      {
+        "input": {
+          "target": [
+            0
+          ],
+          "m": 1
+        },
+        "expected_output": 0,
+        "edge_case_type": "single_element"
+      },
+      {
+        "input": {
+          "target": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "m": 2
+        },
+        "expected_output": -1,
+        "edge_case_type": "all_duplicates"
+      },
+      {
+        "input": {
+          "target": [
+            1,
+            2,
+            3,
+            0
+          ],
+          "m": 3
+        },
+        "expected_output": 1,
+        "edge_case_type": "sorted_ascending"
+      },
+      {
+        "input": {
+          "target": [
+            0,
+            0,
+            2,
+            1
+          ],
+          "m": 2
+        },
+        "expected_output": -1,
+        "edge_case_type": "sorted_descending"
+      },
+      {
+        "input": {
+          "target": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "m": 2
+        },
+        "expected_output": 0,
+        "edge_case_type": "negative_numbers"
+      },
+      {
+        "input": {
+          "target": [
+            1,
+            2,
+            3,
+            1,
+            2,
+            3,
+            1,
+            2,
+            3,
+            1,
+            2,
+            3
+          ],
+          "m": 3
+        },
+        "expected_output": 4,
+        "edge_case_type": "max_constraint_size"
+      },
+      {
+        "input": {
+          "target": [
+            1,
+            2,
+            3,
+            4
+          ],
+          "m": 4
+        },
+        "expected_output": 1,
+        "edge_case_type": "boundary_value"
+      },
+      {
+        "input": {
+          "target": [
+            1,
+            2,
+            1,
+            2,
+            3
+          ],
+          "m": 3
+        },
+        "expected_output": 2,
+        "edge_case_type": "typical_case"
+      },
+      {
+        "input": {
+          "target": [
+            1,
+            2,
+            2,
+            3
+          ],
+          "m": 3
+        },
+        "expected_output": -1,
+        "edge_case_type": "adversarial_case"
+      }
+    ],
+    "solution_python": "def solve(target: list[int], m: int) -> int:\n    n = len(target)\n    S = set()\n    \n    for p in range(n):\n        if target[p] > 0:\n            k = target[p]\n            if k > m:\n                return -1\n            l = p - k + 1\n            if l < 0 or l > n - m:\n                return -1\n            S.add(l)\n            \n    if not S:\n        if all(x == 0 for x in target):\n            return 0\n        return -1\n        \n    adj = {l: set() for l in S}\n    in_degree = {l: 0 for l in S}\n    \n    for p in range(n):\n        if target[p] == 0:\n            l_min = max(0, p - m + 1)\n            l_max = min(n - m, p)\n            for l in range(l_min, l_max + 1):\n                if l in S:\n                    return -1\n        else:\n            k = target[p]\n            l_req = p - k + 1\n            l_min = max(0, p - m + 1)\n            l_max = min(n - m, p)\n            for l in range(l_min, l_max + 1):\n                if l in S and l != l_req:\n                    if l_req not in adj[l]:\n                        adj[l].add(l_req)\n                        in_degree[l_req] += 1\n                        \n    queue = [l for l in S if in_degree[l] == 0]\n    visited_count = 0\n    \n    while queue:\n        u = queue.pop()\n        visited_count += 1\n        for v in adj[u]:\n            in_degree[v] -= 1\n            if in_degree[v] == 0:\n                queue.append(v)\n                \n    if visited_count == len(S):\n        return len(S)\n    else:\n        return -1",
+    "solution_java": "",
+    "solutions": {
+      "python": "def solve(target: list[int], m: int) -> int:\n    n = len(target)\n    S = set()\n    \n    for p in range(n):\n        if target[p] > 0:\n            k = target[p]\n            if k > m:\n                return -1\n            l = p - k + 1\n            if l < 0 or l > n - m:\n                return -1\n            S.add(l)\n            \n    if not S:\n        if all(x == 0 for x in target):\n            return 0\n        return -1\n        \n    adj = {l: set() for l in S}\n    in_degree = {l: 0 for l in S}\n    \n    for p in range(n):\n        if target[p] == 0:\n            l_min = max(0, p - m + 1)\n            l_max = min(n - m, p)\n            for l in range(l_min, l_max + 1):\n                if l in S:\n                    return -1\n        else:\n            k = target[p]\n            l_req = p - k + 1\n            l_min = max(0, p - m + 1)\n            l_max = min(n - m, p)\n            for l in range(l_min, l_max + 1):\n                if l in S and l != l_req:\n                    if l_req not in adj[l]:\n                        adj[l].add(l_req)\n                        in_degree[l_req] += 1\n                        \n    queue = [l for l in S if in_degree[l] == 0]\n    visited_count = 0\n    \n    while queue:\n        u = queue.pop()\n        visited_count += 1\n        for v in adj[u]:\n            in_degree[v] -= 1\n            if in_degree[v] == 0:\n                queue.append(v)\n                \n    if visited_count == len(S):\n        return len(S)\n    else:\n        return -1",
+      "java": ""
+    },
+    "verified": false,
+    "python_verified": true,
+    "java_verified": false,
+    "partial_scrape": false,
+    "is_new": true,
+    "created_at": "2026-07-28T10:46:02.618333Z"
+  },
+  {
+    "id": "codeforces:2233F",
+    "title": "Shortest GCD Paths",
+    "source_site": "codeforces",
+    "source_url": "https://codeforces.com/problemset/problem/2233/F",
+    "source_id": "2233F",
+    "category": "Dynamic Programming",
+    "difficulty": "Hard",
+    "companies": [
+      "General"
+    ],
+    "company": "General",
+    "problem_statement": "You are given three integers $n$, $a$, and $b$. Consider a weighted undirected graph with $n$ vertices labeled from $1$ to $n$. For any pair of distinct vertices $u$ and $v$, there exists an edge between them with weight defined as:\n\n$$w(u, v) = \\frac{\\max(u, v)}{\\gcd(u, v)}$$\n\nwhere $\\gcd(u, v)$ denotes the greatest common divisor of $u$ and $v$.\n\nFind the minimum total weight of a path from vertex $a$ to vertex $b$ in this graph. If $a = b$, the shortest path distance is $0$.",
+    "examples": [
+      {
+        "input": "n = 35, a = 6, b = 35",
+        "output": "12",
+        "explanation": "The optimal path goes from 6 to 7 to 35.\n- Edge (6, 7): weight = max(6, 7) / gcd(6, 7) = 7 / 1 = 7.\n- Edge (7, 35): weight = max(7, 35) / gcd(7, 35) = 35 / 7 = 5.\nTotal weight = 7 + 5 = 12. (Direct edge (6, 35) would cost 35)."
+      },
+      {
+        "input": "n = 20, a = 12, b = 18",
+        "output": "3",
+        "explanation": "Move directly from vertex 12 to vertex 18.\n- Edge (12, 18): weight = max(12, 18) / gcd(12, 18) = 18 / 6 = 3."
+      }
+    ],
+    "constraints": [
+      "1 <= n <= 300",
+      "1 <= a <= n",
+      "1 <= b <= n"
+    ],
+    "test_cases": [
+      {
+        "input": {
+          "n": 1,
+          "a": 1,
+          "b": 1
+        },
+        "expected_output": 0,
+        "edge_case_type": "empty_or_minimal_input"
+      },
+      {
+        "input": {
+          "n": 2,
+          "a": 1,
+          "b": 2
+        },
+        "expected_output": 2,
+        "edge_case_type": "single_element"
+      },
+      {
+        "input": {
+          "n": 5,
+          "a": 3,
+          "b": 3
+        },
+        "expected_output": 0,
+        "edge_case_type": "all_duplicates"
+      },
+      {
+        "input": {
+          "n": 10,
+          "a": 2,
+          "b": 8
+        },
+        "expected_output": 4,
+        "edge_case_type": "sorted_ascending"
+      },
+      {
+        "input": {
+          "n": 10,
+          "a": 8,
+          "b": 2
+        },
+        "expected_output": 4,
+        "edge_case_type": "sorted_descending"
+      },
+      {
+        "input": {
+          "n": 15,
+          "a": 6,
+          "b": 15
+        },
+        "expected_output": 5,
+        "edge_case_type": "negative_numbers"
+      },
+      {
+        "input": {
+          "n": 100,
+          "a": 1,
+          "b": 100
+        },
+        "expected_output": 14,
+        "edge_case_type": "boundary_value"
+      },
+      {
+        "input": {
+          "n": 35,
+          "a": 6,
+          "b": 35
+        },
+        "expected_output": 12,
+        "edge_case_type": "typical_case"
+      },
+      {
+        "input": {
+          "n": 200,
+          "a": 127,
+          "b": 193
+        },
+        "expected_output": 193,
+        "edge_case_type": "adversarial_case"
+      },
+      {
+        "input": {
+          "n": 300,
+          "a": 12,
+          "b": 280
+        },
+        "expected_output": 14,
+        "edge_case_type": "max_constraint_size"
+      }
+    ],
+    "solution_python": "import heapq\nimport math\n\ndef solve(n: int, a: int, b: int) -> int:\n    if a == b:\n        return 0\n    \n    dist = [float('inf')] * (n + 1)\n    dist[a] = 0\n    pq = [(0, a)]\n    \n    while pq:\n        d, u = heapq.heappop(pq)\n        if d > dist[u]:\n            continue\n        if u == b:\n            return d\n            \n        for v in range(1, n + 1):\n            if u == v:\n                continue\n            w = max(u, v) // math.gcd(u, v)\n            if d + w < dist[v]:\n                dist[v] = d + w\n                heapq.heappush(pq, (dist[v], v))\n                \n    return dist[b]",
+    "solution_java": "",
+    "solutions": {
+      "python": "import heapq\nimport math\n\ndef solve(n: int, a: int, b: int) -> int:\n    if a == b:\n        return 0\n    \n    dist = [float('inf')] * (n + 1)\n    dist[a] = 0\n    pq = [(0, a)]\n    \n    while pq:\n        d, u = heapq.heappop(pq)\n        if d > dist[u]:\n            continue\n        if u == b:\n            return d\n            \n        for v in range(1, n + 1):\n            if u == v:\n                continue\n            w = max(u, v) // math.gcd(u, v)\n            if d + w < dist[v]:\n                dist[v] = d + w\n                heapq.heappush(pq, (dist[v], v))\n                \n    return dist[b]",
+      "java": ""
+    },
+    "verified": false,
+    "python_verified": true,
+    "java_verified": false,
+    "partial_scrape": false,
+    "is_new": true,
+    "created_at": "2026-07-28T10:46:02.618333Z"
+  },
+  {
+    "id": "codeforces:2190F",
+    "title": "Xor Product",
+    "source_site": "codeforces",
+    "source_url": "https://codeforces.com/problemset/problem/2190/F",
+    "source_id": "2190F",
+    "category": "Dynamic Programming",
+    "difficulty": "Hard",
+    "companies": [
+      "General"
+    ],
+    "company": "General",
+    "problem_statement": "Given three non‑negative integers x, y and a positive integer k, define the set S(x,y,k) = { (x+i) XOR (y+j) | 0 ≤ i < k, 0 ≤ j < k }. Compute the sum of all elements of S(x,y,k) modulo 1,000,000,007. The function must run in O(log max(x,y,k)) time.",
+    "examples": [
+      {
+        "input": {
+          "x": 3,
+          "y": 5,
+          "k": 2
+        },
+        "output": 24,
+        "explanation": "The pairs are (3,5),(3,6),(4,5),(4,6). Their XORs are 6,7,1,2 respectively. Sum = 6+7+1+2 = 16. 16 mod 1,000,000,007 = 16. (Note: the example uses the same numbers as the statement; the computed sum is 16.)"
+      }
+    ],
+    "constraints": [
+      "0 ≤ x, y ≤ 10^12",
+      "1 ≤ k ≤ 10^12",
+      "Answer fits in 64‑bit signed integer but must be returned modulo 1,000,000,007"
+    ],
+    "test_cases": [
+      {
+        "input": {
+          "x": 0,
+          "y": 0,
+          "k": 1
+        },
+        "expected_output": 0,
+        "edge_case_type": "empty_or_minimal_input"
+      },
+      {
+        "input": {
+          "x": 7,
+          "y": 7,
+          "k": 1
+        },
+        "expected_output": 0,
+        "edge_case_type": "single_element"
+      },
+      {
+        "input": {
+          "x": 5,
+          "y": 5,
+          "k": 3
+        },
+        "expected_output": 12,
+        "edge_case_type": "all_duplicates"
+      },
+      {
+        "input": {
+          "x": 1,
+          "y": 10,
+          "k": 4
+        },
+        "expected_output": 140,
+        "edge_case_type": "sorted_ascending"
+      },
+      {
+        "input": {
+          "x": 100,
+          "y": 20,
+          "k": 5
+        },
+        "expected_output": 860,
+        "edge_case_type": "sorted_descending"
+      },
+      {
+        "input": {
+          "x": 0,
+          "y": 0,
+          "k": 5
+        },
+        "expected_output": 40,
+        "edge_case_type": "negative_numbers"
+      },
+      {
+        "input": {
+          "x": 999999999999,
+          "y\\": 999999999998,
+          "k": 1000000
+        },
+        "expected_output": 4999995000000000,
+        "edge_case_type": "max_constraint_size"
+      },
+      {
+        "input": {
+          "x\\": 123456789012,
+          "y": 987654321098,
+          "k": 1000000000000
+        },
+        "expected_output\\": 0,
+        "edge_case_type": "boundary_value"
+      },
+      {
+        "input": {
+          "x": 12345,
+          "y": 67890,
+          "k": 1000
+        },
+        "expected_output": 4999500000,
+        "edge_case_type": "typical_case"
+      },
+      {
+        "input": {
+          "x": 2,
+          "y": 2,
+          "k": 1024
+        },
+        "expected_output": 524288,
+        "edge_case_type": "adversarial_case"
+      }
+    ],
+    "solution_python": "import sys\nMOD = 1_000_000_007\n\ndef count_ones(L, R, b):\n    \"\"\"Return number of integers in [L,R] whose b‑th bit is 1.\n    b is 0‑based.\n    \"\"\"\n    if L > R:\n        return 0\n    period = 1 << (b + 1)\n    # count ones in [0,R]\n    full_cycles = (R + 1) // period\n    ones = full_cycles * (1 << b)\n    remainder = (R + 1) % period\n    ones += max(0, remainder - (1 << b))\n    # subtract count in [0,L-1]\n    L -= 1\n    if L >= 0:\n        full_cycles = (L + 1) // period\n        ones -= full_cycles * (1 << b)\n        remainder = (L + 1) % period\n        ones -= max(0, remainder - (1 << b))\n    return ones\n\ndef solve(x, y, k):\n    L1, R1 = x, x + k - 1\n    L2, R2 = y, y + k - 1\n    ans = 0\n    for b in range(61):  # because 2^60 > 10^12\n        cnt1_one = count_ones(L1, R1, b)\n        cnt1_zero = k - cnt1_one\n        cnt2_one = count_ones(L2, R2, b)\n        cnt2_zero = k - cnt2_one\n        # pairs where xor has bit b = 1\n        pairs = cnt1_one * cnt2_zero + cnt1_zero * cnt2_one\n        ans = (ans + (pairs % MOD) * ((1 << b) % MOD)) % MOD\n    return ans\n\nif __name__ == \"__main__\":\n    data = sys.stdin.read().strip().split()\n    if not data:\n        sys.exit(0)\n    x, y, k = map(int, data)\n    print(solve(x, y, k))",
+    "solution_java": "",
+    "solutions": {
+      "python": "import sys\nMOD = 1_000_000_007\n\ndef count_ones(L, R, b):\n    \"\"\"Return number of integers in [L,R] whose b‑th bit is 1.\n    b is 0‑based.\n    \"\"\"\n    if L > R:\n        return 0\n    period = 1 << (b + 1)\n    # count ones in [0,R]\n    full_cycles = (R + 1) // period\n    ones = full_cycles * (1 << b)\n    remainder = (R + 1) % period\n    ones += max(0, remainder - (1 << b))\n    # subtract count in [0,L-1]\n    L -= 1\n    if L >= 0:\n        full_cycles = (L + 1) // period\n        ones -= full_cycles * (1 << b)\n        remainder = (L + 1) % period\n        ones -= max(0, remainder - (1 << b))\n    return ones\n\ndef solve(x, y, k):\n    L1, R1 = x, x + k - 1\n    L2, R2 = y, y + k - 1\n    ans = 0\n    for b in range(61):  # because 2^60 > 10^12\n        cnt1_one = count_ones(L1, R1, b)\n        cnt1_zero = k - cnt1_one\n        cnt2_one = count_ones(L2, R2, b)\n        cnt2_zero = k - cnt2_one\n        # pairs where xor has bit b = 1\n        pairs = cnt1_one * cnt2_zero + cnt1_zero * cnt2_one\n        ans = (ans + (pairs % MOD) * ((1 << b) % MOD)) % MOD\n    return ans\n\nif __name__ == \"__main__\":\n    data = sys.stdin.read().strip().split()\n    if not data:\n        sys.exit(0)\n    x, y, k = map(int, data)\n    print(solve(x, y, k))",
+      "java": ""
+    },
+    "verified": false,
+    "python_verified": true,
+    "java_verified": false,
+    "partial_scrape": false,
+    "is_new": true,
+    "created_at": "2026-07-28T10:46:02.618333Z"
+  },
+  {
+    "id": "codeforces:2195F",
+    "title": "Parabola Independence",
+    "source_site": "codeforces",
+    "source_url": "https://codeforces.com/problemset/problem/2195/F",
+    "source_id": "2195F",
+    "category": "Dynamic Programming",
+    "difficulty": "Hard",
+    "companies": [
+      "General"
+    ],
+    "company": "General",
+    "problem_statement": "Given a set of quadratic functions, determine the maximum number of independent functions that can be selected from the set, where two functions are independent if they are not equal for all x.",
+    "examples": [
+      {
+        "input": "functions = [[1, 2, 3], [4, 5, 6], [1, 2, 3]]",
+        "output": "1",
+        "explanation": "Only one function can be selected as the first and third functions are equal"
+      }
+    ],
+    "constraints": [
+      "1 <= n <= 10^3",
+      "1 <= a_i, b_i, c_i <= 10^6"
+    ],
+    "test_cases": [
+      {
+        "input": {
+          "functions": []
+        },
+        "expected_output": 0,
+        "edge_case_type": "empty_or_minimal_input"
+      },
+      {
+        "input": {
+          "functions": [
+            [
+              1,
+              2,
+              3
+            ]
+          ]
+        },
+        "expected_output": 1,
+        "edge_case_type": "single_element"
+      },
+      {
+        "input": {
+          "functions": [
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              1,
+              2,
+              3
+            ]
+          ]
+        },
+        "expected_output": 1,
+        "edge_case_type": "all_duplicates"
+      },
+      {
+        "input": {
+          "functions": [
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              2,
+              3,
+              4
+            ],
+            [
+              3,
+              4,
+              5
+            ]
+          ]
+        },
+        "expected_output": 3,
+        "edge_case_type": "sorted_ascending"
+      },
+      {
+        "input": {
+          "functions": [
+            [
+              3,
+              4,
+              5
+            ],
+            [
+              2,
+              3,
+              4
+            ],
+            [
+              1,
+              2,
+              3
+            ]
+          ]
+        },
+        "expected_output": 3,
+        "edge_case_type": "sorted_descending"
+      },
+      {
+        "input": {
+          "functions": [
+            [
+              -1,
+              -2,
+              -3
+            ],
+            [
+              -2,
+              -3,
+              -4
+            ],
+            [
+              -3,
+              -4,
+              -5
+            ]
+          ]
+        },
+        "expected_output": 3,
+        "edge_case_type": "negative_numbers"
+      },
+      {
+        "input": {
+          "functions": [
+            [
+              1,
+              2,
+              3
+            ]
+          ]
+        },
+        "expected_output": 1,
+        "edge_case_type": "max_constraint_size"
+      },
+      {
+        "input": {
+          "functions": [
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              1,
+              2,
+              4
+            ]
+          ]
+        },
+        "expected_output": 2,
+        "edge_case_type": "boundary_value"
+      },
+      {
+        "input": {
+          "functions": [
+            [
+              1,
+              2,
+              3
+            ],
+            [
+              4,
+              5,
+              6
+            ],
+            [
+              7,
+              8,
+              9
+            ]
+          ]
+        },
+        "expected_output": 3,
+        "edge_case_type": "typical_case"
+      },
+      {
+        "input": {
+          "functions": [
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              1
+            ],
+            [
+              1,
+              1,
+              2
+            ]
+          ]
+        },
+        "expected_output": 2,
+        "edge_case_type": "adversarial_case"
+      }
+    ],
+    "solution_python": "def solve(functions):\n    max_independent = 0\n    selected_functions = []\n    for func in functions:\n        is_independent = True\n        for selected_func in selected_functions:\n            if func[0] == selected_func[0] and func[1] == selected_func[1] and func[2] == selected_func[2]:\n                is_independent = False\n                break\n        if is_independent:\n            selected_functions.append(func)\n            max_independent += 1\n    return max_independent",
+    "solution_java": "",
+    "solutions": {
+      "python": "def solve(functions):\n    max_independent = 0\n    selected_functions = []\n    for func in functions:\n        is_independent = True\n        for selected_func in selected_functions:\n            if func[0] == selected_func[0] and func[1] == selected_func[1] and func[2] == selected_func[2]:\n                is_independent = False\n                break\n        if is_independent:\n            selected_functions.append(func)\n            max_independent += 1\n    return max_independent",
+      "java": ""
+    },
+    "verified": false,
+    "python_verified": true,
+    "java_verified": false,
+    "partial_scrape": false,
+    "is_new": true,
+    "created_at": "2026-07-28T10:46:02.618333Z"
   }
 ]

@@ -1,43 +1,32 @@
-// Admin curation is stored per-browser in localStorage — there is no backend
-// database. This is intentional: the admin view is a one-operator curation
-// tool used once before deployment, not a live multi-admin CMS. Use the
-// "Export questions.json" button in the admin portal to bake curated
-// removals/edits into the static file that ships to everyone else.
+// Admin curation goes through the backend now (see backend/main.py's
+// /api/admin/* endpoints) so a removal or edit is visible to every client
+// hitting /api/questions, not just the admin's own browser. These helpers
+// are thin fetch wrappers; callers should refetch the question list after
+// a successful call to pick up the new server state.
 
-const OVERRIDES_KEY = 'admin_overrides_v1'
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || ''
 
-function loadOverrides() {
-  try {
-    const raw = localStorage.getItem(OVERRIDES_KEY)
-    return raw ? JSON.parse(raw) : { removed: [], edits: {} }
-  } catch {
-    return { removed: [], edits: {} }
+async function request(path, options) {
+  const res = await fetch(`${API_BASE_URL}${path}`, options)
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}))
+    throw new Error(body.detail || `Request failed (${res.status})`)
   }
-}
-
-function saveOverrides(overrides) {
-  localStorage.setItem(OVERRIDES_KEY, JSON.stringify(overrides))
-}
-
-export function getCuratedQuestions(base) {
-  const { removed, edits } = loadOverrides()
-  return base
-    .filter((q) => !removed.includes(q.id))
-    .map((q) => (edits[q.id] ? { ...q, ...edits[q.id] } : q))
-}
-
-export function removeQuestion(id) {
-  const overrides = loadOverrides()
-  if (!overrides.removed.includes(id)) overrides.removed.push(id)
-  saveOverrides(overrides)
+  return res.json().catch(() => ({}))
 }
 
 export function editQuestion(id, fields) {
-  const overrides = loadOverrides()
-  overrides.edits[id] = { ...(overrides.edits[id] || {}), ...fields }
-  saveOverrides(overrides)
+  return request(`/api/admin/questions/${encodeURIComponent(id)}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(fields),
+  })
+}
+
+export function removeQuestion(id) {
+  return request(`/api/admin/questions/${encodeURIComponent(id)}`, { method: 'DELETE' })
 }
 
 export function resetOverrides() {
-  localStorage.removeItem(OVERRIDES_KEY)
+  return request('/api/admin/reset', { method: 'POST' })
 }
